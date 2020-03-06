@@ -15,25 +15,25 @@ const common = {
         content: state.user
       });
     },
-    REMOVE_USER: (state) => {
+    REMOVE_USER: () => {
       removeStore({
         name: "user",
         type: "session"
       });
-    },
+    }
   },
-  actions:{
-    LogIn({commit}, user) {
-      return new Promise((resolve,reject)=>{
-        commit('SET_USER', user)
-        resolve()
-      })
+  actions: {
+    LogIn({ commit }, user) {
+      return new Promise(resolve => {
+        commit("SET_USER", user);
+        resolve();
+      });
     },
-    LogOut({commit}) {
-      return new Promise(resolve=>{
-        commit('REMOVE_USER')
-        resolve()
-      })
+    LogOut({ commit }) {
+      return new Promise(resolve => {
+        commit("REMOVE_USER");
+        resolve();
+      });
     }
   }
 };

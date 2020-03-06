@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "@/views/Home";
 import Login from "@/views/login";
-import store from '@/store/index';
+import store from "@/store/index";
 
 Vue.use(VueRouter);
 
@@ -32,13 +32,13 @@ const router = new VueRouter({
   routes
 });
 router.beforeEach((to, from, next) => {
-  if(store.getters.user) {
-    next()
-  }else if(to.path =='/login'){
-    next()
-  }else{
-    next({path: '/login'})
+  if (store.getters.user) {
+    next();
+  } else if (to.path == "/login") {
+    next();
+  } else {
+    next({ path: "/login" });
   }
-})
+});
 
 export default router;

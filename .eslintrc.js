@@ -16,7 +16,9 @@ module.exports = {
       {
         allowSingleLine: false
       }
-    ]
+    ],
+    semi: [2, "always"],
+    "comma-style": [2, "last"]
   },
   overrides: [
     {
