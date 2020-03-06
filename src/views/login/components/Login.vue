@@ -24,7 +24,24 @@ export default {
     };
   },
   methods: {
-    login() {},
+    login() {
+      if (!this.form.account) {
+        this.$message({
+          type: "error",
+          message: "请输入账号"
+        });
+      } else {
+        this.$store
+          .dispatch("LogIn", this.form.account)
+          .then(() => {
+            // 页面跳转
+            this.$router.push({ path: "/index" });
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      }
+    },
     regest() {
       this.$emit("regest");
     }
