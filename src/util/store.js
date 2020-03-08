@@ -71,7 +71,7 @@ export const getStore = (params = {}) => {
  */
 export const removeStore = (params = {}) => {
   let { name, type } = params;
-  if (type) {
+  if (type === "session") {
     window.sessionStorage.removeItem(name);
   } else {
     window.localStorage.removeItem(name);

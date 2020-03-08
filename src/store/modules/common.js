@@ -18,7 +18,7 @@ const common = {
     REMOVE_USER: () => {
       removeStore({
         name: "user",
-        type: "session"
+        type: "local"
       });
     }
   },
