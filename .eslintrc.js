@@ -30,5 +30,14 @@ module.exports = {
         jest: true
       }
     }
-  ]
+  ],
+  settings: {
+    'import/resolver': {
+      alias: {
+        map: [
+          ['@', './src/'],
+        ],
+      }
+    }
+  }
 };
