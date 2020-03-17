@@ -16,11 +16,17 @@
 </template>
 
 <script>
+import { loginByUsername } from "@/api/user";
+import md5 from "js-md5";
 export default {
   name: "login",
   data() {
     return {
-      form: {}
+      form: {
+        loginType: 1,
+        account: "admin",
+        password: "admin"
+      }
     };
   },
   methods: {
@@ -31,14 +37,22 @@ export default {
           message: "请输入账号"
         });
       } else {
-        this.$store
-          .dispatch("LogIn", this.form.account)
-          .then(() => {
-            // 页面跳转
-            this.$router.push({ path: "/index" });
+        let params = { ...this.form };
+        params.password = md5(params.password);
+        loginByUsername(params)
+          .then(res => {
+            console.log(res);
           })
-          .catch(e => {
-            console.log(e);
+          .then(() => {
+            this.$store
+              .dispatch("LogIn", this.form.account)
+              .then(() => {
+                // 页面跳转
+                this.$router.push({ path: "/index" });
+              })
+              .catch(e => {
+                console.log(e);
+              });
           });
       }
     },

@@ -1,3 +1,4 @@
+console.log(1);
 module.exports = {
   lintOnSave: true,
   productionSourceMap: false,

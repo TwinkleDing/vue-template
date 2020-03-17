@@ -1,11 +1,10 @@
 import axios from "axios";
-import store from "@/store/";
-import router from "@/router";
+// import router from "@/router";
 import { serialize } from "@/util/util";
 import { Message } from "element-ui";
 import NProgress from "nprogress"; // progress bar
 // import "nprogress/nprogress.css"; // progress bar style
-// import { Base64 } from "js-base64";
+import { Base64 } from "js-base64";
 import { getToken } from "@/util/auth";
 
 axios.defaults.timeout = 100000;
@@ -25,9 +24,9 @@ axios.interceptors.request.use(
     NProgress.start(); // start progress bar
     const meta = config.meta || {};
     const isToken = meta.isToken === false;
-    // config.headers["Authorization"] = `Basic ${Base64.encode(
-    //   `${website.clientId}:${website.clientSecret}`
-    // )}`;
+    config.headers["Authorization"] = `Basic ${Base64.encode(
+      `saber:saber_secret`
+    )}`;
     if (getToken() && !isToken) {
       config.headers["Blade-Auth"] = "bearer " + getToken(); // 让每个请求携带token--['Authorization']为自定义key 请根据实际情况自行修改
     }
@@ -55,8 +54,7 @@ axios.interceptors.response.use(
     //如果在白名单里则自行catch逻辑处理
     // if (statusWhiteList.includes(status)) return Promise.reject(res);
     //如果是401则跳转到登录页面
-    if (status === 401)
-      store.dispatch("FedLogOut").then(() => router.push({ path: "/login" }));
+    // if (status === 401) router.push({ path: "/login" });
     // 如果请求为非200否者默认统一处理
     if (status !== 200) {
       Message({

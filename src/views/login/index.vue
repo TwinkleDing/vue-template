@@ -43,7 +43,6 @@ export default {
   justify-content: center;
   align-items: center;
   min-height: 800px;
-  min-width: 1360px;
   &-content {
     width: 500px;
     box-sizing: border-box;
