@@ -1,53 +1,49 @@
 <template>
-  <div class="top-bar">
-    <div class="logo">
-      <img src="@/assets/logo.png" alt="no" />
+  <div class='top-bar'>
+    <div class='logo'>
+      <img src='@/assets/logo.png' alt='no' />
     </div>
-    <div class="logout">
+    <div class='logout'>
       <div>用户id：{{ user }}</div>
-      <el-button type="primary" @click="logout">退出登录</el-button>
+      <el-button type='primary' @click='logout'>退出登录</el-button>
     </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
   computed: {
-    ...mapGetters(["user"])
+    ...mapGetters(['user'])
   },
   methods: {
     logout() {
-      this.$confirm('即将退出登录状态, 是否继续?', "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+      this.$confirm('即将退出登录状态, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       }).then(() => {
-          this.$store
-            .dispatch("LogOut")
-            .then(() => {
-              this.$router.push({ path: "/login" });
-            })
-            .then(() =>{
-              this.$message({
-                type: "success",
-                message: "退出登录"
-              });
-            });
-        })
-        .catch(() => {
+        this.$store.dispatch('LogOut').then(() => {
+          this.$router.push({ path: '/login' });
+        }).then(() =>{
           this.$message({
-            type: "info",
-            message: "已取消删除"
+            type: 'success',
+            message: '退出登录'
           });
         });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消退出'
+        });
+      });
     }
   }
 };
 </script>
-<style lang="less" scoped>
+<style lang='less' scoped>
 .top-bar {
   height: 60px;
   border-bottom: 1px solid #999;

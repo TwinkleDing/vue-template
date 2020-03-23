@@ -1,17 +1,17 @@
 <template>
-  <div class="login-box">
-    <div class="login-box-content">
-      <login v-if="!regest" @regest="regestOpen" />
-      <Registered v-else @regest="regestClose" />
+  <div class='login-box'>
+    <div class='login-box-content'>
+      <login v-if='!regest' @regest='regestOpen' />
+      <Registered v-else @regest='regestClose' />
     </div>
   </div>
 </template>
 
 <script>
-import Login from "./components/Login";
-import Registered from "./components/Registered";
+import Login from './components/Login';
+import Registered from './components/Registered';
 export default {
-  name: "loginBox",
+  name: 'loginBox',
   components: {
     Login,
     Registered
@@ -32,8 +32,8 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-@url: "../../assets/login/girl.png";
+<style lang='less' scoped>
+@url: '../../assets/img/girl.png';
 .login-box {
   background-image: url(@url);
   width: 100%;
