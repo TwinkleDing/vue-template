@@ -74,11 +74,11 @@ export const setTheme = name => {
 export const encryption = params => {
   let { data, type, param, key } = params,
    result = JSON.parse(JSON.stringify(data));
-  if (type == 'Base64') {
+  if (type === 'Base64') {
     param.forEach(ele => {
       result[ele] = btoa(result[ele]);
     });
-  } else if (type == 'Aes') {
+  } else if (type === 'Aes') {
     param.forEach(ele => {
       result[ele] = window.CryptoJS.AES.encrypt(result[ele], key).toString();
     });
@@ -157,12 +157,12 @@ export const exitFullScreen = () => {
 
 export const findParent = (menu, id) => {
   for (let i = 0; i < menu.length; i++) {
-    if (menu[i].children.length != 0) {
+    if (menu[i].children.length !== 0) {
       for (let j = 0; j < menu[i].children.length; j++) {
-        if (menu[i].children[j].id == id) {
+        if (menu[i].children[j].id === id) {
           return menu[i];
         }
-          if (menu[i].children[j].children.length != 0) {
+          if (menu[i].children[j].children.length !== 0) {
             return findParent(menu[i].children[j].children, id);
           }
 
@@ -229,7 +229,7 @@ return value;
   ) {
     let index = 0;
     index = findArray(dic, value);
-    if (index != -1) {
+    if (index !== -1) {
       result = dic[index].label;
     } else {
       result = value;
@@ -239,7 +239,7 @@ return value;
     let index = 0;
     value.forEach(ele => {
       index = findArray(dic, ele);
-      if (index != -1) {
+      if (index !== -1) {
         result.push(dic[index].label);
       } else {
         result.push(value);
@@ -254,7 +254,7 @@ return value;
  */
 export const findArray = (dic, value) => {
   for (let i = 0; i < dic.length; i++) {
-    if (dic[i].value == value) {
+    if (dic[i].value === value) {
       return i;
     }
   }

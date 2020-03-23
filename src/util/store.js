@@ -39,10 +39,10 @@ export const setStore = (params = {}) => {
     datetime: new Date().getTime()
   };
   if (type) {
-window.sessionStorage.setItem(name, JSON.stringify(obj));
-} else {
-window.localStorage.setItem(name, JSON.stringify(obj));
-}
+    window.sessionStorage.setItem(name, JSON.stringify(obj));
+  } else {
+    window.localStorage.setItem(name, JSON.stringify(obj));
+  }
 };
 /**
  * 获取localStorage

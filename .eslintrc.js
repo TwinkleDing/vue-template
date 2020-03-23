@@ -26,7 +26,6 @@ module.exports = {
     'eqeqeq': [2, 'allow-null'],
     'no-const-assign': 2,//禁止修改const声明的变量
     'no-constant-condition': 2,//禁止在条件中使用常量表达式 if(true) if(1)
-    'no-debugger': 2,//禁止使用debugger
     'no-else-return': 2,//如果if语句里面有return,后面不能跟else语句
     'no-empty': 2,//块语句中的内容不能为空
     'no-eq-null': 2,//禁止对null使用==或!=运算符
@@ -48,13 +47,11 @@ module.exports = {
     'no-sparse-arrays': 2,//禁止稀疏数组， [1,,2]
     'no-trailing-spaces': 1,//一行结束后面不要有空格
     'no-undef-init': 2,//变量初始化时不能直接给它赋值为undefined
-    'no-var': 0,//禁用var，用let和const代替
     'curly': [2, 'all'],//必须使用 if(){} 中的{}
     'dot-location': 0,//对象访问符的位置，换行的时候在行首还是行尾
     'eqeqeq': 2,//必须使用全等
     'func-names': 0,//函数表达式必须有名字
     'object-shorthand': 0,//强制对象字面量缩写语法
-    'one-var': 1,//连续声明
     'quotes': [1, 'single'],//引号类型 `` "" ''
   },
   overrides: [

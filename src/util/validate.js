@@ -3,8 +3,8 @@
  */
 
 export function isvalidUsername(str) {
-  const valid_map = ['admin', 'editor'];
-  return valid_map.indexOf(str.trim()) >= 0;
+  const validMap = ['admin', 'editor'];
+  return validMap.indexOf(str.trim()) >= 0;
 }
 
 /* 合法uri*/
@@ -138,28 +138,28 @@ export function cardid(code) {
     91: '国外 '
   };
   if (!validatenull(code)) {
-    if (code.length == 18) {
+    if (code.length === 18) {
       if (!code || !/(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(code)) {
         msg = '身份证号码格式错误';
       } else if (!city[code.substr(0, 2)]) {
         msg = '身份证号码输入错误';
       } else {
         //18位身份证需要验证最后一位校验位
-        code = code.split('');
+        let newCode = code.split(''),
         //∑(ai×Wi)(mod 11)
         //加权因子
-        var factor = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2],
+         factor = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2],
         //校验位
          parity = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2, 'x'],
          sum = 0,
          ai = 0,
          wi = 0;
-        for (var i = 0; i < 17; i++) {
-          ai = code[i];
+        for (let i = 0; i < 17; i++) {
+          ai = newCode[i];
           wi = factor[i];
           sum += ai * wi;
         }
-        if (parity[sum % 11] != code[17]) {
+        if (parity[sum % 11] !== newCode[17]) {
           msg = '身份证号码输入错误';
         } else {
           result = false;
@@ -185,7 +185,7 @@ export function isvalidatemobile(phone) {
   var isPhone = /^0\d{2,3}-?\d{7,8}$/;
   //增加134 减少|1349[0-9]{7}，增加181,增加145，增加17[678]
   if (!validatenull(phone)) {
-    if (phone.length == 11) {
+    if (phone.length === 11) {
       if (isPhone.test(phone)) {
         msg = '手机号码格式不正确';
       } else {
@@ -216,11 +216,11 @@ return false;
  */
 export function validatenum(num, type) {
   let regName = /[^\d.]/g;
-  if (type == 1) {
+  if (type === 1) {
     if (!regName.test(num)) {
 return false;
 }
-  } else if (type == 2) {
+  } else if (type === 2) {
     regName = /[^\d]/g;
     if (!regName.test(num)) {
 return false;
@@ -233,11 +233,11 @@ return false;
  */
 export function validatenumord(num, type) {
   let regName = /[^\d.]/g;
-  if (type == 1) {
+  if (type === 1) {
     if (!regName.test(num)) {
 return false;
 }
-  } else if (type == 2) {
+  } else if (type === 2) {
     regName = /[^\d.]/g;
     if (!regName.test(num)) {
 return false;
@@ -267,7 +267,7 @@ export function validatenull(val) {
     return false;
   }
   if (val instanceof Array) {
-    if (val.length == 0) {
+    if (val.length === 0) {
 return true;
 }
   } else if (val instanceof Object) {
@@ -276,11 +276,11 @@ return true;
 }
   } else {
     if (
-      val == 'null' ||
-      val == null ||
-      val == 'undefined' ||
-      val == undefined ||
-      val == ''
+      val === 'null' ||
+      val === null ||
+      val === 'undefined' ||
+      val === undefined ||
+      val === ''
     ) {
 return true;
 }
@@ -303,8 +303,8 @@ export function isChinese(val) {
 }
 
 export function isSpace(val) {
-  val = String(val);
-  if (val.replace(/(^\s*)|(\s*$)/g, '') == '') {
+  let newVal = String(val);
+  if (newVal.replace(/(^\s*)|(\s*$)/g, '') === '') {
     return true;
   }
     return false;
