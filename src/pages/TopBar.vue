@@ -11,7 +11,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import { mapGetters } from 'vuex';
 
 export default {
