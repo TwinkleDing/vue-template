@@ -57,12 +57,12 @@ export default {
       float: right;
       box-sizing: border-box;
       padding-bottom: 20px;
+      overflow-y: auto;
     }
   }
   .copy-right {
     height: 20px;
     position: relative;
-    top: -20px;
   }
 }
 </style>

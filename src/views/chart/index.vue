@@ -387,7 +387,7 @@ export default {
 
 <style lang="less">
 .charts {
-  height: 100%;
+  height: 150%;
   width: 100%;
   .item {
     float: left;
