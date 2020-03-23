@@ -21,6 +21,9 @@ export default {
       regest: false
     };
   },
+  mounted() {
+    this.$store.dispatch('LogOut');
+  },
   methods: {
     regestOpen() {
       this.regest = true;
