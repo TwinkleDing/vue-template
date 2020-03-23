@@ -1,5 +1,5 @@
 import axios from "axios";
-// import router from "@/router";
+import router from "@/router";
 import { serialize } from "@/util/util";
 import { Message } from "element-ui";
 import NProgress from "nprogress"; // progress bar
@@ -54,7 +54,7 @@ axios.interceptors.response.use(
     //如果在白名单里则自行catch逻辑处理
     // if (statusWhiteList.includes(status)) return Promise.reject(res);
     //如果是401则跳转到登录页面
-    // if (status === 401) router.push({ path: "/login" });
+    if (status === 401) router.push({ path: "/login" });
     // 如果请求为非200否者默认统一处理
     if (status !== 200) {
       Message({
