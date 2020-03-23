@@ -25,7 +25,7 @@ export default {
   },
   data () {
     return {
-      message: '上去',
+      message: '',
       setOptionLine: {
         id: 'lineChart',
         title: { text: '衣服销量' },

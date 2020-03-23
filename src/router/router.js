@@ -2,7 +2,16 @@ import Maps from '@/views/map';
 import Charts from '@/views/chart';
 import Lists from '@/views/list';
 import Forms from '@/views/form';
+import Pages from '@/views/pages';
 export default [
+  {
+    path: '/index',
+    name: 'Pages',
+    component: Pages,
+    meta: {
+      key: 'Pages'
+    }
+  },
   {
     path: '/maps',
     name: 'Maps',

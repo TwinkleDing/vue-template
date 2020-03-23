@@ -7,9 +7,9 @@
       </div>
       <div class='right'>
         <router-view />
+        <div class='copy-right'>Copyright ©2020 , All Rights Reserved.</div>
       </div>
     </div>
-    <div class='copy-right'>Copyright ©2020 , All Rights Reserved.</div>
   </div>
 </template>
 
@@ -45,8 +45,6 @@ export default {
   width: 100%;
   .content {
     height: calc(100% - 61px);
-    padding-bottom: 20px;
-    box-sizing: border-box;
     .left {
       width: 200px;
       height: 100%;
@@ -57,6 +55,8 @@ export default {
       height: 100%;
       width: calc(100% - 201px);
       float: right;
+      box-sizing: border-box;
+      padding-bottom: 20px;
     }
   }
   .copy-right {
