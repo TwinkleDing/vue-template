@@ -7,9 +7,9 @@
 <script>
 export default {
   name: 'Lists'
-}
+};
 </script>
 
 <style lang="less">
-  
+
 </style>

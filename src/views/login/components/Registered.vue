@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: "regest",
+  name: 'regest',
   data() {
     return {
       form: {}
@@ -29,7 +29,7 @@ export default {
   methods: {
     regest() {},
     goBack() {
-      this.$emit("regest");
+      this.$emit('regest');
     }
   }
 };

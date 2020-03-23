@@ -7,18 +7,18 @@
 
 <script>
 // @ is an alias to /src
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
-  name: "Home",
+  name: 'Home',
   components: {},
   computed: {
-    ...mapGetters(["user"])
+    ...mapGetters(['user'])
   },
   methods: {
     logout() {
-      this.$store.dispatch("LogOut").then(() => {
-        this.$router.push({ path: "/login" });
+      this.$store.dispatch('LogOut').then(() => {
+        this.$router.push({ path: '/login' });
       });
     }
   }

@@ -1,9 +1,9 @@
-import Cookies from "js-cookie";
-const TokenKey = "x-access-token";
+import Cookies from 'js-cookie';
+const TokenKey = 'x-access-token';
 var inFifteenMinutes = new Date(new Date().getTime() + 120 * 60 * 1000);
 export function getToken() {
-  let session = JSON.parse(sessionStorage.getItem("saber-token"));
-  let token;
+  let session = JSON.parse(sessionStorage.getItem('saber-token')),
+   token;
   if (session) {
     token = session.content;
   }

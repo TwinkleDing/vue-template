@@ -12,12 +12,12 @@
 
 <script>
 export default {
-  name: "Foo",
+  name: 'Foo',
 
   data() {
     return {
-      message: "Welcome to the Vue.js cookbook",
-      username: ""
+      message: 'Welcome to the Vue.js cookbook',
+      username: ''
     };
   },
 

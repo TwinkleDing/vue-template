@@ -1,28 +1,28 @@
-import { validatenull } from "./validate";
+import { validatenull } from './validate';
 //表单序列化
 export const serialize = data => {
   let list = [];
   Object.keys(data).forEach(ele => {
     list.push(`${ele}=${data[ele]}`);
   });
-  return list.join("&");
+  return list.join('&');
 };
 export const getObjType = obj => {
-  var toString = Object.prototype.toString;
-  var map = {
-    "[object Boolean]": "boolean",
-    "[object Number]": "number",
-    "[object String]": "string",
-    "[object Function]": "function",
-    "[object Array]": "array",
-    "[object Date]": "date",
-    "[object RegExp]": "regExp",
-    "[object Undefined]": "undefined",
-    "[object Null]": "null",
-    "[object Object]": "object"
+  var toString = Object.prototype.toString,
+   map = {
+    '[object Boolean]': 'boolean',
+    '[object Number]': 'number',
+    '[object String]': 'string',
+    '[object Function]': 'function',
+    '[object Array]': 'array',
+    '[object Date]': 'date',
+    '[object RegExp]': 'regExp',
+    '[object Undefined]': 'undefined',
+    '[object Null]': 'null',
+    '[object Object]': 'object'
   };
   if (obj instanceof Element) {
-    return "element";
+    return 'element';
   }
   return map[toString.call(obj)];
 };
@@ -30,21 +30,21 @@ export const getObjType = obj => {
  * 对象深拷贝
  */
 export const deepClone = data => {
-  var type = getObjType(data);
-  var obj;
-  if (type === "array") {
+  var type = getObjType(data),
+   obj;
+  if (type === 'array') {
     obj = [];
-  } else if (type === "object") {
+  } else if (type === 'object') {
     obj = {};
   } else {
     //不再具有下一层次
     return data;
   }
-  if (type === "array") {
+  if (type === 'array') {
     for (var i = 0, len = data.length; i < len; i++) {
       obj.push(deepClone(data[i]));
     }
-  } else if (type === "object") {
+  } else if (type === 'object') {
     for (var key in data) {
       obj[key] = deepClone(data[key]);
     }
@@ -56,9 +56,9 @@ export const deepClone = data => {
  */
 export const toggleGrayMode = status => {
   if (status) {
-    document.body.className = document.body.className + " grayMode";
+    document.body.className = document.body.className + ' grayMode';
   } else {
-    document.body.className = document.body.className.replace(" grayMode", "");
+    document.body.className = document.body.className.replace(' grayMode', '');
   }
 };
 /**
@@ -72,13 +72,13 @@ export const setTheme = name => {
  * 加密处理
  */
 export const encryption = params => {
-  let { data, type, param, key } = params;
-  let result = JSON.parse(JSON.stringify(data));
-  if (type == "Base64") {
+  let { data, type, param, key } = params,
+   result = JSON.parse(JSON.stringify(data));
+  if (type == 'Base64') {
     param.forEach(ele => {
       result[ele] = btoa(result[ele]);
     });
-  } else if (type == "Aes") {
+  } else if (type == 'Aes') {
     param.forEach(ele => {
       result[ele] = window.CryptoJS.AES.encrypt(result[ele], key).toString();
     });
@@ -103,16 +103,16 @@ export const listenfullscreen = callback => {
   function listen() {
     callback();
   }
-  document.addEventListener("fullscreenchange", function() {
+  document.addEventListener('fullscreenchange', function() {
     listen();
   });
-  document.addEventListener("mozfullscreenchange", function() {
+  document.addEventListener('mozfullscreenchange', function() {
     listen();
   });
-  document.addEventListener("webkitfullscreenchange", function() {
+  document.addEventListener('webkitfullscreenchange', function() {
     listen();
   });
-  document.addEventListener("msfullscreenchange", function() {
+  document.addEventListener('msfullscreenchange', function() {
     listen();
   });
 };
@@ -161,11 +161,11 @@ export const findParent = (menu, id) => {
       for (let j = 0; j < menu[i].children.length; j++) {
         if (menu[i].children[j].id == id) {
           return menu[i];
-        } else {
+        }
           if (menu[i].children[j].children.length != 0) {
             return findParent(menu[i].children[j].children, id);
           }
-        }
+
       }
     }
   }
@@ -179,11 +179,11 @@ export const findParent = (menu, id) => {
  */
 
 export const loadStyle = url => {
-  const link = document.createElement("link");
-  link.type = "text/css";
-  link.rel = "stylesheet";
+  const link = document.createElement('link');
+  link.type = 'text/css';
+  link.rel = 'stylesheet';
   link.href = url;
-  const head = document.getElementsByTagName("head")[0];
+  const head = document.getElementsByTagName('head')[0];
   head.appendChild(link);
 };
 /**
@@ -191,8 +191,8 @@ export const loadStyle = url => {
  */
 export const diff = (obj1, obj2) => {
   delete obj1.close;
-  var o1 = obj1 instanceof Object;
-  var o2 = obj2 instanceof Object;
+  var o1 = obj1 instanceof Object,
+   o2 = obj2 instanceof Object;
   if (!o1 || !o2) {
     /*  判断不是对象  */
     return obj1 === obj2;
@@ -204,8 +204,8 @@ export const diff = (obj1, obj2) => {
   }
 
   for (var attr in obj1) {
-    var t1 = obj1[attr] instanceof Object;
-    var t2 = obj2[attr] instanceof Object;
+    var t1 = obj1[attr] instanceof Object,
+     t2 = obj2[attr] instanceof Object;
     if (t1 && t2) {
       return diff(obj1[attr], obj2[attr]);
     } else if (obj1[attr] !== obj2[attr]) {
@@ -218,12 +218,14 @@ export const diff = (obj1, obj2) => {
  * 根据字典的value显示label
  */
 export const findByvalue = (dic, value) => {
-  let result = "";
-  if (validatenull(dic)) return value;
+  let result = '';
+  if (validatenull(dic)) {
+return value;
+}
   if (
-    typeof value == "string" ||
-    typeof value == "number" ||
-    typeof value == "boolean"
+    typeof value === 'string' ||
+    typeof value === 'number' ||
+    typeof value === 'boolean'
   ) {
     let index = 0;
     index = findArray(dic, value);
@@ -262,11 +264,13 @@ export const findArray = (dic, value) => {
  * 生成随机len位数字
  */
 export const randomLenNum = (len, date) => {
-  let random = "";
+  let random = '';
   random = Math.ceil(Math.random() * 100000000000000)
     .toString()
     .substr(0, len ? len : 4);
-  if (date) random = random + Date.now();
+  if (date) {
+random = random + Date.now();
+}
   return random;
 };
 /**
@@ -275,33 +279,33 @@ export const randomLenNum = (len, date) => {
 export const openWindow = (url, title, w, h) => {
   // Fixes dual-screen position                            Most browsers       Firefox
   const dualScreenLeft =
-    window.screenLeft !== undefined ? window.screenLeft : screen.left;
-  const dualScreenTop =
-    window.screenTop !== undefined ? window.screenTop : screen.top;
+    window.screenLeft !== undefined ? window.screenLeft : screen.left,
+   dualScreenTop =
+    window.screenTop !== undefined ? window.screenTop : screen.top,
 
-  const width = window.innerWidth
+   width = window.innerWidth
     ? window.innerWidth
     : document.documentElement.clientWidth
     ? document.documentElement.clientWidth
-    : screen.width;
-  const height = window.innerHeight
+    : screen.width,
+   height = window.innerHeight
     ? window.innerHeight
     : document.documentElement.clientHeight
     ? document.documentElement.clientHeight
-    : screen.height;
+    : screen.height,
 
-  const left = width / 2 - w / 2 + dualScreenLeft;
-  const top = height / 2 - h / 2 + dualScreenTop;
-  const newWindow = window.open(
+   left = width / 2 - w / 2 + dualScreenLeft,
+   top = height / 2 - h / 2 + dualScreenTop,
+   newWindow = window.open(
     url,
     title,
-    "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=yes, copyhistory=no, width=" +
+    'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=yes, copyhistory=no, width=' +
       w +
-      ", height=" +
+      ', height=' +
       h +
-      ", top=" +
+      ', top=' +
       top +
-      ", left=" +
+      ', left=' +
       left
   );
 

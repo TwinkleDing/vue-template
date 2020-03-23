@@ -7,23 +7,23 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 export default {
-  name: "HelloWorld",
+  name: 'HelloWorld',
   props: {
     msg: String
   },
   data() {
     return {
-      name: "丁丁"
+      name: '丁丁'
     };
   },
   computed: {
-    ...mapGetters(["user"])
+    ...mapGetters(['user'])
   },
   methods: {
     ss() {
-      this.$store.commit("SET_USER", this.name);
+      this.$store.commit('SET_USER', this.name);
     }
   }
 };
