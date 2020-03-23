@@ -3,45 +3,23 @@ import VueRouter from 'vue-router';
 import store from '@/store/index';
 import Pages from '@/pages';
 import Login from '@/views/login';
-import Maps from '@/views/map';
-import Charts from '@/views/chart';
-import Lists from '@/views/list';
-import Forms from '@/views/form';
+import routerList from './router';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/index',
-    alias: '/', //重定向
+    path: '/',
+    alias: '/index', //重定向
     name: 'Pages',
-    component: Pages
+    component: Pages,
+    children: [...routerList]
   },
   {
     path: '/login',
     name: 'Login',
     component: Login
   },
-  {
-    path: '/maps',
-    name: 'Maps',
-    component: Maps
-  },
-  {
-    path: '/charts',
-    name: 'Charts',
-    component: Charts
-  },
-  {
-    path: '/lists',
-    name: 'Lists',
-    component: Lists
-  },
-  {
-    path: '/forms',
-    name: 'Forms',
-    component: Forms
-  }
 ];
 
 let router = new VueRouter({

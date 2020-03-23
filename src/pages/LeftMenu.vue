@@ -2,25 +2,23 @@
   <div class='left-menu'>
     <el-menu  default-active='1'
               mode='vertical'
-              @open="handleOpen"
-              @close="handleClose"
               class="el-menu-vertical-demo">
       <template v-for="item in menu">
         <el-menu-item v-if='!item.children || !item.children.length'
                       :key='item.key'
                       :index='item.key'
                       @click='open(item)'>
-           <span slot="title">{{item.name}}</span>
+           <span slot="title">{{item.label}}</span>
         </el-menu-item>
         <el-submenu v-if='item.children && item.children.length'
                     :key='item.key'
                     :index='item.key'>
-          <span slot="title">{{item.name}}</span>
+          <span slot="title">{{item.label}}</span>
           <template v-for="children in item.children">
             <el-menu-item :index='children.key'
                           :key='children.key'
                           @click='open(children)'>
-              <span slot="title">{{children.name}}</span>
+              <span slot="title">{{children.label}}</span>
             </el-menu-item>
           </template>
         </el-submenu>
@@ -40,35 +38,41 @@ export default {
     return {
       menu: [
         {
-          name: '首页',
-          path: '/idnex',
+          label: '首页',
+          name: 'Pages',
+          path: '/index',
           key: '1'
         },
         {
-          name: '常用',
+          label: '常用',
+          name: 'normal',
           path: '/normal',
           key: '2',
           children: [
             {
-              name: '列表',
-              path: '/list',
+              label: '列表',
+              name: 'Lists',
+              path: '/lists',
               key: '2-1',
             },
             {
-              name: '表单',
-              path: '/form',
+              label: '表单',
+              name: 'Forms',
+              path: '/forms',
               key: '2-2',
             },
           ]
         },
         {
-          name: '图表',
-          path: '/chart',
+          label: '图表',
+          name: 'Charts',
+          path: '/charts',
           key: '5',
         },
         {
-          name: '地图',
-          path: '/map',
+          label: '地图',
+          name: 'Maps',
+          path: '/maps',
           key: '6',
         },
       ]
@@ -76,22 +80,14 @@ export default {
   },
   methods: {
     open(item) {
-      console.log(item);
-      this.$router.push(item);
-    },
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
+      if(this.$route.name !== item.name) {
+        this.$router.push(item);
+      }
     }
   }
 };
 </script>
 <style lang='less' scoped>
 .left-menu {
-  width: 200px;
-  height: 100%;
-  border-right: 1px solid #999;
 }
 </style>

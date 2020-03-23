@@ -2,8 +2,13 @@
   <div class='pages'>
     <top-bar />
     <div class='content'>
-      <left-menu/>
-      <router-view />
+      <div class="left">
+        <left-menu/>
+      </div>
+      <div class='right'>
+        <router-view />
+      </div>
+      <div>1213123</div>
     </div>
   </div>
 </template>
@@ -39,7 +44,18 @@ export default {
   height: 100%;
   width: 100%;
   .content {
-    height: calc( 100% - 61px);
+    height: calc(100% - 61px);
+    .left {
+      width: 200px;
+      height: 100%;
+      border-right: 1px solid #999;
+      float: left;
+    };
+    .right {
+      height: 100%;
+      width: calc(100% - 201px);
+      float: right;
+    }
   }
 }
 </style>
