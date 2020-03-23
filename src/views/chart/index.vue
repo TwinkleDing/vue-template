@@ -12,6 +12,7 @@
     <div class="item">
     <e-charts :setOption='setOptionCar' height='450px' width='600px' />
     </div>
+    <go-top :message='message' />
   </div>
 </template>
 
@@ -24,6 +25,7 @@ export default {
   },
   data () {
     return {
+      message: '上去',
       setOptionLine: {
         id: 'lineChart',
         title: { text: '衣服销量' },
