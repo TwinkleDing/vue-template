@@ -1,6 +1,6 @@
 <template>
   <div class='left-menu'>
-    <el-menu  default-active='1'
+    <el-menu  :default-active='metaKey'
               mode='vertical'
               class="el-menu-vertical-demo">
       <template v-for="item in menu">
@@ -41,25 +41,25 @@ export default {
           label: '首页',
           name: 'Pages',
           path: '/index',
-          key: '1'
+          key: 'Pages'
         },
         {
           label: '常用',
           name: 'normal',
           path: '/normal',
-          key: '2',
+          key: 'normal',
           children: [
             {
               label: '列表',
               name: 'Lists',
               path: '/lists',
-              key: '2-1',
+              key: 'Lists',
             },
             {
               label: '表单',
               name: 'Forms',
               path: '/forms',
-              key: '2-2',
+              key: 'Forms',
             },
           ]
         },
@@ -67,16 +67,20 @@ export default {
           label: '图表',
           name: 'Charts',
           path: '/charts',
-          key: '5',
+          key: 'Charts',
         },
         {
           label: '地图',
           name: 'Maps',
           path: '/maps',
-          key: '6',
+          key: 'Maps',
         },
-      ]
+      ],
+      metaKey: 'Pages'
     };
+  },
+  created() {
+    this.metaKey = this.$route.meta.key;
   },
   methods: {
     open(item) {

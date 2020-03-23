@@ -6,21 +6,33 @@ export default [
   {
     path: '/maps',
     name: 'Maps',
-    component: Maps
+    component: Maps,
+    meta: {
+      key: 'Maps'
+    }
   },
   {
     path: '/charts',
     name: 'Charts',
-    component: Charts
+    component: Charts,
+    meta: {
+      key: 'Charts'
+    }
   },
   {
     path: '/lists',
     name: 'Lists',
-    component: Lists
+    component: Lists,
+    meta: {
+      key: 'Lists'
+    }
   },
   {
     path: '/forms',
     name: 'Forms',
-    component: Forms
+    component: Forms,
+    meta: {
+      key: 'Forms'
+    }
   }
 ];

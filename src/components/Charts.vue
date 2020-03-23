@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :id="id" :style="{width: width, height: height}"></div>
+    <div :id="setOption.id" :style="{width: width, height: height}"></div>
   </div>
 </template>
 
@@ -9,10 +9,6 @@ import echarts from 'echarts';
 export default {
   name: 'Charts',
   props: {
-    id: {
-      type: String,
-      default: 'myChart'
-    },
     height: {
       type: String,
       default: '300px'
@@ -56,7 +52,7 @@ export default {
   },
   methods: {
     drawLine(){
-      let myChart = echarts.init(document.getElementById(this.id));
+      let myChart = echarts.init(document.getElementById(this.setOption.id));
       myChart.setOption(this.setOption);
     }
   }
