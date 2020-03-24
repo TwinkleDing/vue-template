@@ -2,6 +2,7 @@ import Maps from '@/views/map';
 import Charts from '@/views/chart';
 import Lists from '@/views/list';
 import Forms from '@/views/form';
+import Infos from '@/views/list/info';
 import Pages from '@/views/pages';
 export default [
   {
@@ -42,6 +43,14 @@ export default [
     component: Forms,
     meta: {
       key: 'Forms'
+    }
+  },
+  {
+    path: '/info/:name',
+    name: 'Infos',
+    component: Infos,
+    meta: {
+      key: 'Infos'
     }
   }
 ];

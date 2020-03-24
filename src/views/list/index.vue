@@ -1,11 +1,5 @@
 <template>
   <div class='pages-lists'>
-    <el-tabs v-model="activeName" @tab-click="handleClickTabs">
-      <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
-      <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
-      <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
-      <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
-    </el-tabs>
     <div class="list-1">
       <el-table
         :data="tableData"
@@ -84,12 +78,11 @@ export default {
           address: '上海市普陀区金沙江路 1516 弄'
         }
       ],
-      activeName: 'second'
     };
   },
   methods: {
-    handleClick() {
-
+    handleClick(row) {
+      this.$router.push(`/info/${row.name}`);
     },
     handleSelectionChange() {
 
@@ -99,9 +92,6 @@ export default {
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
-    },
-    handleClickTabs(tab, event) {
-      console.log(tab, event);
     }
   }
 };

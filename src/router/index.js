@@ -10,8 +10,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    alias: '/index', //重定向
-    name: 'Pages',
+    redirect: '/index', //重定向
     component: Pages,
     children: [...routerList]
   },
