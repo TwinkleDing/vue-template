@@ -8,17 +8,17 @@
                       :key='item.key'
                       :index='item.key'
                       @click='open(item)'>
-           <span slot="title">{{item.label}}</span>
+           <span slot="title" :style='colors'>{{item.label}}</span>
         </el-menu-item>
         <el-submenu v-if='item.children && item.children.length'
                     :key='item.key'
                     :index='item.key'>
-          <span slot="title">{{item.label}}</span>
+          <span slot="title" :style='colors'>{{item.label}}</span>
           <template v-for="children in item.children">
             <el-menu-item :index='children.key'
                           :key='children.key'
                           @click='open(children)'>
-              <span slot="title">{{children.label}}</span>
+              <span slot="title" :style='colors'>{{children.label}}</span>
             </el-menu-item>
           </template>
         </el-submenu>
@@ -31,9 +31,6 @@
 import { mapGetters } from 'vuex';
 
 export default {
-  computed: {
-    ...mapGetters(['user'])
-  },
   data() {
     return {
       menu: [
@@ -81,6 +78,14 @@ export default {
   },
   created() {
     this.metaKey = this.$route.meta.key;
+  },
+  computed: {
+    ...mapGetters(['user', 'color']),
+    colors() {
+      return {
+        color: this.color
+      };
+    }
   },
   methods: {
     open(item) {

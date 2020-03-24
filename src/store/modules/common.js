@@ -2,10 +2,8 @@ import { setStore, getStore, removeStore } from '@/util/store';
 
 const common = {
   state: {
-    user:
-      getStore({
-        name: 'user'
-      }) || ''
+    user: getStore({ name: 'user' }) || '',
+    color: getStore({ name: 'color' }) || '#409eff',
   },
   mutations: {
     SET_USER: (state, user) => {
@@ -19,6 +17,13 @@ const common = {
       removeStore({
         name: 'user',
         type: 'local'
+      });
+    },
+    SET_COLOR: (state, color) => {
+      state.color = color;
+      setStore({
+        name: 'color',
+        content: state.color
       });
     }
   },

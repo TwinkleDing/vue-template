@@ -4,6 +4,7 @@
       <img src='@/assets/logo.png' alt='no' />
     </div>
     <div class='logout'>
+      <top-color />
       <div>用户id：{{ user }}</div>
       <el-button type='primary' @click='logout'>退出登录</el-button>
     </div>
@@ -12,8 +13,12 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import TopColor from './components/TopColor';
 
 export default {
+  components: {
+    TopColor
+  },
   computed: {
     ...mapGetters(['user'])
   },
