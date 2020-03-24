@@ -3,6 +3,7 @@ import Charts from '@/views/chart';
 import Lists from '@/views/list';
 import Forms from '@/views/form';
 import Infos from '@/views/list/info';
+import MarkDown from '@/views/markdown';
 import Pages from '@/views/pages';
 export default [
   {
@@ -51,6 +52,14 @@ export default [
     component: Infos,
     meta: {
       key: 'Infos'
+    }
+  },
+  {
+    path: '/markdowns',
+    name: 'MarkDowns',
+    component: MarkDown,
+    meta: {
+      key: 'MarkDowns'
     }
   }
 ];

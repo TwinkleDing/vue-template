@@ -39,21 +39,25 @@ export default {
       } else {
         let params = { ...this.form };
         params.password = md5(params.password);
-        loginByUsername(params)
-          .then(res => {
+        loginByUsername(params).then(res => {
             console.log(res);
-          })
-          .then(() => {
-            this.$store
-              .dispatch('LogIn', this.form.account)
-              .then(() => {
-                // 页面跳转
-                this.$router.push({ path: '/index' });
-              })
-              .catch(e => {
-                console.log(e);
-              });
+        }).then(() => {
+          this.$store.dispatch('LogIn', this.form.account).then(() => {
+            // 页面跳转
+            const loading = this.$loading({
+              lock: true,
+              text: 'Loading',
+              spinner: 'el-icon-loading',
+              background: 'rgba(0, 0, 0, 0.7)'
+            });
+            setTimeout(() => {
+              loading.close();
+              this.$router.push({ path: '/index' });
+            }, 1000);
+          }).catch(e => {
+            console.log(e);
           });
+        });
       }
     },
     regest() {

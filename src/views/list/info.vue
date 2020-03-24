@@ -265,11 +265,11 @@
 
 <script>
 export default {
-  name: 'fourth',
+  name: 'Infos',
   data() {
     return {
       name: '',
-      activeName: 'third',
+      activeName: 'first',
       fullscreenLoading: false,
       value1: 0,
       valuet: null,
