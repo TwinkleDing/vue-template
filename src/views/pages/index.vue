@@ -1,6 +1,6 @@
 <template>
-  <div>
-    1
+  <div class='pages-index'>
+    
   </div>
 </template>
 
@@ -11,5 +11,7 @@ export default {
 </script>
 
 <style lang="less">
-
+.pages-index {
+  min-height: calc(100% - 20px);
+}
 </style>

@@ -4,6 +4,7 @@
       ref="md" @change="change"
       @imgAdd="$imgAdd"
       style="min-height: 600px" />
+      <div v-html="html"></div>
   </div>
 </template>
 
@@ -19,7 +20,7 @@ export default {
   data() {
     return {
       content:'', // 输入的markdown
-      html:'',// 转成的html
+      html:'',// 转成的html,
     };
   },
   methods: {
@@ -50,6 +51,6 @@ export default {
 
 <style lang="less">
 .pages-markdown{
-  height: 100%;
+  height: calc(100% - 20px);
 }
 </style>
