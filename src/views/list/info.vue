@@ -2,18 +2,18 @@
   <div>
     {{name}}
     <el-tabs v-model="activeName" @tab-click="handleClickTabs">
-      <el-tab-pane label="不用点的" name="first">
+      <el-tab-pane label="静态样式" name="first">
         <tab-one />
       </el-tab-pane>
-      <el-tab-pane label="用来点的" name="second">
+      <el-tab-pane label="点击交互" name="second">
         <tab-two />
       </el-tab-pane>
       <el-tab-pane label="用来看的" name="third">
         <tab-three />
       </el-tab-pane>
-      <el-tab-pane label="定时任务补偿" name="fourth">
+      <!-- <el-tab-pane label="定时任务补偿" name="fourth">
         <tab-four />
-      </el-tab-pane>
+      </el-tab-pane> -->
     </el-tabs>
   </div>
 </template>
@@ -22,19 +22,19 @@
 import TabOne from './components/TabOne';
 import TabTwo from './components/TabTwo';
 import TabThree from './components/TabThree';
-import TabFour from './components/TabFour';
+// import TabFour from './components/TabFour';
 export default {
   name: 'Infos',
   components: {
     TabOne,
     TabTwo,
     TabThree,
-    TabFour
+    // TabFour
   },
   data() {
     return {
       name: '',
-      activeName: 'first',
+      activeName: 'third',
     };
   },
   mounted() {

@@ -1,11 +1,29 @@
 <template>
-  <div>
-    <div class="item progress">
-      <el-card class="box-card">
-        <div v-for="o in 4" :key="o" class="text item">
-          {{'列表内容 ' + o }}
-        </div>
-      </el-card>
+  <div class="tab-three">
+    <div class="item">
+      <el-page-header @back="goBack" content="详情页面"></el-page-header>
+    </div>
+    <div class="item">
+      <el-alert
+        title="成功提示的文案"
+        type="success"
+        effect="dark">
+      </el-alert>
+      <el-alert
+        title="消息提示的文案"
+        type="info"
+        effect="dark">
+      </el-alert>
+      <el-alert
+        title="警告提示的文案"
+        type="warning"
+        effect="dark">
+      </el-alert>
+      <el-alert
+        title="错误提示的文案"
+        type="error"
+        effect="dark">
+      </el-alert>
     </div>
     <div class="item">
       <el-row>
@@ -30,6 +48,9 @@
         </el-carousel-item>
       </el-carousel>
     </div>
+    <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto">
+      <li :key='i' v-for="i in count" class="infinite-list-item">{{ i }}</li>
+    </ul>
   </div>
 </template>
 
@@ -38,13 +59,25 @@ export default {
   name: 'tabThree',
   data() {
     return {
+       count: 0,
       currentDate: new Date(),
     };
   },
   methods: {
+    goBack() {
+      console.log('go back');
+    },
+    load () {
+      this.count += 2;
+    }
   },
 };
 </script>
 
 <style lang="less">
+.tab-three{
+  ul{
+    height: 300px;
+  }
+}
 </style>

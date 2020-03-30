@@ -1,39 +1,45 @@
 <template>
-  <div>
+  <div class="tab-two">
     <div class="item">
-      <el-button
+      <el-button class="btn"
         type="primary"
         @click="openFullScreen1"
         v-loading.fullscreen.lock="fullscreenLoading">
         指令方式
       </el-button>
-      <el-button
+      <el-button class="btn"
         type="primary"
         @click="openFullScreen2">
         服务方式
       </el-button>
     </div>
     <div class="item">
-      <el-button :plain="true" @click="openVn">VNode</el-button>
+      <el-button class="btn" :plain="true" @click="openVn">VNode</el-button>
     </div>
     <div class="item">
-      <el-button @click="openm">点击打开 Message Box</el-button>
-      <el-button @click="openmc">点击打开 Message Box</el-button>
+      <el-button class="btn" @click="openm">点击打开 Message Box</el-button>
+      <el-button class="btn" @click="openmc">点击打开 Message Box</el-button>
     </div>
     <div class="item">
-      <el-button plain @click="open1">
+      <el-button class="btn" plain @click="open1">
         可自动关闭
       </el-button>
-      <el-button plain @click="open2">
+      <el-button class="btn" plain @click="open2">
         不会自动关闭
-        </el-button>
+      </el-button>
+      <el-button class="btn" plain @click="open3">
+        左下角
+      </el-button>
+      <el-button class="btn" plain @click="open4">
+        左上角
+      </el-button>
     </div>
     <div class="item">
       <el-tooltip content="Top center" placement="top">
-        <el-button>Dark</el-button>
+        <el-button class="btn">Dark</el-button>
       </el-tooltip>
       <el-tooltip content="Bottom center" placement="bottom" effect="light">
-        <el-button>Light</el-button>
+        <el-button class="btn">Light</el-button>
       </el-tooltip>
     </div>
     <div class="item">
@@ -43,7 +49,7 @@
         width="200"
         trigger="hover"
         content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
-        <el-button slot="reference">hover 激活</el-button>
+        <el-button class="btn" slot="reference">hover 激活</el-button>
       </el-popover>
       <el-popover
         placement="bottom"
@@ -51,7 +57,7 @@
         width="200"
         trigger="click"
         content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
-        <el-button slot="reference">click 激活</el-button>
+        <el-button class="btn" slot="reference">click 激活</el-button>
       </el-popover>
       <el-popover
         ref="popover"
@@ -61,7 +67,7 @@
         trigger="focus"
         content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
       </el-popover>
-      <el-button v-popover:popover>focus 激活</el-button>
+      <el-button class="btn" v-popover:popover>focus 激活</el-button>
       <el-popover
         placement="bottom"
         title="标题"
@@ -69,12 +75,12 @@
         trigger="manual"
         content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。"
         v-model="visible">
-        <el-button slot="reference" @click="visible = !visible">手动激活</el-button>
+        <el-button class="btn" slot="reference" @click="visible = !visible">手动激活</el-button>
       </el-popover>
     </div>
     <div class="item">
       <el-popconfirm title="这是一段内容确定删除吗？">
-        <el-button slot="reference">删除</el-button>
+        <el-button class="btn" slot="reference">删除</el-button>
       </el-popconfirm>
       <el-popconfirm
         confirmButtonText='好的'
@@ -82,7 +88,7 @@
         icon="el-icon-info"
         iconColor="red"
         title="这是一段内容确定删除吗？">
-        <el-button slot="reference">删除</el-button>
+        <el-button class="btn" slot="reference">删除</el-button>
       </el-popconfirm>
     </div>
     <div class="item">
@@ -92,7 +98,7 @@
         <el-radio label="ttb">从上往下开</el-radio>
         <el-radio label="btt">从下往上开</el-radio>
       </el-radio-group>
-      <el-button @click="drawer = true" type="primary" style="margin-left: 16px;">
+      <el-button class="btn" @click="drawer = true" type="primary" style="margin-left: 16px;">
         点我打开
       </el-button>
 
@@ -103,6 +109,30 @@
         :before-close="handleClose">
         <span>我来啦!</span>
       </el-drawer>
+    </div>
+    <div class="item">
+      <el-dropdown>
+        <el-button class='btn' type="primary">
+          更多菜单<i class="el-icon-arrow-down el-icon--right"></i>
+        </el-button>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>黄金糕</el-dropdown-item>
+          <el-dropdown-item>狮子头</el-dropdown-item>
+          <el-dropdown-item>螺蛳粉</el-dropdown-item>
+          <el-dropdown-item>双皮奶</el-dropdown-item>
+          <el-dropdown-item>蚵仔煎</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+      <el-dropdown class='btn' split-button type="primary" @click="handleClick">
+        更多菜单
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>黄金糕</el-dropdown-item>
+          <el-dropdown-item>狮子头</el-dropdown-item>
+          <el-dropdown-item>螺蛳粉</el-dropdown-item>
+          <el-dropdown-item>双皮奶</el-dropdown-item>
+          <el-dropdown-item>蚵仔煎</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
   </div>
 </template>
@@ -195,6 +225,20 @@ export default {
         duration: 0
       });
     },
+    open3() {
+      this.$notify({
+        title: '自定义位置',
+        message: '左下角弹出的消息',
+        position: 'bottom-left'
+      });
+    },
+    open4() {
+      this.$notify({
+        title: '自定义位置',
+        message: '左上角弹出的消息',
+        position: 'top-left'
+      });
+    },
     handleClose(done) {
       this.$confirm('确认关闭？')
         .then(_ => {
@@ -204,11 +248,23 @@ export default {
         .catch(_ => {
           console.log(_);
         });
+    },
+    handleClick() {
+      alert('button click');
     }
   },
 };
 </script>
 
-<style lang="less">
-  
+<style lang="less" scoped>
+  .tab-two{
+    padding: 100px;
+    .item{
+      text-align: left;
+      margin-bottom: 20px;
+      .btn{
+        margin-right: 20px;
+      }
+    }
+  }
 </style>
