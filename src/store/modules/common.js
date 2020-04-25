@@ -48,7 +48,7 @@ const common = {
         resolve();
       });
     },
-    route({ commit }, route) {
+    route({ commit }) {
       return new Promise((resolve, reject)=> {
         const routes = [
           {

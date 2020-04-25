@@ -32,7 +32,6 @@ var routes = [
   }
 ];
 
-Vue.use(VueRouter);
 var getRoute;
 var _import;
 const env = process.env;
@@ -41,12 +40,18 @@ if (env.NODE_ENV === 'development') {
 } else if (env.NODE_ENV === 'production') {
   _import = file => import('@/views/' + file + '.vue'); //生产
 }
-let router = new VueRouter({
+var router = new VueRouter({
   scrollBehavior: () => ({ x: 0, y: 0 }),
 });
 router.beforeEach((to, from, next) => {
   if(!getRoute) {
-    routes[0].children.push(...filterAsyncRouter(store.getters.route));
+    if(store.getters.route.length === 0) {
+      this.$store.dispatch('route').then(res=> {
+        routes[0].children.push(...filterAsyncRouter(res));
+      });
+    }else {
+      routes[0].children.push(...filterAsyncRouter(store.getters.route));
+    }
     router.addRoutes(routes);
     getRoute = true;
     if (store.getters.user) {
@@ -65,7 +70,7 @@ router.beforeEach((to, from, next) => {
 function filterAsyncRouter(asyncRouterMap) { //遍历后台传来的路由字符串，转换为组件对象
   const accessedRouters = asyncRouterMap.filter(route => {
     if (route.component) {
-    route.component = _import(route.component);
+      route.component = _import(route.component);
     }
     if (route.children && route.children.length) {
       route.children = filterAsyncRouter(route.children);
@@ -74,5 +79,7 @@ function filterAsyncRouter(asyncRouterMap) { //遍历后台传来的路由字符
   });
   return accessedRouters;
 }
+
+Vue.use(VueRouter);
 
 export default router;

@@ -29,6 +29,9 @@ export default {
   computed: {
     ...mapGetters(['user'])
   },
+  mounted() {
+    this.hello();
+  },
   methods: {
     logout() {
       this.$confirm('即将退出登录状态, 是否继续?', '提示', {
