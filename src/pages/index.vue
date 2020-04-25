@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.dispatch('LogOut').then(() => {
+      this.$store.dispatch('logOut').then(() => {
         this.$router.push({ path: '/login' });
       });
     }

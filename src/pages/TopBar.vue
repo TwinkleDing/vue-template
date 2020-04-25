@@ -36,7 +36,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$store.dispatch('LogOut').then(() => {
+        this.$store.dispatch('logOut').then(() => {
           this.$router.push({ path: '/login' });
         }).then(() =>{
           this.$message({
