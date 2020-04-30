@@ -46,7 +46,7 @@ var router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if(!getRoute) {
     if(store.getters.route.length === 0) {
-      this.$store.dispatch('route').then(res=> {
+      store.dispatch('route').then(res=> {
         routes[0].children.push(...filterAsyncRouter(res));
       });
     }else {
