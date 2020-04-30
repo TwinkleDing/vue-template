@@ -60,6 +60,13 @@ const common = {
       return new Promise((resolve, reject)=> {
         const routes = [
           {
+            label: '首页',
+            name: 'Pages',
+            path: '/index',
+            key: 'Pages',
+            component: 'pages/index',
+          },
+          {
             label: '常用',
             name: 'normal',
             path: '/normal',

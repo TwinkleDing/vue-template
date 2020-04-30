@@ -34,14 +34,7 @@ import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
-      menu: [
-        {
-          label: '首页',
-          name: 'Pages',
-          path: '/index',
-          key: 'Pages'
-        }
-      ],
+      menu: [],
       metaKey: 'Pages'
     };
   },
