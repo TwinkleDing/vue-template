@@ -29,6 +29,9 @@ export default {
   computed: {
     ...mapGetters(['user'])
   },
+  mounted() {
+    this.hello();
+  },
   methods: {
     logout() {
       this.$confirm('即将退出登录状态, 是否继续?', '提示', {
@@ -36,7 +39,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$store.dispatch('LogOut').then(() => {
+        this.$store.dispatch('logOut').then(() => {
           this.$router.push({ path: '/login' });
         }).then(() =>{
           this.$message({

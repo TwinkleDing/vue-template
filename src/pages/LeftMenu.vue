@@ -40,51 +40,16 @@ export default {
           name: 'Pages',
           path: '/index',
           key: 'Pages'
-        },
-        {
-          label: '常用',
-          name: 'normal',
-          path: '/normal',
-          key: 'normal',
-          children: [
-            {
-              label: '列表',
-              name: 'Lists',
-              path: '/lists',
-              key: 'Lists',
-            },
-            {
-              label: '表单',
-              name: 'Forms',
-              path: '/forms',
-              key: 'Forms',
-            },
-          ]
-        },
-        {
-          label: '文本编辑器',
-          name: 'MarkDowns',
-          path: '/markdowns',
-          key: 'MarkDowns',
-        },
-        {
-          label: '图表',
-          name: 'Charts',
-          path: '/charts',
-          key: 'Charts',
-        },
-        {
-          label: '地图',
-          name: 'Maps',
-          path: '/maps',
-          key: 'Maps',
-        },
+        }
       ],
       metaKey: 'Pages'
     };
   },
   created() {
     this.metaKey = this.$route.meta.key;
+    this.$store.dispatch('route').then(res=> {
+      this.menu = [...this.menu, ...res];
+    });
   },
   computed: {
     ...mapGetters(['user', 'color']),

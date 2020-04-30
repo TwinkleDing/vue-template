@@ -42,7 +42,7 @@ export default {
         loginByUsername(params).then(res => {
             console.log(res);
         }).then(() => {
-          this.$store.dispatch('LogIn', this.form.account).then(() => {
+          this.$store.dispatch('logIn', this.form.account).then(() => {
             // 页面跳转
             const loading = this.$loading({
               lock: true,

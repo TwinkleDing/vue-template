@@ -2,36 +2,84 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '@/store/index';
 import Pages from '@/pages';
+import NotFound from '@/pages/notFound';
 import Login from '@/views/login';
 import routerList from './router';
 
-Vue.use(VueRouter);
-
-const routes = [
+var routes = [
+  {
+    path: '/index',
+    name: 'Pages',
+    component: Pages,
+    children: [
+      ...routerList
+    ]
+  },
   {
     path: '/',
     redirect: '/index', //重定向
-    component: Pages,
-    children: [...routerList]
   },
   {
     path: '/login',
     name: 'Login',
     component: Login
   },
+  {
+    path: '*',
+    redirect: '/404', //重定向
+    name: '404',
+    component: NotFound
+  }
 ];
 
-let router = new VueRouter({
-  routes
+var getRoute;
+var _import;
+const env = process.env;
+if (env.NODE_ENV === 'development') {
+  _import = file => require('@/views/' + file + '.vue').default; //开发
+} else if (env.NODE_ENV === 'production') {
+  _import = file => import('@/views/' + file + '.vue'); //生产
+}
+var router = new VueRouter({
+  scrollBehavior: () => ({ x: 0, y: 0 }),
 });
 router.beforeEach((to, from, next) => {
-  if (store.getters.user) {
+  if(!getRoute) {
+    if(store.getters.route.length === 0) {
+      this.$store.dispatch('route').then(res=> {
+        routes[0].children.push(...filterAsyncRouter(res));
+      });
+    }else {
+      routes[0].children.push(...filterAsyncRouter(store.getters.route));
+    }
+    router.addRoutes(routes);
+    getRoute = true;
+    if (store.getters.user) {
+      next();
+    } else if (to.path === '/login') {
+      next();
+    } else {
+      next({ path: '/login' });
+    }
+    next({ ...to, replace: true });
+  }else {
     next();
-  } else if (to.path === '/login') {
-    next();
-  } else {
-    next({ path: '/login' });
   }
 });
+
+function filterAsyncRouter(asyncRouterMap) { //遍历后台传来的路由字符串，转换为组件对象
+  const accessedRouters = asyncRouterMap.filter(route => {
+    if (route.component) {
+      route.component = _import(route.component);
+    }
+    if (route.children && route.children.length) {
+      route.children = filterAsyncRouter(route.children);
+    }
+    return true;
+  });
+  return accessedRouters;
+}
+
+Vue.use(VueRouter);
 
 export default router;

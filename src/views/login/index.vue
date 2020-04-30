@@ -22,7 +22,7 @@ export default {
     };
   },
   mounted() {
-    this.$store.dispatch('LogOut');
+    this.$store.dispatch('logOut');
   },
   methods: {
     regestOpen() {
