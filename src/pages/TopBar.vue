@@ -4,7 +4,6 @@
       <img src='@/assets/logo.png' alt='no' />
     </div>
     <div class='logout'>
-      {{mixxins}}
       <top-color />
       <div>用户id：{{ user }}</div>
       <el-button type='primary' @click='logout'>退出登录</el-button>
