@@ -24,6 +24,8 @@
     "vuex": "^3.1.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
     "@vue/cli-plugin-babel": "~4.2.0",
     "@vue/cli-plugin-eslint": "~4.2.0",
     "@vue/cli-plugin-router": "~4.2.0",
@@ -34,6 +36,7 @@
     "@vue/test-utils": "1.0.0-beta.31",
     "axios": "^0.19.2",
     "babel-eslint": "^10.0.3",
+    "babel-loader": "^8.1.0",
     "eslint": "^6.7.2",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-prettier": "^3.1.1",
@@ -41,6 +44,7 @@
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
     "prettier": "^1.19.1",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.43.0"
   }
 }

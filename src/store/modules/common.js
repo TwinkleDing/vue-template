@@ -97,6 +97,9 @@ const common = {
         ];
         commit('SET_ROUTE', routes);
         resolve(routes);
+        if(routes.length === 0) {
+          reject(new Error());
+        }
       });
     }
   }
