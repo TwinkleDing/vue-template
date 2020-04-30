@@ -67,13 +67,13 @@ return;
   if (debug) {
     return obj;
   }
-  if (obj.dataType == 'string') {
+  if (obj.dataType === 'string') {
     content = obj.content;
-  } else if (obj.dataType == 'number') {
+  } else if (obj.dataType === 'number') {
     content = Number(obj.content);
-  } else if (obj.dataType == 'boolean') {
+  } else if (obj.dataType === 'boolean') {
     content = eval(obj.content);
-  } else if (obj.dataType == 'object') {
+  } else if (obj.dataType === 'object') {
     content = obj.content;
   }
   return content;
