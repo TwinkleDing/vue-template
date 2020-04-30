@@ -52,9 +52,9 @@ export default {
     });
   },
   computed: {
-    ...mapGetters(['user', 'color']),
+    ...mapGetters(['user', 'colorName']),
     colors() {
-      return this.color;
+      return this.colorName;
     }
   },
   methods: {

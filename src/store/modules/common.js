@@ -5,6 +5,7 @@ const common = {
     user: getStore({ name: 'user' }) || '',
     color: getStore({ name: 'color' }) || '#409eff',
     route: getStore({ name: 'route' }) || [],
+    colorName: getStore({ name: 'colorName' }) || '#409EFF',
   },
   mutations: {
     SET_USER: (state, user) => {
@@ -33,7 +34,14 @@ const common = {
         name: 'route',
         content: state.route
       });
-    }
+    },
+    SET_COLOR_NAME: (state, colorName) => {
+      state.colorName = colorName;
+      setStore({
+          name: 'colorName',
+          content: state.colorName,
+      });
+    },
   },
   actions: {
     logIn({ commit }, user) {
