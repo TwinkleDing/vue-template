@@ -3,12 +3,14 @@ import VueRouter from 'vue-router';
 import store from '@/store/index';
 import Pages from '@/pages';
 import NotFound from '@/pages/notFound';
-import Login from '@/views/login';
+import Login from '@/pages/login';
+import Empty from '@/pages/empty';
 import routerList from './router';
 
 var routes = [
   {
-    path: '/index',
+    path: '',
+    redirect: '/index', //重定向
     name: 'Pages',
     component: Pages,
     children: [
@@ -74,6 +76,8 @@ function filterAsyncRouter(asyncRouterMap) { //遍历后台传来的路由字符
   const accessedRouters = asyncRouterMap.filter(route => {
     if (route.component) {
       route.component = _import(route.component);
+    }else {
+      route.component = Empty;
     }
     if (route.children && route.children.length) {
       route.children = filterAsyncRouter(route.children);

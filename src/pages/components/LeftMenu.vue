@@ -35,7 +35,7 @@ export default {
   data() {
     return {
       menu: [],
-      metaKey: 'Pages'
+      metaKey: 'Homes'
     };
   },
   created() {

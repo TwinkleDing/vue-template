@@ -16,8 +16,8 @@
 <script>
 // @ is an alias to /src
 import { mapGetters } from 'vuex';
-import TopBar from './TopBar';
-import LeftMenu from './LeftMenu';
+import TopBar from './components/TopBar';
+import LeftMenu from './components/LeftMenu';
 
 export default {
   name: 'Pages',

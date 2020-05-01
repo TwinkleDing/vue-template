@@ -61,10 +61,10 @@ const common = {
         const routes = [
           {
             label: '首页',
-            name: 'Pages',
+            name: 'Homes',
             path: '/index',
-            key: 'Pages',
-            component: 'pages/index',
+            key: 'Homes',
+            component: 'home/index',
           },
           {
             label: '常用',
