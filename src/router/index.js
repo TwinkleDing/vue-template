@@ -25,10 +25,13 @@ var routes = [
     component: Login
   },
   {
-    path: '*',
-    redirect: '/404', //重定向
+    path: '/404', //重定向
     name: '404',
     component: NotFound
+  },
+  {
+    path: '*',
+    redirect: '/404', //重定向
   }
 ];
 
