@@ -16,8 +16,8 @@
 <script>
 // @ is an alias to /src
 import { mapGetters } from 'vuex';
-import TopBar from './components/TopBar';
-import LeftMenu from './components/LeftMenu';
+import TopBar from './TopBar';
+import LeftMenu from './LeftMenu';
 
 export default {
   name: 'Pages',
@@ -38,7 +38,7 @@ export default {
 };
 </script>
 <style lang="less">
-@url: '../assets/img/beach.jpg';
+@url: '../../assets/img/beach.jpg';
 .pages {
   background-image: url(@url);
   height: 100%;

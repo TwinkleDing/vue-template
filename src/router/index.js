@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '@/store/index';
-import Pages from '@/pages';
+import Pages from '@/pages/index';
 import NotFound from '@/pages/notFound';
 import Login from '@/pages/login';
-import Empty from '@/pages/empty';
+import Empty from '@/pages/index/empty.vue';
 import routerList from './router';
 
 var routes = [

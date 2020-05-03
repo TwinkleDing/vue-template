@@ -78,6 +78,15 @@ const common = {
                 path: '/lists',
                 key: 'Lists',
                 component: 'list/index',
+                children: [
+                  {
+                    label: '列表',
+                    name: 'Listss',
+                    path: '/listss',
+                    key: 'Listss',
+                    component: 'list/index',
+                  },
+                ]
               },
               {
                 label: '表单',
