@@ -65,7 +65,7 @@ export default {
   },
   methods: {
     goBack() {
-      console.log('go back');
+      this.$router.go(-1);
     },
     load () {
       this.count += 2;

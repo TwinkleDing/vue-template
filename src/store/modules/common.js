@@ -2,17 +2,31 @@ import { setStore, getStore, removeStore } from '@/util/store';
 
 const common = {
   state: {
+    userInfo: getStore({ name: 'userInfo' }) || '',
     user: getStore({ name: 'user' }) || '',
     color: getStore({ name: 'color' }) || '#409eff',
     route: getStore({ name: 'route' }) || [],
     colorName: getStore({ name: 'colorName' }) || '#409EFF',
   },
   mutations: {
+    SET_USER_INFO: (state, userInfo) => {
+      state.userInfo = userInfo;
+      setStore({
+        name: 'userInfo',
+        content: state.userInfo
+      });
+    },
     SET_USER: (state, user) => {
       state.user = user;
       setStore({
         name: 'user',
         content: state.user
+      });
+    },
+    REMOVE_USER_INFO: () => {
+      removeStore({
+        name: 'userInfo',
+        type: 'local'
       });
     },
     REMOVE_USER: () => {
@@ -44,6 +58,12 @@ const common = {
     },
   },
   actions: {
+    userInfo({ commit }, userInfo) {
+      return new Promise(resolve => {
+        commit('SET_USER_INFO', userInfo);
+        resolve();
+      });
+    },
     logIn({ commit }, user) {
       return new Promise(resolve => {
         commit('SET_USER', user);
@@ -53,6 +73,7 @@ const common = {
     logOut({ commit }) {
       return new Promise(resolve => {
         commit('REMOVE_USER');
+        commit('REMOVE_USER_INFO');
         resolve();
       });
     },

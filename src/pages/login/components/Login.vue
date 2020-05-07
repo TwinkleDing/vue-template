@@ -41,6 +41,7 @@ export default {
         params.password = md5(params.password);
         loginByUsername(params).then(res => {
             console.log(res);
+            this.$store.dispatch('userInfo', res.data.data);
         }).then(() => {
           this.$store.dispatch('logIn', this.form.account).then(() => {
             // 页面跳转
