@@ -52,16 +52,16 @@ export default {
       // 创建相机
       let w = 1200;
       let h = 800;
-      let k = w / h;
-      let s = 200; // 三位场景显示范围控制系数，系数越大，显示的范围越大
+      // let k = w / h;
+      // let s = 200; // 三位场景显示范围控制系数，系数越大，显示的范围越大
       // // 正投影相机
-      this.camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 0.001, 1000);
+      // this.camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 0.001, 1000);
 
       // 透视相机
-      // this.camera = new THREE.PerspectiveCamera(60, w / h, 0.25, 1000 );
+      this.camera = new THREE.PerspectiveCamera(60, w / h, 0.25, 1000 );
       //
-      this.camera.position.set(10, 10, 10);
-      this.camera.lookAt( new THREE.Vector3( 2, 2, 2 ) );
+      this.camera.position.set(100, 100, 100);
+      this.camera.lookAt( new THREE.Vector3( 30, 10, 20 ) );
 
       // 创建光源
       let ambient = new THREE.HemisphereLight(0xffffff, 0x444444);
@@ -98,9 +98,76 @@ export default {
       // stats
       this.stats = new Stats();
       document.getElementById('model').appendChild(this.stats.dom);
-
+      this.clock = new THREE.Clock();
+      this.animation();
       this.render();
       this.controlsEvent();
+      this.simianti();
+      this.ding();
+    },
+    ding() {
+      let material = new THREE.MeshBasicMaterial({
+        color: 0x4a90e2,
+        side: THREE.DoubleSide, //两面可见
+      });
+      let geometryH = new THREE.BoxGeometry(100, 10, 10);
+      let geometryS = new THREE.BoxGeometry(10, 10, 100);
+      let geometryG = new THREE.BoxGeometry(10, 10, 30);
+
+      let meshH = new THREE.Mesh(geometryH, material);
+      let meshS = new THREE.Mesh(geometryS, material);
+      let meshG = new THREE.Mesh(geometryG, material);
+
+      meshS.position.set(0, 0, 50);
+      meshG.position.set(-15.5, 0, 87);
+      meshG.rotateY(45);
+
+      let group = new THREE.Group();
+      let axisHelper = new THREE.AxesHelper(1000);
+      group.add(axisHelper);
+      group.add(meshH, meshS, meshG);
+      group.position.set(20, 20, -20);
+
+      this.scene.add(group);
+      let ground = group.clone();
+      ground.rotateX(90);
+      this.scene.add(ground);
+
+      this.scene.updateMatrixWorld(true);
+
+      var worldPosition = new THREE.Vector3();
+      meshS.getWorldPosition(worldPosition);
+      console.log('世界坐标',worldPosition);
+    },
+    simianti() {
+      let geometry = new THREE.BufferGeometry(); //创建一个Buffer类型几何体对象
+      //类型数组创建顶点数据
+      let vertices = new Float32Array([
+        200, 0, -200,
+        200, 100, -200,
+        250, 0, -200,
+        200, 0, -300,
+      ]);
+      let attribue = new THREE.BufferAttribute(vertices, 3); //3个为一组，表示一个顶点的xyz坐标
+      geometry.attributes.position = attribue;
+      let material = new THREE.PointsMaterial({
+        color: 0x4a90e2,
+        side: THREE.DoubleSide, //两面可见
+        size: 1.0 //点对象像素尺寸
+      }); //材质对象
+      let indexes = new Uint16Array([
+        // 0对应第1个顶点位置数据、第1个顶点法向量数据
+        // 1对应第2个顶点位置数据、第2个顶点法向量数据
+        // 索引值3个为一组，表示一个三角形的3个顶点
+        0, 1, 2,
+        0, 2, 3,
+        0, 1, 3,
+        1, 2, 3
+      ]);
+      // 索引数据赋值给几何体的index属性
+      geometry.index = new THREE.BufferAttribute(indexes, 1); //1个为一组
+      let mesh = new THREE.Mesh(geometry, material); //网格模型对象Mesh
+      this.scene.add(mesh); // 网格模型添加到场景中
     },
     onWindowResize() {
       this.camera.aspect = window.innerWidth / window.innerHeight;
