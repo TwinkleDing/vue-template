@@ -1,17 +1,12 @@
 <template>
   <div class='home-index'>
-    <three />
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import Three from './components/three1';
 export default {
   name: 'Pages',
-  components: {
-    Three
-  },
   data() {
     return {
     };

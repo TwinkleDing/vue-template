@@ -138,6 +138,13 @@ const common = {
             path: '/maps',
             key: 'Maps',
             component: 'map/index',
+          },
+          {
+            label: '模型',
+            name: 'Model',
+            path: '/models',
+            key: 'Models',
+            component: 'model/index',
           }
         ];
         commit('SET_ROUTE', routes);
