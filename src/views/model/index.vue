@@ -104,6 +104,48 @@ export default {
       this.controlsEvent();
       this.simianti();
       this.ding();
+      this.newBox();
+    },
+    newBox() {
+      let geometry = new THREE.BufferGeometry(); //创建一个Buffer类型几何体对象
+      //类型数组创建顶点数据
+      let vertices = new Float32Array([
+        80, 0, 50,
+        80, 0, -50,
+        -80, 0, -50,
+        -80, 0, 50,
+
+        80, 60, 50,
+        80, 60, -50,
+        -80, 60, -50,
+        -80, 60, 50,
+      ]);
+      let attribue = new THREE.BufferAttribute(vertices, 3); //3个为一组，表示一个顶点的xyz坐标
+      geometry.attributes.position = attribue;
+      let material = new THREE.PointsMaterial({
+        color: 0x4a90e2,
+        side: THREE.DoubleSide, //两面可见
+        size: 1.0 //点对象像素尺寸
+      }); //材质对象
+      let indexes = new Uint16Array([
+        // 0对应第1个顶点位置数据、第1个顶点法向量数据
+        // 1对应第2个顶点位置数据、第2个顶点法向量数据
+        // 索引值3个为一组，表示一个三角形的3个顶点
+        0, 1, 2,
+        0, 2, 3,
+        0, 4, 5,
+        0, 5, 1,
+        0, 4, 7,
+        0, 7, 3,
+        2, 6, 7,
+        2, 7, 3,
+        2, 6, 5,
+        2, 5, 1,
+      ]);
+      // 索引数据赋值给几何体的index属性
+      geometry.index = new THREE.BufferAttribute(indexes, 1); //1个为一组
+      let mesh = new THREE.Mesh(geometry, material); //网格模型对象Mesh
+      this.scene.add(mesh); // 网格模型添加到场景中
     },
     ding() {
       let material = new THREE.MeshBasicMaterial({
@@ -123,14 +165,14 @@ export default {
       meshG.rotateY(45);
 
       let group = new THREE.Group();
-      let axisHelper = new THREE.AxesHelper(1000);
-      group.add(axisHelper);
+      // let axisHelper = new THREE.AxesHelper(1000);
+      // group.add(axisHelper);
       group.add(meshH, meshS, meshG);
-      group.position.set(20, 20, -20);
+      group.position.set(200, 200, -200);
 
       this.scene.add(group);
       let ground = group.clone();
-      ground.rotateX(90);
+      ground.rotateX(Math.PI / 2);
       this.scene.add(ground);
 
       this.scene.updateMatrixWorld(true);
