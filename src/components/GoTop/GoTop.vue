@@ -1,5 +1,5 @@
 <template>
-  <div id='app1' class='go-top' @click="goTop">
+  <div v-if="show" class='go-top' @click="goTop">
     {{message}}
   </div>
 </template>
@@ -13,20 +13,32 @@ export default {
       default: ''
     }
   },
+  data() {
+    return {
+      show: false,
+      dom: {}
+    };
+  },
   mounted() {
+    this.dom = document.getElementsByClassName('right')[0];
     window.addEventListener('scroll', this.showbtn, true);
   },
   methods: {
     showbtn(){
       let that = this;
-      let scrollTop = document.getElementsByClassName('right')[0].scrollTop;
+      let scrollTop = that.dom.scrollTop;
       that.scrollTop = scrollTop;
+      if(scrollTop > 100) {
+        this.show = true;
+      }else {
+        this.show = false;
+      }
     },
     goTop() {
       let timer = setInterval( ()=> {
-        let osTop = document.getElementsByClassName('right')[0].scrollTop;
+        let osTop = this.dom.scrollTop;
         let ispeed = Math.floor(-osTop / 5);
-        document.getElementsByClassName('right')[0].scrollTop = osTop + ispeed;
+        this.dom.scrollTop = osTop + ispeed;
         this.isTop = true;
         if(osTop === 0){
           clearInterval(timer);
