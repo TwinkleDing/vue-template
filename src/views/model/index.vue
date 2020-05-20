@@ -81,12 +81,12 @@ export default {
       // this.mesh.rotation.x = -Math.PI / 2;
       // this.scene.add(this.mesh);
 
-      // 网格
-      this.grid = new THREE.GridHelper(200, 40, 0xff0000, 0x000000);
-      this.grid.name = 'GridHelper';
-      this.grid.material.opacity = 0.2;
-      this.grid.material.transparent = true;
-      this.scene.add(this.grid);
+      // // 网格
+      // this.grid = new THREE.GridHelper(200, 40, 0xff0000, 0x000000);
+      // this.grid.name = 'GridHelper';
+      // this.grid.material.opacity = 0.2;
+      // this.grid.material.transparent = true;
+      // this.scene.add(this.grid);
 
       // 创建渲染器对象
       this.renderer = new THREE.WebGLRenderer({antialias: true});
@@ -126,15 +126,14 @@ export default {
       let attribue = new THREE.BufferAttribute(vertices, 3); //3个为一组，表示一个顶点的xyz坐标
       //类型数组创建顶点颜色color数据
       let colors = new Float32Array([
-        1, 0, 0, //顶点1颜色
-        0, 1, 0, //顶点2颜色
-        0, 0, 1, //顶点3颜色
-        0, 0, 1, //顶点3颜色
-
-        1, 1, 0, //顶点4颜色
-        0, 1, 1, //顶点5颜色
-        1, 0, 1, //顶点6颜色
-        1, 0, 1, //顶点6颜色
+        0, 0, 0,
+        0, 0, 1,
+        0, 1, 0,
+        0, 1, 1,
+        1, 0, 0,
+        1, 0, 1,
+        1, 1, 0,
+        1, 1, 1
       ]);
       geometry.attributes.color = new THREE.BufferAttribute(colors, 3);
       geometry.attributes.position = attribue;
@@ -266,7 +265,12 @@ export default {
         event.preventDefault();
         mouse.x = event.clientX / that.renderer.domElement.clientWidth * 2 - 1;
         mouse.y = -(event.clientY / that.renderer.domElement.clientHeight) * 2 + 1;
-
+        console.log(event.clientX);
+        console.log(event.clientY);
+        console.log(that.renderer.domElement.clientWidth);
+        console.log(that.renderer.domElement.clientHeight);
+        console.log(mouse.x);
+        console.log(mouse.y);
         let raycaster = new THREE.Raycaster();
         raycaster.setFromCamera(mouse, that.camera);
         //总结一下，这里必须装网格，mesh，装入组是没有效果的
@@ -276,8 +280,16 @@ export default {
 
         console.log(intersects);
         if(intersects.length > 0) {
-          cube.position.y = 50;
-          cube.material = new THREE.MeshPhongMaterial( { color: 0xff0000});//移到物体上时颜色变成橘色
+          if(intersects[0].object.name === 'box') {
+            cube.material = new THREE.MeshPhongMaterial( { color: 0xff0000});//移到物体上时颜色变成橘色
+          }else {
+            cube.material = new THREE.MeshPhongMaterial( { color: 0xffff00});//移到物体上时颜色变成橘色
+          }
+          // intersects.map(item=> {
+          //   if(item.object.name === 'box') {
+          //     cube.material = new THREE.MeshPhongMaterial( { color: 0xff0000});//移到物体上时颜色变成橘色
+          //   }
+          // });
         }
       }
     }
