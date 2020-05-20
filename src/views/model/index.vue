@@ -58,7 +58,7 @@ export default {
       // this.camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 0.001, 1000);
 
       // 透视相机
-      this.camera = new THREE.PerspectiveCamera(60, w / h, 0.25, 1000 );
+      this.camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 2000 );
       //
       this.camera.position.set(100, 100, 100);
       this.camera.lookAt( new THREE.Vector3( 30, 10, 20 ) );
@@ -71,17 +71,19 @@ export default {
       light.position.set( 0, 20, 10);
       this.scene.add(light);
 
-      // ground
-      let material = new THREE.MeshPhongMaterial({
-        color: 0x999999,
-        depthWrite: false
-      });
-      this.mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry(200, 200), material);
-      this.mesh.rotation.x = -Math.PI / 2;
-      this.scene.add(this.mesh);
+      // // ground
+      // let material = new THREE.MeshPhongMaterial({
+      //   color: 0x999999,
+      //   depthWrite: false
+      // });
+      // this.mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry(200, 200), material);
+      // this.mesh.name = 'ground';
+      // this.mesh.rotation.x = -Math.PI / 2;
+      // this.scene.add(this.mesh);
 
       // 网格
       this.grid = new THREE.GridHelper(200, 40, 0xff0000, 0x000000);
+      this.grid.name = 'GridHelper';
       this.grid.material.opacity = 0.2;
       this.grid.material.transparent = true;
       this.scene.add(this.grid);
@@ -105,6 +107,7 @@ export default {
       this.simianti();
       this.ding();
       this.newBox();
+      this.keyDowns();
     },
     newBox() {
       let geometry = new THREE.BufferGeometry(); //创建一个Buffer类型几何体对象
@@ -121,9 +124,23 @@ export default {
         -80, 60, 50,
       ]);
       let attribue = new THREE.BufferAttribute(vertices, 3); //3个为一组，表示一个顶点的xyz坐标
+      //类型数组创建顶点颜色color数据
+      let colors = new Float32Array([
+        1, 0, 0, //顶点1颜色
+        0, 1, 0, //顶点2颜色
+        0, 0, 1, //顶点3颜色
+        0, 0, 1, //顶点3颜色
+
+        1, 1, 0, //顶点4颜色
+        0, 1, 1, //顶点5颜色
+        1, 0, 1, //顶点6颜色
+        1, 0, 1, //顶点6颜色
+      ]);
+      geometry.attributes.color = new THREE.BufferAttribute(colors, 3);
       geometry.attributes.position = attribue;
       let material = new THREE.PointsMaterial({
-        color: 0x4a90e2,
+        vertexColors: THREE.VertexColors, //以顶点颜色为准
+        // color: 0x4a90e2,
         side: THREE.DoubleSide, //两面可见
         size: 1.0 //点对象像素尺寸
       }); //材质对象
@@ -145,6 +162,7 @@ export default {
       // 索引数据赋值给几何体的index属性
       geometry.index = new THREE.BufferAttribute(indexes, 1); //1个为一组
       let mesh = new THREE.Mesh(geometry, material); //网格模型对象Mesh
+      mesh.name = 'house';
       this.scene.add(mesh); // 网格模型添加到场景中
     },
     ding() {
@@ -169,7 +187,7 @@ export default {
       // group.add(axisHelper);
       group.add(meshH, meshS, meshG);
       group.position.set(200, 200, -200);
-
+      group.name = 'ding';
       this.scene.add(group);
       let ground = group.clone();
       ground.rotateX(Math.PI / 2);
@@ -209,6 +227,7 @@ export default {
       // 索引数据赋值给几何体的index属性
       geometry.index = new THREE.BufferAttribute(indexes, 1); //1个为一组
       let mesh = new THREE.Mesh(geometry, material); //网格模型对象Mesh
+      mesh.name = 'zhui';
       this.scene.add(mesh); // 网格模型添加到场景中
     },
     onWindowResize() {
@@ -234,6 +253,34 @@ export default {
       this.controls = new OrbitControls(this.camera,this.renderer.domElement);//创建控件对象
       this.controls.addEventListener('change', this.render);//监听鼠标、键盘事件
     },
+    keyDowns() {
+      let geometry = new THREE.SphereGeometry( 25, 100, 100 )
+      let cube = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { color: 0x00ff00 } ) );
+      cube.name = 'box';
+      this.scene.add( cube );
+      let that = this;
+      //点击射线
+      let mouse = new THREE.Vector2();
+      document.getElementById('model').addEventListener('mousedown', onDocumentMouseDown, false);
+      function onDocumentMouseDown(event) {
+        event.preventDefault();
+        mouse.x = event.clientX / that.renderer.domElement.clientWidth * 2 - 1;
+        mouse.y = -(event.clientY / that.renderer.domElement.clientHeight) * 2 + 1;
+
+        let raycaster = new THREE.Raycaster();
+        raycaster.setFromCamera(mouse, that.camera);
+        //总结一下，这里必须装网格，mesh，装入组是没有效果的
+        //所以我们将所有的盒子的网格放入对象就可以了
+        // 需要被监听的对象要存储在clickObjects中。
+        let intersects = raycaster.intersectObjects(that.scene.children, true);
+
+        console.log(intersects);
+        if(intersects.length > 0) {
+          cube.position.y = 50;
+          cube.material = new THREE.MeshPhongMaterial( { color: 0xff0000});//移到物体上时颜色变成橘色
+        }
+      }
+    }
   },
 };
 </script>
