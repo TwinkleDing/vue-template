@@ -163,18 +163,20 @@ export default {
       let mesh = new THREE.Mesh(geometry, material); //网格模型对象Mesh
       mesh.name = 'house';
       let mss = new THREE.PointsMaterial({
-        color: 0x4a90e2,
+        color: 0xaacc00,
         side: THREE.DoubleSide, //两面可见
       }); //材质对象
       let mss1 = new THREE.PointsMaterial({
-        // color: 0x4a90e2,
+        // color: 0xaacc00,
         side: THREE.DoubleSide, //两面可见
       }); //材质对象
       let group = new THREE.Group();
       let meshDoor = new THREE.Mesh(new THREE.PlaneBufferGeometry(20, 40),mss);
       meshDoor.name = 'door';
       meshDoor.position.set(-80, 20, 0);
-      meshDoor.rotation.y = 20;
+      meshDoor.rotateY(1);
+      var axis = new THREE.Vector3(-80, 0, -20);//向量axis
+      meshDoor.rotateOnAxis(axis,Math.PI/8);//绕axis轴旋转π/8
 
       let meshL = new THREE.Mesh(new THREE.PlaneBufferGeometry(40, 60),mss1);
       meshL.name = 'door1';
@@ -193,6 +195,11 @@ export default {
       group.add(meshDoor, meshL, meshR, meshH);
       this.scene.add(group);
       this.scene.add(mesh); // 网格模型添加到场景中
+    },
+    openDoor() {
+      requestAnimationFrame( this.animation );
+      this.render();
+      this.stats.update();
     },
     ding() {
       let material = new THREE.MeshBasicMaterial({
