@@ -58,7 +58,7 @@ export default {
       // this.camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 0.001, 1000);
 
       // 透视相机
-      this.camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 2000 );
+      this.camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 1000 );
       //
       this.camera.position.set(100, 100, 100);
       this.camera.lookAt( new THREE.Vector3( 30, 10, 20 ) );
@@ -71,22 +71,22 @@ export default {
       light.position.set( 0, 20, 10);
       this.scene.add(light);
 
-      // // ground
-      // let material = new THREE.MeshPhongMaterial({
-      //   color: 0x999999,
-      //   depthWrite: false
-      // });
-      // this.mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry(200, 200), material);
-      // this.mesh.name = 'ground';
-      // this.mesh.rotation.x = -Math.PI / 2;
-      // this.scene.add(this.mesh);
+      // ground
+      let material = new THREE.MeshPhongMaterial({
+        color: 0x999999,
+        depthWrite: false
+      });
+      this.mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry(200, 200), material);
+      this.mesh.name = 'ground';
+      this.mesh.rotation.x = -Math.PI / 2;
+      this.scene.add(this.mesh);
 
-      // // 网格
-      // this.grid = new THREE.GridHelper(200, 40, 0xff0000, 0x000000);
-      // this.grid.name = 'GridHelper';
-      // this.grid.material.opacity = 0.2;
-      // this.grid.material.transparent = true;
-      // this.scene.add(this.grid);
+      // 网格
+      this.grid = new THREE.GridHelper(200, 40, 0xff0000, 0x000000);
+      this.grid.name = 'GridHelper';
+      this.grid.material.opacity = 0.2;
+      this.grid.material.transparent = true;
+      this.scene.add(this.grid);
 
       // 创建渲染器对象
       this.renderer = new THREE.WebGLRenderer({antialias: true});
@@ -153,8 +153,8 @@ export default {
         0, 5, 1,
         0, 4, 7,
         0, 7, 3,
-        2, 6, 7,
-        2, 7, 3,
+        // 2, 6, 7,
+        // 2, 7, 3,
         2, 6, 5,
         2, 5, 1,
       ]);
@@ -162,6 +162,36 @@ export default {
       geometry.index = new THREE.BufferAttribute(indexes, 1); //1个为一组
       let mesh = new THREE.Mesh(geometry, material); //网格模型对象Mesh
       mesh.name = 'house';
+      let mss = new THREE.PointsMaterial({
+        color: 0x4a90e2,
+        side: THREE.DoubleSide, //两面可见
+      }); //材质对象
+      let mss1 = new THREE.PointsMaterial({
+        // color: 0x4a90e2,
+        side: THREE.DoubleSide, //两面可见
+      }); //材质对象
+      let group = new THREE.Group();
+      let meshDoor = new THREE.Mesh(new THREE.PlaneBufferGeometry(20, 40),mss);
+      meshDoor.name = 'door';
+      meshDoor.position.set(-80, 20, 0);
+      meshDoor.rotation.y = 20;
+
+      let meshL = new THREE.Mesh(new THREE.PlaneBufferGeometry(40, 60),mss1);
+      meshL.name = 'door1';
+      meshL.position.set(-80, 30, 30);
+      meshL.rotation.y = Math.PI / 2;
+
+      let meshR = new THREE.Mesh(new THREE.PlaneBufferGeometry(40, 60),mss1);
+      meshR.name = 'door2';
+      meshR.position.set(-80, 30, -30);
+      meshR.rotation.y = Math.PI / 2;
+      let meshH = new THREE.Mesh(new THREE.PlaneBufferGeometry(20, 20),mss1);
+      meshH.name = 'door3';
+      meshH.position.set(-80, 50, 0);
+      meshH.rotation.y = Math.PI / 2;
+
+      group.add(meshDoor, meshL, meshR, meshH);
+      this.scene.add(group);
       this.scene.add(mesh); // 网格模型添加到场景中
     },
     ding() {
@@ -253,46 +283,39 @@ export default {
       this.controls.addEventListener('change', this.render);//监听鼠标、键盘事件
     },
     keyDowns() {
-      let geometry = new THREE.SphereGeometry( 25, 100, 100 )
+      let geometry = new THREE.SphereGeometry( 25, 100, 100 );
       let cube = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { color: 0x00ff00 } ) );
       cube.name = 'box';
       this.scene.add( cube );
       let that = this;
       //点击射线
-      let mouse = new THREE.Vector2();
       document.getElementById('model').addEventListener('mousedown', onDocumentMouseDown, false);
       function onDocumentMouseDown(event) {
         event.preventDefault();
-        mouse.x = event.clientX / that.renderer.domElement.clientWidth * 2 - 1;
-        mouse.y = -(event.clientY / that.renderer.domElement.clientHeight) * 2 + 1;
-        console.log(event.clientX);
-        console.log(event.clientY);
-        console.log(that.renderer.domElement.clientWidth);
-        console.log(that.renderer.domElement.clientHeight);
-        console.log(mouse.x);
-        console.log(mouse.y);
-        let raycaster = new THREE.Raycaster();
-        raycaster.setFromCamera(mouse, that.camera);
-        //总结一下，这里必须装网格，mesh，装入组是没有效果的
-        //所以我们将所有的盒子的网格放入对象就可以了
-        // 需要被监听的对象要存储在clickObjects中。
-        let intersects = raycaster.intersectObjects(that.scene.children, true);
-
-        console.log(intersects);
+        let intersects = that.getIntersects(event);
         if(intersects.length > 0) {
           if(intersects[0].object.name === 'box') {
-            cube.material = new THREE.MeshPhongMaterial( { color: 0xff0000});//移到物体上时颜色变成橘色
-          }else {
-            cube.material = new THREE.MeshPhongMaterial( { color: 0xffff00});//移到物体上时颜色变成橘色
+            var material = new THREE.PointsMaterial({
+              color: 0xff0000,
+              side: THREE.DoubleSide, //两面可见
+              size: 1.0 //点对象像素尺寸
+            });
+            intersects[0].object.material = material;
           }
-          // intersects.map(item=> {
-          //   if(item.object.name === 'box') {
-          //     cube.material = new THREE.MeshPhongMaterial( { color: 0xff0000});//移到物体上时颜色变成橘色
-          //   }
-          // });
+        }else {
+          cube.material = new THREE.MeshPhongMaterial({ color: 0xffff00});
         }
       }
-    }
+    },
+    getIntersects (event) {
+      let raycaster = new THREE.Raycaster();
+      let mouse = new THREE.Vector2();
+      mouse.x = event.layerX / this.renderer.domElement.clientWidth * 2 - 1;
+      mouse.y = -(event.layerY / this.renderer.domElement.clientHeight) * 2 + 1;
+      raycaster.setFromCamera(mouse, this.camera);
+      let intersects = raycaster.intersectObjects(this.scene.children, true);
+      return intersects;
+    },
   },
 };
 </script>
