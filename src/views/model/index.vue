@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div id='model' class="model-ca"></div>
+    <!-- <div id='model' class="model-ca"></div> -->
+    <Three5 />
   </div>
 </template>
 
@@ -8,8 +9,12 @@
 import * as THREE from 'three';
 import Stats from 'three/examples/jsm/libs/stats.module.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import Three5 from './components/three5';
 export default {
   name: 'models',
+  components: {
+    Three5
+  },
   data() {
     return {
       scene: {},
@@ -32,11 +37,12 @@ export default {
       previousAction: null,
       api: {
         state: 'Walking'
-      }
+      },
+      speed:0,
     };
   },
   mounted() {
-    this.init();
+    // this.init();
   },
   methods: {
     init() {
@@ -60,7 +66,7 @@ export default {
       // 透视相机
       this.camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 1000 );
       //
-      this.camera.position.set(100, 100, 100);
+      this.camera.position.set(-200, 150, 150);
       this.camera.lookAt( new THREE.Vector3( 30, 10, 20 ) );
 
       // 创建光源
@@ -108,6 +114,22 @@ export default {
       this.ding();
       this.newBox();
       this.keyDowns();
+      this.xuanZhuan();
+    },
+    xuanZhuan() {
+      var points = [
+          new THREE.Vector2(50,60),
+          new THREE.Vector2(25,0),
+          new THREE.Vector2(50,-60)
+      ];
+      var geometry = new THREE.LatheGeometry(points,30,0,Math.PI);
+      var material=new THREE.MeshPhongMaterial({
+          color:0x0000ff,//三角面颜色
+          side:THREE.DoubleSide//两面可见
+      });//材质对象
+      material.wireframe = true;//线条模式渲染(查看细分数)
+      var mesh=new THREE.Mesh(geometry,material);//旋转网格模型对象
+      this.scene.add(mesh);//旋转网格模型添加到场景中
     },
     newBox() {
       let geometry = new THREE.BufferGeometry(); //创建一个Buffer类型几何体对象
@@ -157,6 +179,8 @@ export default {
         // 2, 7, 3,
         2, 6, 5,
         2, 5, 1,
+        4, 7, 6,
+        4, 6, 5,
       ]);
       // 索引数据赋值给几何体的index属性
       geometry.index = new THREE.BufferAttribute(indexes, 1); //1个为一组
@@ -171,32 +195,52 @@ export default {
         side: THREE.DoubleSide, //两面可见
       }); //材质对象
       let group = new THREE.Group();
-      let meshDoor = new THREE.Mesh(new THREE.PlaneBufferGeometry(20, 40),mss);
-      meshDoor.name = 'door';
-      meshDoor.position.set(-80, 20, 0);
-      meshDoor.rotateY(1);
-      var axis = new THREE.Vector3(-80, 0, -20);//向量axis
-      meshDoor.rotateOnAxis(axis,Math.PI/8);//绕axis轴旋转π/8
+      let w = 20;
+      let h = 40;
+      let z = 20; // z轴坐标
+      this.meshDoor = new THREE.Mesh(new THREE.PlaneBufferGeometry(w, h),mss);
+      this.meshDoor.position.set(0, 0, z / 2);
 
       let meshL = new THREE.Mesh(new THREE.PlaneBufferGeometry(40, 60),mss1);
       meshL.name = 'door1';
-      meshL.position.set(-80, 30, 30);
+      meshL.position.set(0, 30, 30);
       meshL.rotation.y = Math.PI / 2;
 
       let meshR = new THREE.Mesh(new THREE.PlaneBufferGeometry(40, 60),mss1);
       meshR.name = 'door2';
-      meshR.position.set(-80, 30, -30);
+      meshR.position.set(0, 30, -30);
       meshR.rotation.y = Math.PI / 2;
+
       let meshH = new THREE.Mesh(new THREE.PlaneBufferGeometry(20, 20),mss1);
       meshH.name = 'door3';
-      meshH.position.set(-80, 50, 0);
+      meshH.position.set(0, 50, 0);
       meshH.rotation.y = Math.PI / 2;
 
-      group.add(meshDoor, meshL, meshR, meshH);
-      this.scene.add(group);
-      this.scene.add(mesh); // 网格模型添加到场景中
+      group.add(this.meshDoor, meshL, meshR, meshH);
+      group.position.set(-80, 0, 0);
+      let axisHelper = new THREE.AxesHelper(1000);
+      group.add(axisHelper);
+      let house = new THREE.Group();
+      house.add(group, mesh);
+      house.position.set(200, 200, 200);
+
+      this.scene.add(house); // 网格模型添加到场景中
+      this.animation(this.meshDoor,z,w);
     },
-    openDoor() {
+    animation() { //圆周运动
+      if(!this.meshDoor) {
+        return false;
+      }
+      let w = 20; // 主要管理半径，会影响位置
+      let x = 0; // 主要管理位置X
+      let z = 20; // 主要管理位置Z
+      this.speed += Math.PI / 180;
+      let angle = this.speed;
+      this.meshDoor.rotation.y = Math.PI-angle; // 指向圆心
+      let a = (x + w) / 2 + - w / 2 * (1 - Math.cos(angle)); // 因为初始位X值设为了零
+      let b = 20;
+      let c = z / 2 + w / 2 * Math.sin(Math.abs(angle));
+      this.meshDoor.position.set(a, b, c);
       requestAnimationFrame( this.animation );
       this.render();
       this.stats.update();
@@ -272,15 +316,6 @@ export default {
       this.renderer.setSize( window.innerWidth, window.innerHeight );
       this.render();
     },
-    animation() {
-      let dt = this.clock.getDelta();
-      if ( this.mixer ) {
-        this.mixer.update( dt );
-      }
-      requestAnimationFrame( this.animation );
-      this.render();
-      this.stats.update();
-    },
     render() {
       this.renderer.render(this.scene,this.camera);//执行渲染操作
     },
@@ -289,6 +324,7 @@ export default {
       this.controls = new OrbitControls(this.camera,this.renderer.domElement);//创建控件对象
       this.controls.addEventListener('change', this.render);//监听鼠标、键盘事件
     },
+    // 单机控制
     keyDowns() {
       let geometry = new THREE.SphereGeometry( 25, 100, 100 );
       let cube = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { color: 0x00ff00 } ) );
@@ -313,6 +349,14 @@ export default {
           cube.material = new THREE.MeshPhongMaterial({ color: 0xffff00});
         }
       }
+      document.getElementById('model').addEventListener('keydown', onKeyDown, false);
+      function onKeyDown(event) {
+        console.log(event.keyCode);
+        // if(event.keyCode === 87) {
+        //   that.
+        // }
+      }
+
     },
     getIntersects (event) {
       let raycaster = new THREE.Raycaster();
