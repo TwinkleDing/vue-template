@@ -91,7 +91,7 @@ export default {
       */
       // 创建一个圆柱几何体，高度120，顶点坐标y分量范围[-60,60]
       let geometry = new THREE.CylinderGeometry(5, 10, 160, 50, 300);
-      geometry.translate(0, 60, 0); //平移后，y分量范围[0,120]
+      geometry.translate(0, 80, 0); //平移后，y分量范围[0,120]
       /**
        * 设置几何体对象Geometry的蒙皮索引skinIndices、权重skinWeights属性
        * 实现一个模拟腿部骨骼运动的效果
@@ -102,17 +102,16 @@ export default {
         let vertex = geometry.vertices[i]; //第i个顶点
         if (vertex.y <= 60) {
           geometry.skinWeights.push(new THREE.Vector4(1 - vertex.y / 60, 0, 0, 0));
-          // geometry.skinIndices.push(new THREE.Vector4(0, 0, 0, 0));
-        } else if (60 < vertex.y && vertex.y <= 60 + 40) {
+          geometry.skinIndices.push(new THREE.Vector4(0, 0, 0, 0));
+        } else if (60 < vertex.y && vertex.y <= 100) {
           geometry.skinWeights.push(new THREE.Vector4(1 - (vertex.y - 60) / 60, 0, 0, 0));
-          // geometry.skinIndices.push(new THREE.Vector4(1, 0, 0, 0));
-        } else if (60 + 40 < vertex.y && vertex.y <= 60 + 40 + 20) {
-          geometry.skinWeights.push(new THREE.Vector4(1 - (vertex.y - 100) / 60, 0, 0, 0));
-          // geometry.skinIndices.push(new THREE.Vector4(2, 0, 0, 0));
-        } else {
-          console.log(1);
-          geometry.skinWeights.push(new THREE.Vector4(1 - (vertex.y - 140) / 60, 0, 0, 0));
-          // geometry.skinIndices.push(new THREE.Vector4(2, 0, 0, 0));
+          geometry.skinIndices.push(new THREE.Vector4(1, 0, 0, 0));
+        } else if (100 < vertex.y && vertex.y <= 140) {
+          geometry.skinWeights.push(new THREE.Vector4(1 - (vertex.y - 100) / 40, 0, 0, 0));
+          geometry.skinIndices.push(new THREE.Vector4(2, 0, 0, 0));
+        } else if (140 < vertex.y && vertex.y <= 160) {
+          geometry.skinWeights.push(new THREE.Vector4(1 - (vertex.y - 140) / 20, 0, 0, 0));
+          geometry.skinIndices.push(new THREE.Vector4(3, 0, 0, 0));
         }
       }
       // 材质对象
@@ -122,8 +121,8 @@ export default {
       });
       // 创建骨骼网格模型
       let SkinnedMesh = new THREE.SkinnedMesh(geometry, material);
-      SkinnedMesh.position.set(50, 120, 50); //设置网格模型位置
-      SkinnedMesh.rotateX(Math.PI); //旋转网格模型
+      // SkinnedMesh.position.set(50, 120, 50); //设置网格模型位置
+      // SkinnedMesh.rotateX(Math.PI); //旋转网格模型
       this.scene.add(SkinnedMesh); //网格模型添加到场景中
 
       /**
@@ -152,9 +151,9 @@ export default {
       this.scene.add(skeletonHelper);
 
       // 转动关节带动骨骼网格模型出现弯曲效果  好像腿弯曲一样
-      skeleton.bones[1].rotation.x = 0.5;
-      skeleton.bones[2].rotation.x = 1;
-      skeleton.bones[3].rotation.x = 1.5;
+      // skeleton.bones[1].rotation.x = 0.5;
+      // skeleton.bones[2].rotation.x = 1;
+      // skeleton.bones[3].rotation.x = 1;
       let n = 0;
       let T = 50;
       let step = 0.01;
@@ -162,18 +161,20 @@ export default {
       let that = this;
       function render() {
         that.render(that.scene, that.camera);
-        // requestAnimationFrame(render);
+        requestAnimationFrame(render);
         n += 1;
         if (n < T) {
           // 改变骨关节角度
           skeleton.bones[0].rotation.x = skeleton.bones[0].rotation.x - step;
-          skeleton.bones[1].rotation.x = skeleton.bones[1].rotation.x + 2 * step;
+          skeleton.bones[1].rotation.x = skeleton.bones[1].rotation.x + step;
           skeleton.bones[2].rotation.x = skeleton.bones[2].rotation.x + 2 * step;
+          skeleton.bones[3].rotation.x = skeleton.bones[3].rotation.x + 2 * step;
         }
         if (n < 2 * T && n > T) {
           skeleton.bones[0].rotation.x = skeleton.bones[0].rotation.x + step;
-          skeleton.bones[1].rotation.x = skeleton.bones[1].rotation.x - 2 * step;
+          skeleton.bones[1].rotation.x = skeleton.bones[1].rotation.x - step;
           skeleton.bones[2].rotation.x = skeleton.bones[2].rotation.x - 2 * step;
+          skeleton.bones[3].rotation.x = skeleton.bones[3].rotation.x - 2 * step;
         }
         if (n === 2 * T) {
           n = 0;
