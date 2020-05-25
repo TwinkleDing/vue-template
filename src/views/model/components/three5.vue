@@ -32,7 +32,7 @@ export default {
       this.scene = new THREE.Scene();
 
       // 辅助坐标系  参数250表示坐标系大小，可以根据场景大小去设置
-      let axisHelper = new THREE.AxisHelper(1000);
+      let axisHelper = new THREE.AxisHelper(160);
       this.scene.add(axisHelper);
       // ground
       let material = new THREE.MeshPhongMaterial({
@@ -104,7 +104,7 @@ export default {
           geometry.skinWeights.push(new THREE.Vector4(1 - vertex.y / 60, 0, 0, 0));
           geometry.skinIndices.push(new THREE.Vector4(0, 0, 0, 0));
         } else if (60 < vertex.y && vertex.y <= 100) {
-          geometry.skinWeights.push(new THREE.Vector4(1 - (vertex.y - 60) / 60, 0, 0, 0));
+          geometry.skinWeights.push(new THREE.Vector4(1 - (vertex.y - 60) / 40, 0, 0, 0));
           geometry.skinIndices.push(new THREE.Vector4(1, 0, 0, 0));
         } else if (100 < vertex.y && vertex.y <= 140) {
           geometry.skinWeights.push(new THREE.Vector4(1 - (vertex.y - 100) / 40, 0, 0, 0));
@@ -117,7 +117,7 @@ export default {
       // 材质对象
       let material = new THREE.MeshPhongMaterial({
         skinning: true, //允许蒙皮动画
-        wireframe:true,
+        // wireframe:true,
       });
       // 创建骨骼网格模型
       let SkinnedMesh = new THREE.SkinnedMesh(geometry, material);
