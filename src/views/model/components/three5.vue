@@ -90,6 +90,7 @@ export default {
       // this.guge();
       this.initBones();
       this.controlsEvent();
+      this.setupDatGui();
 
     },
     // 绑定骨骼
@@ -106,10 +107,10 @@ export default {
 			};
 			this.geometry = this.createGeometry( sizing );
 			this.bones = this.createBones( sizing );
-			this.mesh = this.createMesh( this.geometry, this.bones );
+      this.mesh = this.createMesh( this.geometry, this.bones );
+      this.mesh.position.set(20, 16, 0);
 			this.mesh.scale.multiplyScalar( 1 );
       this.scene.add( this.mesh );
-      this.setupDatGui();
       this.stats = new Stats();
       document.getElementById('box5').appendChild(this.stats.dom);
       let render=()=> {
@@ -142,6 +143,25 @@ export default {
 			return bones;
     },
     // 创建几何
+    createGeometry( sizing ) {
+			let geometry = new THREE.CylinderBufferGeometry( 5, 5, sizing.height, 20, sizing.segmentCount * 6, true );
+			let position = geometry.attributes.position;
+			let vertex = new THREE.Vector3();
+			let skinIndices = []; // 蒙皮索引数组
+			let skinWeights = []; // 蒙皮权值
+			for ( let i = 0; i < position.count; i ++ ) {
+				vertex.fromBufferAttribute( position, i );
+				let y = vertex.y + sizing.halfHeight;
+				let skinIndex = Math.floor( y / sizing.segmentHeight );
+				let skinWeight = y % sizing.segmentHeight / sizing.segmentHeight;
+				skinIndices.push( skinIndex, skinIndex + 1, 0, 0 );
+				skinWeights.push( 1 - skinWeight, skinWeight, 0, 0 );
+			}
+			geometry.setAttribute( 'skinIndex', new THREE.Uint16BufferAttribute( skinIndices, 4 ) );
+			geometry.setAttribute( 'skinWeight', new THREE.Float32BufferAttribute( skinWeights, 4 ) );
+      return geometry;
+    },
+    // 创建几何
 		createMesh( geometry, bones ) {
 			let material = new THREE.MeshPhongMaterial( {
 				skinning: true,
@@ -158,25 +178,6 @@ export default {
 			skeletonHelper.material.linewidth = 2;
 			this.scene.add( skeletonHelper );
 			return mesh;
-    },
-    // 创建几何
-    createGeometry( sizing ) {
-			let geometry = new THREE.CylinderBufferGeometry( 5, 5, sizing.height, 20, sizing.segmentCount * 6, true );
-			let position = geometry.attributes.position;
-			let vertex = new THREE.Vector3();
-			let skinIndices = []; // 蒙皮索引数组
-			let skinWeights = []; // 蒙皮权值
-			for ( let i = 0; i < position.count; i ++ ) {
-				vertex.fromBufferAttribute( position, i );
-				let y = vertex.y + sizing.halfHeight;
-				let skinIndex = Math.floor( y / sizing.segmentHeight );
-				let skinWeight = y % sizing.segmentHeight / sizing.segmentHeight;
-				skinIndices.push( skinIndex, skinIndex + 1, 0, 0 );
-				skinWeights.push( 1 - skinWeight, skinWeight, 0, 0 );
-			}
-			geometry.addAttribute( 'skinIndex', new THREE.Uint16BufferAttribute( skinIndices, 4 ) );
-			geometry.addAttribute( 'skinWeight', new THREE.Float32BufferAttribute( skinWeights, 4 ) );
-      return geometry;
     },
     setupDatGui() {
 			let folder = this.gui.addFolder( 'General Options' );
