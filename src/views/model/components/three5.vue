@@ -7,6 +7,8 @@
 <script>
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { GUI } from 'three/examples/jsm/libs/dat.gui.module.js';
+import Stats from 'three/examples/jsm/libs/stats.module.js';
 export default {
   name: 'three2',
   data() {
@@ -17,7 +19,11 @@ export default {
       mesh: {},
       renderer: {},
       render: {},
-      controls: {}
+      controls: {},
+      state: {
+        animateBones: false,
+        wireframe: false
+      }
     };
   },
   computed: {
@@ -30,7 +36,8 @@ export default {
     initThree() {
       // 创建场景对象Scene
       this.scene = new THREE.Scene();
-
+      this.gui = new GUI();
+			this.stats = new Stats();
       // 辅助坐标系  参数250表示坐标系大小，可以根据场景大小去设置
       let axisHelper = new THREE.AxisHelper(160);
       this.scene.add(axisHelper);
@@ -80,106 +87,138 @@ export default {
         this.renderer.render(this.scene,this.camera);//执行渲染操作
       };
 
-      this.guge();
-
+      // this.guge();
+      this.initBones();
       this.controlsEvent();
 
     },
-    guge() {
-      /**
-     * 创建骨骼网格模型SkinnedMesh
-      */
-      // 创建一个圆柱几何体，高度120，顶点坐标y分量范围[-60,60]
-      let geometry = new THREE.CylinderGeometry(5, 10, 120, 50, 300);
-      geometry.translate(0, 60, 0); //平移后，y分量范围[0,120]
-      /**
-       * 设置几何体对象Geometry的蒙皮索引skinIndices、权重skinWeights属性
-       * 实现一个模拟腿部骨骼运动的效果
-       */
-      //遍历几何体顶点，为每一个顶点设置蒙皮索引、权重属性
-      //根据y来分段，0~60一段、60~100一段、100~120一段
-      for (let i = 0; i < geometry.vertices.length; i++) {
-        let vertex = geometry.vertices[i]; //第i个顶点
-         if (vertex.y <= 60) {
-          // 设置每个顶点蒙皮索引属性  受根关节Bone1影响
-          geometry.skinIndices.push(new THREE.Vector4(0, 0, 0, 0));
-          // 设置每个顶点蒙皮权重属性
-          // 影响该顶点关节Bone1对应权重是1-vertex.y/60
-          geometry.skinWeights.push(new THREE.Vector4(1 - vertex.y / 60, 0, 0, 0));
-        } else if (60 < vertex.y && vertex.y <= 60 + 40) {
-          // Vector4(1, 0, 0, 0)表示对应顶点受关节Bone2影响
-          geometry.skinIndices.push(new THREE.Vector4(1, 0, 0, 0));
-          // 影响该顶点关节Bone2对应权重是1-(vertex.y-60)/40
-          geometry.skinWeights.push(new THREE.Vector4(1 - (vertex.y - 60) / 40, 0, 0, 0));
-        } else if (60 + 40 < vertex.y && vertex.y <= 60 + 40 + 20) {
-          // Vector4(2, 0, 0, 0)表示对应顶点受关节Bone3影响
-          geometry.skinIndices.push(new THREE.Vector4(2, 0, 0, 0));
-          // 影响该顶点关节Bone3对应权重是1-(vertex.y-100)/20
-          geometry.skinWeights.push(new THREE.Vector4(1 - (vertex.y - 100) / 20, 0, 0, 0));
+    // 绑定骨骼
+		initBones() {
+			let segmentHeight = 8;
+			let segmentCount = 4;
+			let height = segmentHeight * segmentCount;
+			let halfHeight = height * 0.5;
+			let sizing = {
+				segmentHeight: segmentHeight,
+				segmentCount: segmentCount,
+				height: height,
+				halfHeight: halfHeight
+			};
+			this.geometry = this.createGeometry( sizing );
+			this.bones = this.createBones( sizing );
+			this.mesh = this.createMesh( this.geometry, this.bones );
+			this.mesh.scale.multiplyScalar( 1 );
+      this.scene.add( this.mesh );
+      this.setupDatGui();
+      this.stats = new Stats();
+      document.getElementById('box5').appendChild(this.stats.dom);
+      let render=()=> {
+        requestAnimationFrame( render );
+        let time = Date.now() * 0.001;
+        //Wiggle the bones
+        if ( this.state.animateBones ) {
+          for ( let i = 0; i < this.mesh.skeleton.bones.length; i ++ ) {
+            this.mesh.skeleton.bones[ i ].rotation.z = Math.sin( time ) * 2 / this.mesh.skeleton.bones.length;
+          }
         }
-      }
-      // 材质对象
-      let material = new THREE.MeshPhongMaterial({
-        skinning: true, //允许蒙皮动画
-        wireframe:true,
-      });
-      // 创建骨骼网格模型
-      let SkinnedMesh = new THREE.SkinnedMesh(geometry, material);
-      SkinnedMesh.position.set(50, 120, 50); //设置网格模型位置
-      // SkinnedMesh.rotateX(Math.PI); //旋转网格模型
-      this.scene.add(SkinnedMesh); //网格模型添加到场景中
-
-      /**
-      * 骨骼系统
-      */
-      let Bone1 = new THREE.Bone(); //关节1，用来作为根关节
-      let Bone2 = new THREE.Bone(); //关节2
-      let Bone3 = new THREE.Bone(); //关节3
-      // 设置关节父子关系   多个骨头关节构成一个树结构
-      Bone1.add(Bone2);
-      Bone2.add(Bone3);
-      // 设置关节之间的相对位置
-      //根关节Bone1默认位置是(0,0,0)
-      Bone2.position.y = 60; //Bone2相对父对象Bone1位置
-      Bone3.position.y = 40; //Bone3相对父对象Bone2位置
-
-      let skeleton = new THREE.Skeleton([Bone1, Bone2, Bone3]); //创建骨骼系统
-
-      //骨骼关联网格模型
-      SkinnedMesh.add(Bone1); //根骨头关节添加到网格模型
-      SkinnedMesh.bind(skeleton); //网格模型绑定到骨骼系统
-      let skeletonHelper = new THREE.SkeletonHelper(SkinnedMesh);
-      this.scene.add(skeletonHelper);
-
-      // 转动关节带动骨骼网格模型出现弯曲效果  好像腿弯曲一样
-      skeleton.bones[1].rotation.x = 0.5;
-      skeleton.bones[2].rotation.x = 1;
-      let n = 0;
-      let T = 50;
-      let step = 0.01;
-      // 渲染函数
-      let that = this;
-      function render() {
-        that.render(that.scene, that.camera);
-        requestAnimationFrame(render);
-        n += 1;
-        if (n < T) {
-          // 改变骨关节角度
-          skeleton.bones[0].rotation.x = skeleton.bones[0].rotation.x - step;
-          skeleton.bones[1].rotation.x = skeleton.bones[1].rotation.x + 2 * step;
-          skeleton.bones[2].rotation.x = skeleton.bones[2].rotation.x + 2 * step;
-        }
-        if (n < 2 * T && n > T) {
-          skeleton.bones[0].rotation.x = skeleton.bones[0].rotation.x + step;
-          skeleton.bones[1].rotation.x = skeleton.bones[1].rotation.x - 2 * step;
-          skeleton.bones[2].rotation.x = skeleton.bones[2].rotation.x - 2 * step;
-        }
-        if (n === 2 * T) {
-          n = 0;
-        }
-      }
+        this.render();
+        this.stats.update();
+      };
       render();
     },
+    // 创建骨骼
+    createBones(sizing ) {
+			let bones = [];
+			let prevBone = new THREE.Bone();
+			bones.push( prevBone );
+			prevBone.position.y = - sizing.halfHeight;
+			for ( let i = 0; i < sizing.segmentCount; i ++ ) {
+				let bone = new THREE.Bone();
+				bone.position.y = sizing.segmentHeight;
+				bones.push( bone );
+				prevBone.add( bone );
+				prevBone = bone;
+			}
+			return bones;
+    },
+    // 创建几何
+		createMesh( geometry, bones ) {
+			let material = new THREE.MeshPhongMaterial( {
+				skinning: true,
+				color: 0x156289,
+				emissive: 0x072534,
+				side: THREE.DoubleSide,
+				flatShading: true
+			} );
+			let mesh = new THREE.SkinnedMesh( geometry,	material );
+			let skeleton = new THREE.Skeleton( bones );
+			mesh.add( bones[ 0 ] ); // 绑定骨骼
+			mesh.bind( skeleton ); // 绑定骨架
+			let skeletonHelper = new THREE.SkeletonHelper( mesh );
+			skeletonHelper.material.linewidth = 2;
+			this.scene.add( skeletonHelper );
+			return mesh;
+    },
+    // 创建几何
+    createGeometry( sizing ) {
+			let geometry = new THREE.CylinderBufferGeometry( 5, 5, sizing.height, 20, sizing.segmentCount * 6, true );
+			let position = geometry.attributes.position;
+			let vertex = new THREE.Vector3();
+			let skinIndices = []; // 蒙皮索引数组
+			let skinWeights = []; // 蒙皮权值
+			for ( let i = 0; i < position.count; i ++ ) {
+				vertex.fromBufferAttribute( position, i );
+				let y = vertex.y + sizing.halfHeight;
+				let skinIndex = Math.floor( y / sizing.segmentHeight );
+				let skinWeight = y % sizing.segmentHeight / sizing.segmentHeight;
+				skinIndices.push( skinIndex, skinIndex + 1, 0, 0 );
+				skinWeights.push( 1 - skinWeight, skinWeight, 0, 0 );
+			}
+			geometry.addAttribute( 'skinIndex', new THREE.Uint16BufferAttribute( skinIndices, 4 ) );
+			geometry.addAttribute( 'skinWeight', new THREE.Float32BufferAttribute( skinWeights, 4 ) );
+      return geometry;
+    },
+    setupDatGui() {
+			let folder = this.gui.addFolder( 'General Options' );
+			folder.add( this.state, 'animateBones' );
+			folder.__controllers[ 0 ].name( 'Animate Bones' );
+			folder.add( this.mesh, 'pose' );
+			folder.__controllers[ 1 ].name( '.pose()' );
+			folder.add( this.state, 'wireframe' ).onChange( ( e ) => {
+				this.mesh.material.wireframe = e;
+			} );
+
+			let bones = this.mesh.skeleton.bones;
+			for ( let i = 0; i < bones.length; i ++ ) {
+				let bone = bones[ i ];
+				folder = this.gui.addFolder( 'Bone ' + i );
+
+				folder.add( bone.position, 'x', - 10 + bone.position.x, 10 + bone.position.x );
+				folder.add( bone.position, 'y', - 10 + bone.position.y, 10 + bone.position.y );
+				folder.add( bone.position, 'z', - 10 + bone.position.z, 10 + bone.position.z );
+
+				folder.add( bone.rotation, 'x', - Math.PI * 0.5, Math.PI * 0.5 );
+				folder.add( bone.rotation, 'y', - Math.PI * 0.5, Math.PI * 0.5 );
+				folder.add( bone.rotation, 'z', - Math.PI * 0.5, Math.PI * 0.5 );
+
+				folder.add( bone.scale, 'x', 0, 2 );
+				folder.add( bone.scale, 'y', 0, 2 );
+				folder.add( bone.scale, 'z', 0, 2 );
+
+				folder.__controllers[ 0 ].name( 'position.x' );
+				folder.__controllers[ 1 ].name( 'position.y' );
+				folder.__controllers[ 2 ].name( 'position.z' );
+
+				folder.__controllers[ 3 ].name( 'rotation.x' );
+				folder.__controllers[ 4 ].name( 'rotation.y' );
+				folder.__controllers[ 5 ].name( 'rotation.z' );
+
+				folder.__controllers[ 6 ].name( 'scale.x' );
+				folder.__controllers[ 7 ].name( 'scale.y' );
+				folder.__controllers[ 8 ].name( 'scale.z' );
+
+			}
+		},
     jiya() {
       /**
        * 创建网格模型，并给模型的几何体设置多个变形目标
