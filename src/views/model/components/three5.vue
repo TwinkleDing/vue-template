@@ -90,8 +90,8 @@ export default {
      * 创建骨骼网格模型SkinnedMesh
       */
       // 创建一个圆柱几何体，高度120，顶点坐标y分量范围[-60,60]
-      let geometry = new THREE.CylinderGeometry(5, 10, 160, 50, 300);
-      geometry.translate(0, 80, 0); //平移后，y分量范围[0,120]
+      let geometry = new THREE.CylinderGeometry(5, 10, 120, 50, 300);
+      geometry.translate(0, 60, 0); //平移后，y分量范围[0,120]
       /**
        * 设置几何体对象Geometry的蒙皮索引skinIndices、权重skinWeights属性
        * 实现一个模拟腿部骨骼运动的效果
@@ -100,28 +100,32 @@ export default {
       //根据y来分段，0~60一段、60~100一段、100~120一段
       for (let i = 0; i < geometry.vertices.length; i++) {
         let vertex = geometry.vertices[i]; //第i个顶点
-        if (vertex.y <= 60) {
-          geometry.skinWeights.push(new THREE.Vector4(1 - vertex.y / 60, 0, 0, 0));
+         if (vertex.y <= 60) {
+          // 设置每个顶点蒙皮索引属性  受根关节Bone1影响
           geometry.skinIndices.push(new THREE.Vector4(0, 0, 0, 0));
-        } else if (60 < vertex.y && vertex.y <= 100) {
-          geometry.skinWeights.push(new THREE.Vector4(1 - (vertex.y - 60) / 40, 0, 0, 0));
+          // 设置每个顶点蒙皮权重属性
+          // 影响该顶点关节Bone1对应权重是1-vertex.y/60
+          geometry.skinWeights.push(new THREE.Vector4(1 - vertex.y / 60, 0, 0, 0));
+        } else if (60 < vertex.y && vertex.y <= 60 + 40) {
+          // Vector4(1, 0, 0, 0)表示对应顶点受关节Bone2影响
           geometry.skinIndices.push(new THREE.Vector4(1, 0, 0, 0));
-        } else if (100 < vertex.y && vertex.y <= 140) {
-          geometry.skinWeights.push(new THREE.Vector4(1 - (vertex.y - 100) / 40, 0, 0, 0));
+          // 影响该顶点关节Bone2对应权重是1-(vertex.y-60)/40
+          geometry.skinWeights.push(new THREE.Vector4(1 - (vertex.y - 60) / 40, 0, 0, 0));
+        } else if (60 + 40 < vertex.y && vertex.y <= 60 + 40 + 20) {
+          // Vector4(2, 0, 0, 0)表示对应顶点受关节Bone3影响
           geometry.skinIndices.push(new THREE.Vector4(2, 0, 0, 0));
-        } else if (140 < vertex.y && vertex.y <= 160) {
-          geometry.skinWeights.push(new THREE.Vector4(1 - (vertex.y - 140) / 20, 0, 0, 0));
-          geometry.skinIndices.push(new THREE.Vector4(3, 0, 0, 0));
+          // 影响该顶点关节Bone3对应权重是1-(vertex.y-100)/20
+          geometry.skinWeights.push(new THREE.Vector4(1 - (vertex.y - 100) / 20, 0, 0, 0));
         }
       }
       // 材质对象
       let material = new THREE.MeshPhongMaterial({
         skinning: true, //允许蒙皮动画
-        // wireframe:true,
+        wireframe:true,
       });
       // 创建骨骼网格模型
       let SkinnedMesh = new THREE.SkinnedMesh(geometry, material);
-      // SkinnedMesh.position.set(50, 120, 50); //设置网格模型位置
+      SkinnedMesh.position.set(50, 120, 50); //设置网格模型位置
       // SkinnedMesh.rotateX(Math.PI); //旋转网格模型
       this.scene.add(SkinnedMesh); //网格模型添加到场景中
 
@@ -131,18 +135,15 @@ export default {
       let Bone1 = new THREE.Bone(); //关节1，用来作为根关节
       let Bone2 = new THREE.Bone(); //关节2
       let Bone3 = new THREE.Bone(); //关节3
-      let Bone4 = new THREE.Bone(); //关节3
       // 设置关节父子关系   多个骨头关节构成一个树结构
       Bone1.add(Bone2);
       Bone2.add(Bone3);
-      Bone3.add(Bone4);
       // 设置关节之间的相对位置
       //根关节Bone1默认位置是(0,0,0)
       Bone2.position.y = 60; //Bone2相对父对象Bone1位置
       Bone3.position.y = 40; //Bone3相对父对象Bone2位置
-      Bone4.position.y = 40; //Bone3相对父对象Bone2位置
 
-      let skeleton = new THREE.Skeleton([Bone1, Bone2, Bone3, Bone4]); //创建骨骼系统
+      let skeleton = new THREE.Skeleton([Bone1, Bone2, Bone3]); //创建骨骼系统
 
       //骨骼关联网格模型
       SkinnedMesh.add(Bone1); //根骨头关节添加到网格模型
@@ -151,9 +152,8 @@ export default {
       this.scene.add(skeletonHelper);
 
       // 转动关节带动骨骼网格模型出现弯曲效果  好像腿弯曲一样
-      // skeleton.bones[1].rotation.x = 0.5;
-      // skeleton.bones[2].rotation.x = 1;
-      // skeleton.bones[3].rotation.x = 1;
+      skeleton.bones[1].rotation.x = 0.5;
+      skeleton.bones[2].rotation.x = 1;
       let n = 0;
       let T = 50;
       let step = 0.01;
@@ -166,15 +166,13 @@ export default {
         if (n < T) {
           // 改变骨关节角度
           skeleton.bones[0].rotation.x = skeleton.bones[0].rotation.x - step;
-          skeleton.bones[1].rotation.x = skeleton.bones[1].rotation.x + step;
+          skeleton.bones[1].rotation.x = skeleton.bones[1].rotation.x + 2 * step;
           skeleton.bones[2].rotation.x = skeleton.bones[2].rotation.x + 2 * step;
-          skeleton.bones[3].rotation.x = skeleton.bones[3].rotation.x + 2 * step;
         }
         if (n < 2 * T && n > T) {
           skeleton.bones[0].rotation.x = skeleton.bones[0].rotation.x + step;
-          skeleton.bones[1].rotation.x = skeleton.bones[1].rotation.x - step;
+          skeleton.bones[1].rotation.x = skeleton.bones[1].rotation.x - 2 * step;
           skeleton.bones[2].rotation.x = skeleton.bones[2].rotation.x - 2 * step;
-          skeleton.bones[3].rotation.x = skeleton.bones[3].rotation.x - 2 * step;
         }
         if (n === 2 * T) {
           n = 0;

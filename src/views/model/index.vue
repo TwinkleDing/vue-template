@@ -61,10 +61,10 @@ export default {
       // let k = w / h;
       // let s = 200; // 三位场景显示范围控制系数，系数越大，显示的范围越大
       // // 正投影相机
-      // this.camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 0.001, 1000);
+      // this.camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 1, 1000);
 
       // 透视相机
-      this.camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 1000 );
+      this.camera = new THREE.PerspectiveCamera(45, w / h, 0.01, 100000 );
       //
       this.camera.position.set(-200, 150, 150);
       this.camera.lookAt( new THREE.Vector3( 30, 10, 20 ) );
@@ -107,28 +107,76 @@ export default {
       this.stats = new Stats();
       document.getElementById('model').appendChild(this.stats.dom);
       this.clock = new THREE.Clock();
-      this.animation();
       this.render();
       this.controlsEvent();
-      this.simianti();
-      this.ding();
-      this.newBox();
-      this.keyDowns();
-      this.xuanZhuan();
+      // this.simianti();
+      // this.ding();
+      // this.newBox();
+      // this.keyDowns();
+      // this.xuanZhuan();
+      // this.tree();
+      // this.sprite();
+      this.ligh();
+    },
+    ligh() {
+
+    },
+    tree() {
+      let textureTree = new THREE.TextureLoader().load('/static/tree.png');
+      for (let i = 0; i < 100; i ++) {
+        let spriteMaterial = new THREE.SpriteMaterial({
+          map: textureTree
+        });
+        let sprite = new THREE.Sprite(spriteMaterial);
+        this.scene.add(sprite);
+        sprite.scale.set(100, 100, 1);
+        let k1 = Math.random() - 0.5;
+        let k2 = Math.random() - 0.5;
+        sprite.position.set(1000 * k1, 50, 1000 * k2);
+
+      }
+    },
+    sprite() {
+      let group = new THREE.Group();
+      let textureTree = new THREE.TextureLoader().load('/static/rain.png');
+      for (let i = 0; i< 1000; i ++) {
+        let spriteMaterial = new THREE.SpriteMaterial({
+          map: textureTree,
+        });
+        let sprite = new THREE.Sprite(spriteMaterial);
+        group.add(sprite);
+        sprite.scale.set(8, 10, 1);
+        let k1 = Math.random() - 0.5;
+        let k2 = Math.random() - 0.5;
+        let k3 = Math.random() - 0.5;
+        sprite.position.set(1000 * k1, 400 * k2, 1000 * k3);
+      }
+      this.scene.add(group);
+      let render = ()=>{
+        group.children.forEach(sprite => {
+          sprite.position.y -= 1;
+          if(sprite.position.y < -200) {
+            sprite.position.y = 200;
+          }
+        });
+        this.render();
+        requestAnimationFrame(render);
+      };
+      render();
     },
     xuanZhuan() {
-      var points = [
+      let points = [
           new THREE.Vector2(50,60),
           new THREE.Vector2(25,0),
           new THREE.Vector2(50,-60)
       ];
-      var geometry = new THREE.LatheGeometry(points,30,0,Math.PI);
-      var material=new THREE.MeshPhongMaterial({
+      let geometry = new THREE.LatheGeometry(points,30,0,Math.PI);
+      let material=new THREE.MeshPhongMaterial({
           color:0x0000ff,//三角面颜色
           side:THREE.DoubleSide//两面可见
       });//材质对象
       material.wireframe = true;//线条模式渲染(查看细分数)
-      var mesh=new THREE.Mesh(geometry,material);//旋转网格模型对象
+      let mesh=new THREE.Mesh(geometry,material);//旋转网格模型对象
       this.scene.add(mesh);//旋转网格模型添加到场景中
     },
     newBox() {
@@ -324,7 +372,7 @@ export default {
       this.controls = new OrbitControls(this.camera,this.renderer.domElement);//创建控件对象
       this.controls.addEventListener('change', this.render);//监听鼠标、键盘事件
     },
-    // 单机控制
+    // 单击控制
     keyDowns() {
       let geometry = new THREE.SphereGeometry( 25, 100, 100 );
       let cube = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { color: 0x00ff00 } ) );
