@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- <div id='model' class="model-ca"></div> -->
-    <Three5 />
+    <Three6 />
   </div>
 </template>
 
@@ -9,11 +9,11 @@
 import * as THREE from 'three';
 import Stats from 'three/examples/jsm/libs/stats.module.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import Three5 from './components/three5';
+import Three6 from './components/three6';
 export default {
   name: 'models',
   components: {
-    Three5
+    Three6
   },
   data() {
     return {

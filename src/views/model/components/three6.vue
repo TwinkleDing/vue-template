@@ -21,7 +21,7 @@ export default {
       render: {},
       controls: {},
       state: {
-        animateBones: true,
+        animateBones: false,
         wireframe: false
       }
     };
@@ -87,15 +87,14 @@ export default {
         this.renderer.render(this.scene,this.camera);//执行渲染操作
       };
 
-      // this.guge();
       this.initBones();
       this.controlsEvent();
 
     },
     // 绑定骨骼
 		initBones() {
-			let segmentHeight = 8;
-			let segmentCount = 4;
+			let segmentHeight = 16;
+			let segmentCount = 2;
 			let height = segmentHeight * segmentCount;
 			let halfHeight = height * 0.5;
 			let sizing = {
@@ -105,8 +104,8 @@ export default {
 				halfHeight: halfHeight
       };
       let bonesSizing = {
-        topWidth: 5,
-        bottomWidth: 5,
+        topWidth: 3,
+        bottomWidth: 2,
       };
 			this.geometry = this.createGeometry( sizing, bonesSizing );
 			this.bones = this.createBones( sizing );
@@ -120,11 +119,15 @@ export default {
       // this.setupDatGui();
       let render=()=> {
         requestAnimationFrame( render );
-        let time = Date.now() * 0.001;
+        let time = Date.now() * 0.003;
         //Wiggle the bones
         if ( this.state.animateBones ) {
           for ( let i = 0; i < this.mesh.skeleton.bones.length; i ++ ) {
-            this.mesh.skeleton.bones[ i ].rotation.z = Math.sin( time ) * 2 / this.mesh.skeleton.bones.length;
+            if(Math.sin(time) * 2 > 0) {
+              this.mesh.skeleton.bones[ i ].rotation.z = Math.sin( time ) * 2 / this.mesh.skeleton.bones.length;
+            }else {
+              this.mesh.skeleton.bones[0].rotation.z = Math.sin( time ) * 2 / this.mesh.skeleton.bones.length;
+            }
           }
         }
         this.render();
@@ -134,7 +137,37 @@ export default {
     },
     // 创建骨骼
     createBones(sizing ) {
-			let bones = [];
+      let bones = [];
+      let bone1 = new THREE.Bone();
+      let bone2 = new THREE.Bone();
+      let bone3 = new THREE.Bone();
+      let bone4 = new THREE.Bone();
+      let bone5 = new THREE.Bone();
+      let bone6 = new THREE.Bone();
+      let bone7 = new THREE.Bone();
+      let bone8 = new THREE.Bone();
+      let bone9 = new THREE.Bone();
+      let bone10 = new THREE.Bone();
+      let bone11 = new THREE.Bone();
+      let bone12 = new THREE.Bone();
+      let bone13 = new THREE.Bone();
+      // 躯干添加脖子
+      bone1.add(bone2);
+      bone1.add(bone3);
+      bone1.add(bone4);
+
+      bone2.add(bone5);
+
+      bone3.add(bone6);
+      bone6.add(bone7);
+      bone3.add(bone8);
+      bone8.add(bone9);
+
+      bone4.add(bone10);
+      bone10.add(bone11);
+      bone4.add(bone12);
+      bone12.add(bone13);
+
       let prevBone = new THREE.Bone();
       // 向上偏移高度一半
 			prevBone.position.y = - sizing.halfHeight;
@@ -151,13 +184,15 @@ export default {
         // 将当前骨骼设置为下一个骨骼的父节点
 				prevBone = bone;
       }
+
+      // bones = [bone1, bone2, bone3, bone4, bone5, bone6, bone7, bone8, bone9, bone10, bone11, bone12, bone13]
 			return bones;
     },
     // 创建几何
     createGeometry( sizing, bonesSizing ) {
       // 创建一个圆柱体
-      let geometry = new THREE.CylinderBufferGeometry( bonesSizing.topWidth, bonesSizing.bottomWidth,
-        sizing.height, 50, sizing.segmentCount * 6, true );
+      let geometry = new THREE.CylinderBufferGeometry( bonesSizing.bottomWidth, bonesSizing.topWidth,
+        sizing.height, 50, sizing.segmentCount, true );
       // 获取到几何体的位置属性
       let position = geometry.attributes.position;
 			let vertex = new THREE.Vector3();
@@ -242,27 +277,6 @@ export default {
 
 			}
 		},
-    jiya() {
-      /**
-       * 创建网格模型，并给模型的几何体设置多个变形目标
-       */
-      // 创建一个几何体具有8个顶点
-      var geometry = new THREE.BoxGeometry(50, 50, 50); //立方体几何对象
-      console.log(geometry.vertices);
-      // 为geometry提供变形目标的数据
-      var box1 = new THREE.BoxGeometry(100, 5, 100); //为变形目标1提供数据
-      var box2 = new THREE.BoxGeometry(5, 200, 5); //为变形目标2提供数据
-      // 设置变形目标的数据
-      geometry.morphTargets[0] = {name: 'target1',vertices: box1.vertices};
-      geometry.morphTargets[1] = {name: 'target2',vertices: box2.vertices};
-      var material = new THREE.MeshLambertMaterial({
-        morphTargets: true, //允许变形
-        color: 0x0000ff
-      }); //材质对象
-      var mesh = new THREE.Mesh(geometry, material); //网格模型对象
-      this.scene.add(mesh); //网格模型添加到场景中
-      this.render();
-    },
     controlsEvent() {
       // 控制器
       this.controls = new OrbitControls(this.camera,this.renderer.domElement);//创建控件对象

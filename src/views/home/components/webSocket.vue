@@ -44,6 +44,7 @@ export default {
     },
     send() {
       this.ws.send('发送数据');
+      // 接收数据
       this.ws.onmessage = (evt) => {
         const received = evt.data;
         this.msg = received;
