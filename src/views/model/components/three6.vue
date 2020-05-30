@@ -112,15 +112,17 @@ export default {
       this.stats = new Stats();
       document.getElementById('box5').appendChild(this.stats.dom);
       this.setupDatGui();
-      this.timeGo= 0;
+      this.timeGo= Math.PI / 2;
       let render=()=> {
         requestAnimationFrame( render );
-        this.timeGo += 0.03;
+        this.timeGo += 0.1;
         //Wiggle the bones
         if ( this.state.animateBones ) {
           for ( let i = 0; i < this.mesh.children[0].skeleton.bones.length; i ++ ) {
-              this.mesh.children[0].skeleton.bones[i].rotation.x = this.timeGo;
-              this.mesh.children[0].skeleton.bones[i].rotation.z = Math.sin( this.timeGo ) * 2 / this.mesh.children[0].skeleton.bones.length;
+              this.mesh.children[2].skeleton.bones[1].rotation.z = Math.sin( this.timeGo ) * 2 / this.mesh.children[0].skeleton.bones.length;
+              this.mesh.children[4].skeleton.bones[1].rotation.z = - Math.sin( this.timeGo ) * 2 / this.mesh.children[0].skeleton.bones.length;
+              this.mesh.children[6].skeleton.bones[1].rotation.z = Math.sin( this.timeGo ) * 2 / this.mesh.children[0].skeleton.bones.length;
+              this.mesh.children[8].skeleton.bones[1].rotation.z = - Math.sin( this.timeGo ) * 2 / this.mesh.children[0].skeleton.bones.length;
           }
         }
         this.render();
@@ -170,7 +172,6 @@ export default {
       // 左腿
       bone3.add(bone31);
       bone31.name='zuodatui';
-      bone31.position.y = sizing.segmentHeight;
       bone31.position.z = sizing.segmentHeight;
       bone31.add(bone311);
       bone311.name='zuoxiaotui';
@@ -178,7 +179,6 @@ export default {
       // 右腿
       bone3.add(bone32);
       bone32.name='youdatui';
-      bone32.position.y = sizing.segmentHeight;
       bone32.position.z = - sizing.segmentHeight;
       bone32.add(bone321);
       bone321.name='youxiaotui';
@@ -190,7 +190,7 @@ export default {
     createGeometry( count, height, topWidth, bottomWidth ) {
       // 创建一个圆柱体
       let geometry = new THREE.CylinderBufferGeometry( bottomWidth, topWidth,
-        height, 50, count, true );
+        height, 500, count, true );
       // 获取到几何体的位置属性
       let position = geometry.attributes.position;
 			let vertex = new THREE.Vector3();
@@ -218,16 +218,24 @@ export default {
 			let material = new THREE.MeshPhongMaterial( {
 				skinning: true,
 				color: 0x156289,
-				emissive: 0x072534,
 				side: THREE.DoubleSide,
 				flatShading: true
       } );
 
+      // 加载纹理贴图
+      let textureLoader = new THREE.TextureLoader();
+      let texture = textureLoader.load('./static/face.jpg');
+      texture.offset = new THREE.Vector2(0.28, -0.2);
+      let materialFace = new THREE.MeshPhongMaterial({
+        map: texture,
+				side: THREE.DoubleSide,
+        normalScale: new THREE.Vector2(1.2, 1.2),
+      });
       // 创建脖子
       let geometryBoZi = this.createGeometry( 1, 8, 3, 3 );
       geometryBoZi.rotateZ(Math.PI);
       geometryBoZi.translate(0, -20, 0);
-      let meshBoZi = new THREE.SkinnedMesh( geometryBoZi,	material );
+      let meshBoZi = new THREE.SkinnedMesh( geometryBoZi,	materialFace );
       meshBoZi.name='脖子';
       let skeletonBoZi = new THREE.Skeleton( [bones[0], bones[1]] );
 			meshBoZi.add( bones[ 0 ] ); // 绑定骨骼第一个
@@ -242,46 +250,74 @@ export default {
       meshQuGan.bind( skeletonQuGan );
 
       // 创建左臂
-      let geometryZuoBi = this.createGeometry( 2, 32, 3, 3 );
+      let geometryZuoBi = this.createGeometry( 1, 16, 3, 3 );
       geometryZuoBi.rotateX(- Math.PI / 2);
-      geometryZuoBi.translate(0, -16, -16);
+      geometryZuoBi.translate(0, -16, -8);
       let meshZuoBi = new THREE.SkinnedMesh( geometryZuoBi,	material );
       meshZuoBi.name='左臂';
-      let skeletonZuoBi = new THREE.Skeleton( [bones[0], bones[7], bones[8]] );
+      let skeletonZuoBi = new THREE.Skeleton( [bones[0], bones[7]] );
       meshZuoBi.bind( skeletonZuoBi );
 
+      let geometryZuoBi2 = this.createGeometry( 1, 16, 3, 3 );
+      geometryZuoBi2.translate(0, -8, -16);
+      let meshZuoBi2 = new THREE.SkinnedMesh( geometryZuoBi2,	material );
+      meshZuoBi2.name='左臂2';
+      let skeletonZuoBi2 = new THREE.Skeleton( [bones[7], bones[8]] );
+      meshZuoBi2.bind( skeletonZuoBi2 );
+
       // 创建右臂
-      let geometryYouBi = this.createGeometry( 2, 32, 3, 3 );
+      let geometryYouBi = this.createGeometry( 1, 16, 3, 3 );
       geometryYouBi.rotateX(Math.PI / 2);
-      geometryYouBi.translate(0, -16, 16);
+      geometryYouBi.translate(0, -16, 8);
       let meshYouBi = new THREE.SkinnedMesh( geometryYouBi,	material );
       meshYouBi.name='右臂';
-      let skeletonYouBi = new THREE.Skeleton( [bones[0], bones[9], bones[10]] );
+      let skeletonYouBi = new THREE.Skeleton( [bones[0], bones[9]] );
       meshYouBi.bind( skeletonYouBi );
 
+      let geometryYouBi2 = this.createGeometry( 1, 16, 3, 3 );
+      geometryYouBi2.translate(0, -8, 16);
+      let meshYouBi2 = new THREE.SkinnedMesh( geometryYouBi2,	material );
+      meshYouBi2.name='右臂2';
+      let skeletonYouBi2 = new THREE.Skeleton( [bones[9], bones[10]] );
+      meshYouBi2.bind( skeletonYouBi2 );
+
       // 创建左腿
-      let geometryZuoTui = this.createGeometry( 2, 32, 3, 3 );
+      let geometryZuoTui = this.createGeometry( 1, 16, 3, 3 );
       geometryZuoTui.rotateX(- Math.PI / 2);
-      geometryZuoTui.translate(0, 16, -16);
+      geometryZuoTui.translate(0, 16, -8);
       let meshZuoTui = new THREE.SkinnedMesh( geometryZuoTui,	material );
       meshZuoTui.name='左腿';
-      let skeletonZuoTui = new THREE.Skeleton( [bones[2], bones[3], bones[4]] );
+      let skeletonZuoTui = new THREE.Skeleton( [bones[2], bones[3]] );
       meshZuoTui.bind( skeletonZuoTui );
 
+      let geometryZuoTui2 = this.createGeometry( 1, 16, 3, 3 );
+      geometryZuoTui2.translate(0, 24, 16);
+      let meshZuoTui2 = new THREE.SkinnedMesh( geometryZuoTui2,	material );
+      meshZuoTui2.name='左腿2';
+      let skeletonZuoTui2 = new THREE.Skeleton( [bones[3], bones[4]] );
+      meshZuoTui2.bind( skeletonZuoTui2 );
+
       // 创建右腿
-      let geometryYouTui = this.createGeometry( 2, 32, 3, 3 );
+      let geometryYouTui = this.createGeometry( 1, 16, 3, 3 );
       geometryYouTui.rotateX(Math.PI / 2);
-      geometryYouTui.translate(0, 16, 16);
+      geometryYouTui.translate(0, 16, 8);
       let meshYouTui = new THREE.SkinnedMesh( geometryYouTui,	material );
       meshYouTui.name='右腿';
-      let skeletonYouTui = new THREE.Skeleton( [bones[2], bones[5], bones[6]] );
+      let skeletonYouTui = new THREE.Skeleton( [bones[2], bones[5]] );
+
       meshYouTui.bind( skeletonYouTui );
+      let geometryYouTui2 = this.createGeometry( 1, 16, 3, 3 );
+      geometryYouTui2.translate(0, 24, -16);
+      let meshYouTui2 = new THREE.SkinnedMesh( geometryYouTui2,	material );
+      meshYouTui2.name='右腿2';
+      let skeletonYouTui2 = new THREE.Skeleton( [bones[5], bones[6]] );
+      meshYouTui2.bind( skeletonYouTui2 );
 
 
       let group = new THREE.Group();
-      group.add(meshBoZi, meshQuGan, meshZuoBi, meshYouBi, meshZuoTui, meshYouTui);
+      group.add(meshBoZi, meshQuGan, meshZuoBi, meshZuoBi2, meshYouBi, meshYouBi2, meshZuoTui, meshZuoTui2, meshYouTui, meshYouTui2);
       // 创建骨架辅助对象
-			let skeletonHelper = new THREE.SkeletonHelper( meshBoZi );
+			let skeletonHelper = new THREE.SkeletonHelper( group );
 			skeletonHelper.material.linewidth = 2;
 			this.scene.add( skeletonHelper );
 			return group;
@@ -311,7 +347,10 @@ export default {
     GUIInfo(parts, index) {
       let bonesBoZi = this.mesh.children[index].skeleton.bones;
 			for ( let i = 0; i < bonesBoZi.length; i ++ ) {
-				let bone = bonesBoZi[ i ];
+        if(i === 0) {
+          continue;
+        }
+        let bone = bonesBoZi[ i ];
 				let folder = this.gui.addFolder(parts+i);
 
 				folder.add( bone.position, 'x', - 10 + bone.position.x, 10 + bone.position.x );
