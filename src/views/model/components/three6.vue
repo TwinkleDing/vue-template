@@ -135,6 +135,7 @@ export default {
       let bones = [];
       let bone1 = new THREE.Bone();
       let bone2 = new THREE.Bone();
+      let bone21 = new THREE.Bone();
       let bone3 = new THREE.Bone();
       let bone31 = new THREE.Bone();
       let bone311 = new THREE.Bone();
@@ -151,6 +152,9 @@ export default {
       bone1.add(bone2);
       bone2.name='bozi';
       bone2.position.y = - sizing.height / 4;
+      bone2.add(bone21);
+      bone21.name='tou';
+      bone21.position.y = - sizing.height / 4;
       // 躯干
       bone1.add(bone3);
       bone3.name='qugan';
@@ -183,14 +187,19 @@ export default {
       bone32.add(bone321);
       bone321.name='youxiaotui';
       bone321.position.y = sizing.segmentHeight;
-      bones = [bone1, bone2, bone3, bone31, bone311, bone32, bone321, bone4, bone41, bone5, bone51];
+      bones = [bone1, bone2, bone3, bone31, bone311, bone32, bone321, bone4, bone41, bone5, bone51, bone21];
 			return bones;
     },
     // 创建几何
-    createGeometry( count, height, topWidth, bottomWidth ) {
+    createGeometry( count, height, topWidth, bottomWidth, qiu ) {
+      let geometry = {};
+      if(qiu) {
+        geometry = new THREE.BoxBufferGeometry(height, height, height);
+      }else {
       // 创建一个圆柱体
-      let geometry = new THREE.CylinderBufferGeometry( bottomWidth, topWidth,
-        height, 500, count, true );
+        geometry = new THREE.CylinderBufferGeometry( bottomWidth, topWidth,
+          height, 100, count, true );
+      }
       // 获取到几何体的位置属性
       let position = geometry.attributes.position;
 			let vertex = new THREE.Vector3();
@@ -224,22 +233,32 @@ export default {
 
       // 加载纹理贴图
       let textureLoader = new THREE.TextureLoader();
-      let texture = textureLoader.load('./static/face.jpg');
-      texture.offset = new THREE.Vector2(0.28, -0.2);
+      let texture = textureLoader.load('./static/shidifu.jpg');
+      // texture.offset = new THREE.Vector2(0.28, -0.2);
       let materialFace = new THREE.MeshPhongMaterial({
         map: texture,
 				side: THREE.DoubleSide,
         normalScale: new THREE.Vector2(1.2, 1.2),
+        transparent: true,
       });
+      let materialArr = [materialFace, material, material, material, material, material];
       // 创建脖子
-      let geometryBoZi = this.createGeometry( 1, 8, 3, 3 );
+      let geometryBoZi = this.createGeometry( 1, 8, 3, 3);
       geometryBoZi.rotateZ(Math.PI);
       geometryBoZi.translate(0, -20, 0);
-      let meshBoZi = new THREE.SkinnedMesh( geometryBoZi,	materialFace );
+      let meshBoZi = new THREE.SkinnedMesh( geometryBoZi,	material );
       meshBoZi.name='脖子';
       let skeletonBoZi = new THREE.Skeleton( [bones[0], bones[1]] );
 			meshBoZi.add( bones[ 0 ] ); // 绑定骨骼第一个
       meshBoZi.bind( skeletonBoZi );
+
+      let geometryBoZi2 = this.createGeometry( 1, 16, 3, 3, 'qiu' );
+      geometryBoZi2.rotateZ(Math.PI);
+      geometryBoZi2.translate(0, -32, 0);
+      let meshBoZi2 = new THREE.SkinnedMesh( geometryBoZi2,	materialArr );
+      meshBoZi2.name='头';
+      let skeletonBoZi2 = new THREE.Skeleton( [bones[1], bones[11]] );
+      meshBoZi2.bind( skeletonBoZi2 );
 
       // 创建躯干
       let geometryQuGan = this.createGeometry( 1, 32, 6, 6 );
@@ -315,7 +334,7 @@ export default {
 
 
       let group = new THREE.Group();
-      group.add(meshBoZi, meshQuGan, meshZuoBi, meshZuoBi2, meshYouBi, meshYouBi2, meshZuoTui, meshZuoTui2, meshYouTui, meshYouTui2);
+      group.add(meshBoZi, meshQuGan, meshZuoBi, meshZuoBi2, meshYouBi, meshYouBi2, meshZuoTui, meshZuoTui2, meshYouTui, meshYouTui2, meshBoZi2);
       // 创建骨架辅助对象
 			let skeletonHelper = new THREE.SkeletonHelper( group );
 			skeletonHelper.material.linewidth = 2;
