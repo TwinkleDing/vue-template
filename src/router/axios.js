@@ -3,7 +3,7 @@ import router from '@/router';
 import { serialize } from '@/util/util';
 import { Message } from 'element-ui';
 import NProgress from 'nprogress'; // progress bar
-// import "nprogress/nprogress.css"; // progress bar style
+import 'nprogress/nprogress.css'; // progress bar style
 import { Base64 } from 'js-base64';
 import { getToken } from '@/util/auth';
 
@@ -55,8 +55,8 @@ axios.interceptors.response.use(
     // if (statusWhiteList.includes(status)) return Promise.reject(res);
     //如果是401则跳转到登录页面
     if (status === 401) {
-router.push({ path: '/login' });
-}
+      router.push({ path: '/login' });
+    }
     // 如果请求为非200否者默认统一处理
     if (status !== 200) {
       Message({
