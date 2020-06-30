@@ -36,7 +36,6 @@ export default {
     initThree() {
       // 创建场景对象Scene
       this.scene = new THREE.Scene();
-      this.gui = new GUI();
 			this.stats = new Stats();
       // 辅助坐标系  参数250表示坐标系大小，可以根据场景大小去设置
       let axisHelper = new THREE.AxesHelper(160);
@@ -117,18 +116,32 @@ export default {
         requestAnimationFrame( render );
         this.timeGo += 0.1;
         //Wiggle the bones
-        if ( this.state.animateBones ) {
-          for ( let i = 0; i < this.mesh.children[0].skeleton.bones.length; i ++ ) {
-              this.mesh.children[2].skeleton.bones[1].rotation.z = Math.sin( this.timeGo ) * 2 / this.mesh.children[0].skeleton.bones.length;
-              this.mesh.children[4].skeleton.bones[1].rotation.z = - Math.sin( this.timeGo ) * 2 / this.mesh.children[0].skeleton.bones.length;
-              this.mesh.children[6].skeleton.bones[1].rotation.z = Math.sin( this.timeGo ) * 2 / this.mesh.children[0].skeleton.bones.length;
-              this.mesh.children[8].skeleton.bones[1].rotation.z = - Math.sin( this.timeGo ) * 2 / this.mesh.children[0].skeleton.bones.length;
-          }
-        }
+        this.renderRun();
         this.render();
         this.stats.update();
       };
       render();
+    },
+    renderRun() {
+      if ( this.state.animateBones ) {
+        for ( let i = 0; i < this.mesh.children[0].skeleton.bones.length; i ++ ) {
+          // 前后
+          this.mesh.children[2].skeleton.bones[1].rotation.z = Math.sin( this.timeGo ) * 2 / this.mesh.children[0].skeleton.bones.length;
+          this.mesh.children[4].skeleton.bones[1].rotation.z = - Math.sin( this.timeGo ) * 2 / this.mesh.children[0].skeleton.bones.length;
+          this.mesh.children[6].skeleton.bones[1].rotation.z = Math.sin( this.timeGo ) * 2 / this.mesh.children[0].skeleton.bones.length;
+          this.mesh.children[8].skeleton.bones[1].rotation.z = - Math.sin( this.timeGo ) * 2 / this.mesh.children[0].skeleton.bones.length;
+
+          // this.mesh.children[3].skeleton.bones[1].position.y = (0 + 16) / 2 + - 16 / 2 * (1 - Math.cos(this.timeGo))
+          // this.mesh.children[5].skeleton.bones[1].position.y = - (0 + 16) / 2 + - 16 / 2 * (1 - Math.cos(this.timeGo))
+          // this.mesh.children[7].skeleton.bones[1].position.y = (0 + 16) / 2 + - 16 / 2 * (1 - Math.cos(this.timeGo))
+          // this.mesh.children[9].skeleton.bones[1].position.y = - (0 + 16) / 2 + - 16 / 2 * (1 - Math.cos(this.timeGo))
+
+          // this.mesh.children[3].skeleton.bones[1].position.z = 16 / 2 + 16 / 2 * Math.sin(Math.abs(this.timeGo));
+          // this.mesh.children[5].skeleton.bones[1].position.z = 16 / 2 + 16 / 2 * Math.sin(Math.abs(this.timeGo));
+          // this.mesh.children[7].skeleton.bones[1].position.z = 16 / 2 + 16 / 2 * Math.sin(Math.abs(this.timeGo));
+          // this.mesh.children[9].skeleton.bones[1].position.z = 16 / 2 + 16 / 2 * Math.sin(Math.abs(this.timeGo));
+        }
+      }
     },
     // 创建骨骼
     createBones(sizing ) {
@@ -176,14 +189,14 @@ export default {
       // 左腿
       bone3.add(bone31);
       bone31.name='zuodatui';
-      bone31.position.z = sizing.segmentHeight;
+      bone31.position.z = - sizing.segmentHeight;
       bone31.add(bone311);
       bone311.name='zuoxiaotui';
       bone311.position.y = sizing.segmentHeight;
       // 右腿
       bone3.add(bone32);
       bone32.name='youdatui';
-      bone32.position.z = - sizing.segmentHeight;
+      bone32.position.z = sizing.segmentHeight;
       bone32.add(bone321);
       bone321.name='youxiaotui';
       bone321.position.y = sizing.segmentHeight;
@@ -310,7 +323,7 @@ export default {
       meshZuoTui.bind( skeletonZuoTui );
 
       let geometryZuoTui2 = this.createGeometry( 1, 16, 3, 3 );
-      geometryZuoTui2.translate(0, 24, 16);
+      geometryZuoTui2.translate(0, 24, -16);
       let meshZuoTui2 = new THREE.SkinnedMesh( geometryZuoTui2,	material );
       meshZuoTui2.name='左腿2';
       let skeletonZuoTui2 = new THREE.Skeleton( [bones[3], bones[4]] );
@@ -326,7 +339,7 @@ export default {
 
       meshYouTui.bind( skeletonYouTui );
       let geometryYouTui2 = this.createGeometry( 1, 16, 3, 3 );
-      geometryYouTui2.translate(0, 24, -16);
+      geometryYouTui2.translate(0, 24, 16);
       let meshYouTui2 = new THREE.SkinnedMesh( geometryYouTui2,	material );
       meshYouTui2.name='右腿2';
       let skeletonYouTui2 = new THREE.Skeleton( [bones[5], bones[6]] );
@@ -342,6 +355,7 @@ export default {
 			return group;
     },
     setupDatGui() {
+      this.gui = new GUI();
 			let folder = this.gui.addFolder( 'General Options' );
 			folder.add( this.state, 'animateBones' );
 			folder.__controllers[ 0 ].name( 'Animate Bones' );
@@ -357,11 +371,11 @@ export default {
       // 左臂
       this.GUIInfo('左臂', 2);
       // 右臂
-      this.GUIInfo('右臂', 3);
+      this.GUIInfo('右臂', 4);
       // 左腿
-      this.GUIInfo('左腿', 4);
+      this.GUIInfo('左腿', 6);
       // 右腿
-      this.GUIInfo('右腿', 5);
+      this.GUIInfo('右腿', 8);
     },
     GUIInfo(parts, index) {
       let bonesBoZi = this.mesh.children[index].skeleton.bones;
@@ -403,7 +417,10 @@ export default {
       this.controls = new OrbitControls(this.camera,this.renderer.domElement);//创建控件对象
       this.controls.addEventListener('change', this.render);//监听鼠标、键盘事件
     },
-  }
+  },
+  beforeDestroy() {
+    this.gui = '';
+  },
 };
 </script>
 
