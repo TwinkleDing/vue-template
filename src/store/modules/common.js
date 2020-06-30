@@ -3,6 +3,8 @@ import { setStore, getStore, removeStore } from '@/util/store';
 const common = {
   state: {
     userInfo: getStore({ name: 'userInfo' }) || '',
+    loginIn: getStore({ name: 'loginIn'}) || false ,
+    loginOut: getStore({ name: 'loginOut'}) || true ,
     user: getStore({ name: 'user' }) || '',
     color: getStore({ name: 'color' }) || '#409eff',
     route: getStore({ name: 'route' }) || [],
@@ -56,6 +58,20 @@ const common = {
           content: state.colorName,
       });
     },
+    SET_LOGIN_IN: (state, loginIn) => {
+      state.loginIn = loginIn;
+      setStore({
+        name: 'loginIn',
+        content: state.loginIn
+      });
+    },
+    SET_LOGIN_OUT: (state, loginOut) => {
+      state.loginOut = loginOut;
+      setStore({
+        name: 'loginOut',
+        content: state.loginOut
+      });
+    }
   },
   actions: {
     userInfo({ commit }, userInfo) {
