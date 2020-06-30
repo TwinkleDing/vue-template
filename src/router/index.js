@@ -59,7 +59,6 @@ router.beforeEach((to, from, next) => {
     }
     router.addRoutes(routes);
     getRoute = true;
-    console.log(store.getters.user);
     if (store.getters.user) {
       next({ ...to, replace: true });
     } else if (to.path === '/login') {
