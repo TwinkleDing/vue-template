@@ -21,7 +21,9 @@ export default {
       render: {},
       controls: {},
       state: {
-        animateBones: false,
+        animateBonesZ: false,
+        animateBonesT: false,
+        animateBonesN: false,
         wireframe: false
       }
     };
@@ -123,25 +125,42 @@ export default {
       render();
     },
     renderRun() {
-      if ( this.state.animateBones ) {
-        for ( let i = 0; i < this.mesh.children[0].skeleton.bones.length; i ++ ) {
-          // 前后
-          this.mesh.children[2].skeleton.bones[1].rotation.z = Math.sin( this.timeGo ) * 2 / this.mesh.children[0].skeleton.bones.length;
-          this.mesh.children[4].skeleton.bones[1].rotation.z = - Math.sin( this.timeGo ) * 2 / this.mesh.children[0].skeleton.bones.length;
-          this.mesh.children[6].skeleton.bones[1].rotation.z = Math.sin( this.timeGo ) * 2 / this.mesh.children[0].skeleton.bones.length;
-          this.mesh.children[8].skeleton.bones[1].rotation.z = - Math.sin( this.timeGo ) * 2 / this.mesh.children[0].skeleton.bones.length;
-
-          // this.mesh.children[3].skeleton.bones[1].position.y = (0 + 16) / 2 + - 16 / 2 * (1 - Math.cos(this.timeGo))
-          // this.mesh.children[5].skeleton.bones[1].position.y = - (0 + 16) / 2 + - 16 / 2 * (1 - Math.cos(this.timeGo))
-          // this.mesh.children[7].skeleton.bones[1].position.y = (0 + 16) / 2 + - 16 / 2 * (1 - Math.cos(this.timeGo))
-          // this.mesh.children[9].skeleton.bones[1].position.y = - (0 + 16) / 2 + - 16 / 2 * (1 - Math.cos(this.timeGo))
-
-          // this.mesh.children[3].skeleton.bones[1].position.z = 16 / 2 + 16 / 2 * Math.sin(Math.abs(this.timeGo));
-          // this.mesh.children[5].skeleton.bones[1].position.z = 16 / 2 + 16 / 2 * Math.sin(Math.abs(this.timeGo));
-          // this.mesh.children[7].skeleton.bones[1].position.z = 16 / 2 + 16 / 2 * Math.sin(Math.abs(this.timeGo));
-          // this.mesh.children[9].skeleton.bones[1].position.z = 16 / 2 + 16 / 2 * Math.sin(Math.abs(this.timeGo));
-        }
+      if ( this.state.animateBonesZ ) {
+        this.run1();
       }
+      if ( this.state.animateBonesT ) {
+        this.run2();
+      }
+      if ( this.state.animateBonesN ) {
+        this.reRun();
+      }
+    },
+    run1() {
+      this.reRun();
+      // 前后
+      this.mesh.children[2].skeleton.bones[1].rotation.z = Math.sin( this.timeGo ) * 2 / this.mesh.children[0].skeleton.bones.length;
+      this.mesh.children[4].skeleton.bones[1].rotation.z = - Math.sin( this.timeGo ) * 2 / this.mesh.children[0].skeleton.bones.length;
+      this.mesh.children[6].skeleton.bones[1].rotation.z = - Math.sin( this.timeGo ) * 2 / this.mesh.children[0].skeleton.bones.length;
+      this.mesh.children[8].skeleton.bones[1].rotation.z = Math.sin( this.timeGo ) * 2 / this.mesh.children[0].skeleton.bones.length;
+    },
+    run2() {
+      this.reRun();
+      // 左右
+      this.mesh.children[2].skeleton.bones[1].rotation.x = Math.sin( this.timeGo ) / this.mesh.children[0].skeleton.bones.length;
+      this.mesh.children[4].skeleton.bones[1].rotation.x = - Math.sin( this.timeGo ) / this.mesh.children[0].skeleton.bones.length;
+      this.mesh.children[6].skeleton.bones[1].rotation.x = Math.sin( this.timeGo ) / this.mesh.children[0].skeleton.bones.length;
+      this.mesh.children[8].skeleton.bones[1].rotation.x = - Math.sin( this.timeGo ) / this.mesh.children[0].skeleton.bones.length;
+    },
+    // 归位
+    reRun() {
+      this.mesh.children[2].skeleton.bones[1].rotation.z = 0;
+      this.mesh.children[4].skeleton.bones[1].rotation.z = 0;
+      this.mesh.children[6].skeleton.bones[1].rotation.z = 0;
+      this.mesh.children[8].skeleton.bones[1].rotation.z = 0;
+      this.mesh.children[2].skeleton.bones[1].rotation.x = 0;
+      this.mesh.children[4].skeleton.bones[1].rotation.x = 0;
+      this.mesh.children[6].skeleton.bones[1].rotation.x = 0;
+      this.mesh.children[8].skeleton.bones[1].rotation.x = 0;
     },
     // 创建骨骼
     createBones(sizing ) {
@@ -247,8 +266,8 @@ export default {
       // 加载纹理贴图
       let textureLoader = new THREE.TextureLoader();
       let texture = textureLoader.load('./static/shidifu.jpg');
-      // texture.offset = new THREE.Vector2(0.28, -0.2);
       let materialFace = new THREE.MeshPhongMaterial({
+				skinning: true,
         map: texture,
 				side: THREE.DoubleSide,
         normalScale: new THREE.Vector2(1.2, 1.2),
@@ -357,10 +376,12 @@ export default {
     setupDatGui() {
       this.gui = new GUI();
 			let folder = this.gui.addFolder( 'General Options' );
-			folder.add( this.state, 'animateBones' );
-			folder.__controllers[ 0 ].name( 'Animate Bones' );
-			folder.add( this.mesh.children[0], 'pose' );
-			folder.__controllers[ 1 ].name( '.pose()' );
+			folder.add( this.state, 'animateBonesZ' );
+			folder.__controllers[ 0 ].name( '走路' );
+			folder.add( this.state, 'animateBonesT' );
+			folder.__controllers[ 1 ].name( '跳跃' );
+			folder.add( this.state, 'animateBonesN' );
+			folder.__controllers[ 2 ].name( '归位' );
 			folder.add( this.state, 'wireframe' ).onChange( ( e ) => {
 				this.mesh.children[0].material.wireframe = e;
       } );
