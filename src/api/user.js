@@ -4,9 +4,9 @@ import { baseUrl } from '@/config/env';
 // 登录
 export const loginByUsername = data =>
   request({
-    url: '/api/index',
-    method: 'get',
-    params: {
-      type: 'top'
+    url: baseUrl+'/user/login',
+    method: 'post',
+    data: {
+      ...data
     }
   });

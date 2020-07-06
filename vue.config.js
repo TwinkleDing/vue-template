@@ -12,9 +12,9 @@ module.exports = {
     hotOnly: false,
     /* 使用代理 */
     proxy: {
-      '/api': {
+      '/': {
         /* 目标代理服务器地址 */
-        target: 'http://v.juhe.cn/toutiao/',
+        target: 'http://localhost:3333/api',
         /* 允许跨域 */
         changeOrigin: true
       }

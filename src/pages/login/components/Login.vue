@@ -17,15 +17,13 @@
 
 <script>
 import { loginByUsername } from '@/api/user';
-import md5 from 'js-md5';
 export default {
   name: 'login',
   data() {
     return {
       form: {
-        loginType: 1,
-        account: 'admin',
-        password: 'admin'
+        account: 'bilibili',
+        password: 'bilibili'
       }
     };
   },
@@ -37,8 +35,10 @@ export default {
           message: '请输入账号'
         });
       } else {
-        let params = { ...this.form };
-        params.password = md5(params.password);
+        let params = {
+          'user_id': this.form.account,
+          'user_pwd': this.form.password
+        };
         loginByUsername(params).then(res => {
           this.$store.dispatch('userInfo', res.data.data);
         }).then(() => {
