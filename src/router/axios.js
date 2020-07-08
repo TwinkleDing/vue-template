@@ -4,7 +4,7 @@ import { serialize } from '@/util/util';
 import { Message } from 'element-ui';
 import NProgress from 'nprogress'; // progress bar
 import 'nprogress/nprogress.css'; // progress bar style
-import { getToken } from '@/util/auth';
+// import { getToken } from '@/util/auth';
 
 axios.defaults.timeout = 100000;
 //返回其他状态吗

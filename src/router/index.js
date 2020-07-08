@@ -12,10 +12,7 @@ var routes = [
     path: '',
     redirect: '/index', //重定向
     name: 'Pages',
-    component: Pages,
-    children: [
-      ...routerList
-    ]
+    component: Pages
   },
   {
     path: '/',
@@ -46,35 +43,38 @@ if (env.NODE_ENV === 'development') {
   _import = file => import('@/views/' + file + '.vue'); //生产
 }
 var router = new VueRouter({
-  scrollBehavior: () => ({ x: 0, y: 0 }),
+  routes,
+  scrollBehavior: () => ({ x: 0, y: 0 })
 });
 router.beforeEach((to, from, next) => {
-  if(!getRoute) {
-    if(store.getters.route.length === 0) {
-      store.dispatch('route').then(res=> {
-        routes[0].children.push(...filterAsyncRouter(res));
-      });
-    }else {
-      routes[0].children.push(...filterAsyncRouter(store.getters.route));
-    }
-    router.addRoutes(routes);
-    getRoute = true;
-    if (store.getters.user) {
-      next({ ...to, replace: true });
-    } else if (to.path === '/login') {
-      next({ ...to, replace: true });
-    } else {
-      next({ path: '/login' });
-    }
-  }else {
-    if (store.getters.user) {
-      next();
-    } else if (to.path === '/login') {
-      next();
-    } else {
-      next({ path: '/login' });
-    }
-  }
+  // routes[0].children = [...routerList];
+  next();
+  // if(!getRoute) {
+    // if(store.getters.route.length === 0) {
+    //   store.dispatch('route').then(res=> {
+    //     routes[0].children.push(...filterAsyncRouter(res));
+    //   });
+    // }else {
+    //   routes[0].children.push(...filterAsyncRouter(store.getters.route));
+    // }
+    // router.addRoutes(routes);
+    // getRoute = true;
+    // if (store.getters.user) {
+    //   next({ ...to, replace: true });
+    // } else if (to.path === '/login') {
+    //   next({ ...to, replace: true });
+    // } else {
+    //   next({ path: '/login' });
+    // }
+  // }else {
+  //   if (store.getters.user) {
+  //     next();
+  //   } else if (to.path === '/login') {
+  //     next();
+  //   } else {
+  //     next({ path: '/login' });
+  //   }
+  // }
 });
 
 function filterAsyncRouter(asyncRouterMap) { //遍历后台传来的路由字符串，转换为组件对象
