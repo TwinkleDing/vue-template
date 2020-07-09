@@ -55,8 +55,7 @@ export default {
               loading.close();
               this.$router.push({ path: '/index' });
             }, 1000);
-          }).catch(e => {
-            console.log(e);
+          }).catch(() => {
           });
         });
       }

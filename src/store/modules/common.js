@@ -1,5 +1,4 @@
 import { setStore, getStore, removeStore } from '@/util/store';
-import router from '@/router';
 
 const common = {
   state: {

@@ -81,17 +81,17 @@ export default {
     };
   },
   methods: {
-    handleClick(row) {
+    handleClick() {
       this.$router.push('/info');
     },
     handleSelectionChange() {
 
     },
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+    handleSizeChange() {
+      // console.log(`每页 ${val} 条`);
     },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+    handleCurrentChange() {
+      // console.log(`当前页: ${val}`);
     }
   }
 };

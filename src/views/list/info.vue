@@ -41,9 +41,10 @@ export default {
     // this.name = this.$route.params.name;
   },
   methods: {
-    handleClickTabs(tab, event) {
-      console.log(tab, event);
-    },
+    // handleClickTabs(tab, event) {
+    //   console.log(tab, event);
+    // },
+    handleClickTabs() {}
   },
 };
 </script>

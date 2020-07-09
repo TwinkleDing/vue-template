@@ -2,6 +2,16 @@ module.exports = {
   publicPath: './',
   lintOnSave: true,
   productionSourceMap: false,
+  chainWebpack: (config) => {
+    //忽略的打包文件
+    config.externals({
+      'vue': 'Vue',
+      'vue-router': 'VueRouter',
+      'vuex': 'Vuex',
+      'axios': 'axios',
+      'element-ui': 'ELEMENT',
+    });
+  },
   /* webpack-dev-server 相关配置 */
   devServer: {
     /* 自动打开浏览器 */
