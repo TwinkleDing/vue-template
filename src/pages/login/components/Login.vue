@@ -41,6 +41,7 @@ export default {
         };
         loginByUsername(params).then(res => {
           this.$store.dispatch('userInfo', res.data.data);
+          this.$store.dispatch('route');
         }).then(() => {
           this.$store.dispatch('logIn', this.form.account).then(() => {
             // 页面跳转

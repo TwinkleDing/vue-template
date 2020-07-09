@@ -38,7 +38,7 @@ export default {
     };
   },
   mounted() {
-    this.name = this.$route.params.name;
+    // this.name = this.$route.params.name;
   },
   methods: {
     handleClickTabs(tab, event) {

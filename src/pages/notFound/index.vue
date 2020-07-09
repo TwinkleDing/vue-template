@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'not-found',
+  name: 'NotFound',
   methods: {
     goIndex() {
       this.$router.push('/index');

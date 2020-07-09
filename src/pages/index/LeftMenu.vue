@@ -10,6 +10,7 @@
 
 <script>
 import leftItem from './components/leftItem';
+import {mapGetters} from 'vuex';
 
 export default {
   name: 'leftMenu',
@@ -24,9 +25,10 @@ export default {
   },
   created() {
     this.metaKey = this.$route.meta.key;
-    this.$store.dispatch('route').then(res=> {
-      this.menu = res;
-    });
+    this.menu = this.route[0].children;
+  },
+  computed: {
+    ...mapGetters(['route'])
   }
 };
 </script>

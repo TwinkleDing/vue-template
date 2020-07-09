@@ -1,4 +1,5 @@
 import { setStore, getStore, removeStore } from '@/util/store';
+import router from '@/router';
 
 const common = {
   state: {
@@ -34,6 +35,12 @@ const common = {
     REMOVE_USER: () => {
       removeStore({
         name: 'user',
+        type: 'local'
+      });
+    },
+    REMOVE_ROUTES: () => {
+      removeStore({
+        name: 'route',
         type: 'local'
       });
     },
@@ -89,6 +96,7 @@ const common = {
     logOut({ commit }) {
       return new Promise(resolve => {
         commit('REMOVE_USER');
+        commit('REMOVE_ROUTES');
         commit('REMOVE_USER_INFO');
         resolve();
       });
@@ -97,70 +105,82 @@ const common = {
       return new Promise((resolve, reject)=> {
         const routes = [
           {
-            label: '首页',
-            name: 'Homes',
-            path: '/index',
-            key: 'Homes',
-            component: 'home/index',
-          },
-          {
-            label: '常用',
-            name: 'normal',
-            path: '/normal',
-            key: 'normal',
+            path: '',
+            name: 'Pages',
+            component: 'Pages',
             children: [
               {
-                label: '列表',
-                name: 'Lists',
-                path: '/lists',
-                key: 'Lists',
-                component: 'list/index',
+                label: '首页',
+                name: 'Homes',
+                path: '/dashboard',
+                key: 'Homes',
+                component: 'home/index',
+              },
+              {
+                label: '常用',
+                name: 'normal',
+                path: '/normal',
+                key: 'normal',
                 children: [
                   {
                     label: '列表',
-                    name: 'Listss',
-                    path: '/listss',
-                    key: 'Listss',
+                    name: 'Lists',
+                    path: '/lists',
+                    key: 'Lists',
                     component: 'list/index',
+                    children: [
+                      {
+                        label: '列表',
+                        name: 'Listss',
+                        path: '/listss',
+                        key: 'Listss',
+                        component: 'list/index',
+                      },
+                    ]
+                  },
+                  {
+                    label: '表单',
+                    name: 'Forms',
+                    path: '/forms',
+                    key: 'Forms',
+                    component: 'form/index',
                   },
                 ]
               },
               {
-                label: '表单',
-                name: 'Forms',
-                path: '/forms',
-                key: 'Forms',
-                component: 'form/index',
+                label: '文本编辑器',
+                name: 'MarkDowns',
+                path: '/markdowns',
+                key: 'MarkDowns',
+                component: 'markdown/index',
               },
+              {
+                label: '图表',
+                name: 'Charts',
+                path: '/charts',
+                key: 'Charts',
+                component: 'chart/index',
+              },
+              {
+                label: '地图',
+                name: 'Maps',
+                path: '/maps',
+                key: 'Maps',
+                component: 'map/index',
+              },
+              {
+                label: '模型',
+                name: 'Model',
+                path: '/models',
+                key: 'Models',
+                component: 'model/index',
+              }
             ]
           },
           {
-            label: '文本编辑器',
-            name: 'MarkDowns',
-            path: '/markdowns',
-            key: 'MarkDowns',
-            component: 'markdown/index',
-          },
-          {
-            label: '图表',
-            name: 'Charts',
-            path: '/charts',
-            key: 'Charts',
-            component: 'chart/index',
-          },
-          {
-            label: '地图',
-            name: 'Maps',
-            path: '/maps',
-            key: 'Maps',
-            component: 'map/index',
-          },
-          {
-            label: '模型',
-            name: 'Model',
-            path: '/models',
-            key: 'Models',
-            component: 'model/index',
+            path: '*',
+            name: 'NotFound',
+            redirect: '/404', //重定向
           }
         ];
         commit('SET_ROUTE', routes);

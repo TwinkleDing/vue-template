@@ -9,14 +9,13 @@ import routerList from './router';
 
 var routes = [
   {
-    path: '',
-    redirect: '/index', //重定向
-    name: 'Pages',
-    component: Pages
+    path: '/',
+    redirect: '/dashboard', //重定向
   },
   {
-    path: '/',
-    redirect: '/index', //重定向
+    path: '/index',
+    redirect: '/dashboard', //重定向
+    component: Pages,
   },
   {
     path: '/login',
@@ -25,12 +24,7 @@ var routes = [
   },
   {
     path: '/404', //重定向
-    name: '404',
     component: NotFound
-  },
-  {
-    path: '*',
-    redirect: '/404', //重定向
   }
 ];
 
@@ -43,46 +37,40 @@ if (env.NODE_ENV === 'development') {
   _import = file => import('@/views/' + file + '.vue'); //生产
 }
 var router = new VueRouter({
-  routes,
-  scrollBehavior: () => ({ x: 0, y: 0 })
+  routes : [...routes, ...routerList],
+  scrollBehavior: () => ({ x: 0, y: 0 }),
 });
 router.beforeEach((to, from, next) => {
-  // routes[0].children = [...routerList];
-  next();
-  // if(!getRoute) {
-    // if(store.getters.route.length === 0) {
-    //   store.dispatch('route').then(res=> {
-    //     routes[0].children.push(...filterAsyncRouter(res));
-    //   });
-    // }else {
-    //   routes[0].children.push(...filterAsyncRouter(store.getters.route));
-    // }
-    // router.addRoutes(routes);
-    // getRoute = true;
-    // if (store.getters.user) {
-    //   next({ ...to, replace: true });
-    // } else if (to.path === '/login') {
-    //   next({ ...to, replace: true });
-    // } else {
-    //   next({ path: '/login' });
-    // }
-  // }else {
-  //   if (store.getters.user) {
-  //     next();
-  //   } else if (to.path === '/login') {
-  //     next();
-  //   } else {
-  //     next({ path: '/login' });
-  //   }
-  // }
+  if(store.getters.route.length) {
+    if(!getRoute) {
+      router.addRoutes(filterAsyncRouter(store.getters.route));
+      getRoute = true;
+      next({ ...to, replace: true });
+    }else {
+      next();
+    }
+  }else {
+    // 未登录
+    if(to.path.includes('login')) {
+      next();
+    }else {
+      next('/login');
+    }
+  }
 });
 
 function filterAsyncRouter(asyncRouterMap) { //遍历后台传来的路由字符串，转换为组件对象
   const accessedRouters = asyncRouterMap.filter(route => {
-    if (route.component) {
-      route.component = _import(route.component);
+    if(route.name === 'Pages') {
+      route.component = Pages;
+    }else if(route.name === 'NotFound') {
+      route.component = NotFound;
     }else {
-      route.component = Empty;
+      if (route.component) {
+        route.component = _import(route.component);
+      }else {
+        route.component = Empty;
+      }
     }
     if (route.children && route.children.length) {
       route.children = filterAsyncRouter(route.children);

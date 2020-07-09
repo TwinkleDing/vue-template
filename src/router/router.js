@@ -1,11 +1,13 @@
-import Infos from '@/views/list/info';
+import Layout from '@/pages/index';
+
 export default [
   {
-    path: '/info/:name',
-    name: 'Infos',
-    component: Infos,
-    meta: {
-      key: 'Infos'
-    }
+    path: '/info',
+    component: Layout,
+    children: [{
+      path: '/info',
+      name: 'Infos',
+      component: () => import( /* webpackChunkName: "views" */ '@/views/list/info')
+    }]
   }
 ];

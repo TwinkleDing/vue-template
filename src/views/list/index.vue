@@ -82,7 +82,7 @@ export default {
   },
   methods: {
     handleClick(row) {
-      this.$router.push(`/info/${row.name}`);
+      this.$router.push('/info');
     },
     handleSelectionChange() {
 
