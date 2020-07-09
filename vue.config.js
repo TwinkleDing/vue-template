@@ -1,4 +1,5 @@
 module.exports = {
+  publicPath: './',
   lintOnSave: true,
   productionSourceMap: false,
   /* webpack-dev-server 相关配置 */
