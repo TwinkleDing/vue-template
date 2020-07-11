@@ -25,19 +25,22 @@ const common = {
         content: state.user
       });
     },
-    REMOVE_USER_INFO: () => {
+    REMOVE_USER_INFO: (state) => {
+      state.userInfo = {};
       removeStore({
         name: 'userInfo',
         type: 'local'
       });
     },
-    REMOVE_USER: () => {
+    REMOVE_USER: (state) => {
+      state.user = '';
       removeStore({
         name: 'user',
         type: 'local'
       });
     },
-    REMOVE_ROUTES: () => {
+    REMOVE_ROUTES: (state) => {
+      state.route = [];
       removeStore({
         name: 'route',
         type: 'local'
