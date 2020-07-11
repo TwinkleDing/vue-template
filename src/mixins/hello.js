@@ -2,9 +2,7 @@
 var myMixin = {
     methods: {
         hello() {
-            console.log(this.mixxins);
             this.mixxins = 'mixxins';
-            console.log('hello from mixin!');
         }
     }
 };

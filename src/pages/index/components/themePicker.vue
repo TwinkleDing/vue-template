@@ -10,7 +10,7 @@
 <script>
 import { mapGetters } from 'vuex';
 const version = require('element-ui/package.json').version; // element-ui version from node_modules
-// const ORIGINAL_THEME = '#409EFF'; // default color
+const ORIGINAL_THEME = '#409EFF'; // default color
 
 export default {
   data() {
@@ -27,22 +27,20 @@ export default {
   },
   watch: {
     defaultTheme: {
-      handler(val) {
+      handler: function(val) {
         this.theme = val;
       },
       immediate: true
     },
     theme: {
       async handler(val) {
-        console.log(val);
-        const oldVal = this.chalk ? this.theme : this.themeColor;
+        const oldVal = this.chalk ? this.theme : ORIGINAL_THEME;
         if (typeof val !== 'string') {
           return;
         }
         const themeCluster = this.getThemeCluster(val.replace('#', ''));
-
         const originalCluster = this.getThemeCluster(oldVal.replace('#', ''));
-        console.log(themeCluster, originalCluster);
+        // console.log(themeCluster, originalCluster);
 
         const $message = this.$message({
           message: '  Compiling the theme',
@@ -54,7 +52,7 @@ export default {
 
         const getHandler = (variable, id) => {
           return () => {
-            const originalCluster = this.getThemeCluster(this.themeColor.replace('#', ''));
+            const originalCluster = this.getThemeCluster(ORIGINAL_THEME.replace('#', ''));
             const newStyle = this.updateStyle(this[variable], originalCluster, themeCluster);
 
             let styleTag = document.getElementById(id);
@@ -94,7 +92,7 @@ export default {
         $message.close();
       },
       immediate: true
-    },
+    }
   },
 
   methods: {
@@ -125,10 +123,9 @@ export default {
         let red = parseInt(color.slice(0, 2), 16);
         let green = parseInt(color.slice(2, 4), 16);
         let blue = parseInt(color.slice(4, 6), 16);
-        let theme = '';
         if (tint === 0) { // when primary color is in its rgb space
-          theme = [red, green, blue].join(',');
-        } else {
+          return [red, green, blue].join(',');
+        }
           red += Math.round(tint * (255 - red));
           green += Math.round(tint * (255 - green));
           blue += Math.round(tint * (255 - blue));
@@ -137,9 +134,7 @@ export default {
           green = green.toString(16);
           blue = blue.toString(16);
 
-          theme = `#${red}${green}${blue}`;
-        }
-        return theme;
+          return `#${red}${green}${blue}`;
       };
 
       const shadeColor = (color, shade) => {
