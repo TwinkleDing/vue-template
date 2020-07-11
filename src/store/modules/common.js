@@ -8,7 +8,7 @@ const common = {
     user: getStore({ name: 'user' }) || '',
     color: getStore({ name: 'color' }) || '#409eff',
     route: getStore({ name: 'route' }) || [],
-    colorName: getStore({ name: 'colorName' }) || '#409EFF',
+    colorName: '#409EFF' || '#409EFF',
   },
   mutations: {
     SET_USER_INFO: (state, userInfo) => {

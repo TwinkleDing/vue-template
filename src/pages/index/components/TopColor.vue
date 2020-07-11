@@ -29,7 +29,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="scss">
 .top-color {
   cursor: pointer;
 }

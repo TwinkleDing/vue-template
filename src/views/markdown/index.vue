@@ -49,7 +49,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="scss">
 .pages-markdown{
   height: calc(100% - 20px);
 }

@@ -35,10 +35,10 @@ export default {
 };
 </script>
 
-<style lang='less' scoped>
-@url: '../../assets/img/girl.png';
+<style lang='scss' scoped>
+$url: '../../assets/img/girl.png';
 .login-box {
-  background-image: url(@url);
+  background-image: url($url);
   width: 100%;
   height: 100%;
   background-size: 100% 100%;

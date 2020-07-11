@@ -193,7 +193,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="scss">
 .pages-form {
   padding: 20px;
   text-align: left;

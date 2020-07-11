@@ -49,7 +49,7 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .progress{
   width: 400px;
 }

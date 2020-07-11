@@ -21,7 +21,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="scss">
   #container {
     height: 100%;
     width: 100%;

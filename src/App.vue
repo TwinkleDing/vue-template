@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<style lang="less">
+<style lang="scss">
 html,
 body {
   width: 100%;

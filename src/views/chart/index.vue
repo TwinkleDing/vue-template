@@ -385,7 +385,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="scss">
 .charts {
   height: 150%;
   width: 100%;

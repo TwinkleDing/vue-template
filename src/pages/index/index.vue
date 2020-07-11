@@ -37,10 +37,10 @@ export default {
   }
 };
 </script>
-<style lang="less">
-@url: '../../assets/img/beach.jpg';
+<style lang="scss">
+$url: '../../assets/img/beach.jpg';
 .pages {
-  background-image: url(@url);
+  background-image: url($url);
   height: 100%;
   width: 100%;
   .content {

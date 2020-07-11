@@ -18,7 +18,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="scss">
 .home-index {
   min-height: calc(100% - 20px);
 }

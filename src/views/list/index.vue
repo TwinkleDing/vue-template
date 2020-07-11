@@ -97,7 +97,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="scss">
 .pages-lists{
   height: auto;
   padding: 20px;

@@ -56,7 +56,7 @@ export default {
   }
 };
 </script>
-<style lang='less' scoped>
+<style lang='scss' scoped>
 .top-bar {
   height: 60px;
   border-bottom: 1px solid #999;

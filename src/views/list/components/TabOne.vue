@@ -156,7 +156,7 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .tab-one{
   padding: 100px;
   .item{

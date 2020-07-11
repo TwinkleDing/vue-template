@@ -12,7 +12,7 @@
     "core-js": "^3.6.5",
     "dat.gui": "^0.7.7",
     "echarts": "^4.8.0",
-    "element-ui": "^2.13.0",
+    "element-ui": "^2.4.5",
     "js-base64": "^2.5.2",
     "js-cookie": "^2.2.1",
     "js-md5": "^0.7.3",
@@ -44,9 +44,10 @@
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-vue": "^6.1.2",
-    "less": "^3.0.4",
-    "less-loader": "^5.0.0",
+    "node-sass": "^4.9.2",
     "prettier": "^1.19.1",
+    "sass-loader": "^7.0.3",
+    "vue-cli-plugin-element": "^1.0.1",
     "vue-template-compiler": "^2.6.11",
     "webpack": "^4.43.0"
   }
