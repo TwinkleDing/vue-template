@@ -5,7 +5,7 @@
     </div>
     <div class='logout'>
       <top-color />
-      <div>用户id：{{ user }}</div>
+      <div><i class="el-icon-user"></i>用户id：{{ user }}</div>
       <el-button type='primary' @click='logout'>退出登录</el-button>
     </div>
   </div>

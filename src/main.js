@@ -1,6 +1,4 @@
 import Vue from 'vue';
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
 import VueAxios from 'vue-axios';
 import echarts from 'echarts';
 import axios from './router/axios';
@@ -14,7 +12,6 @@ import './plugins/element.js';
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
 Vue.use(echarts);
-Vue.use(ElementUI);
 Vue.use(GoTop);
 new Vue({
   router,
