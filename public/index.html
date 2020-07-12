@@ -15,3 +15,12 @@
     <!-- built files will be auto injected -->
   </body>
 </html>
+
+<!-- 引入组件库 -->
+<% for (var i in htmlWebpackPlugin.options.cdn &&
+htmlWebpackPlugin.options.cdn.js) { %>
+<script
+  src="<%= htmlWebpackPlugin.options.cdn.js[i] %>"
+  crossorigin="anonymous"
+></script>
+<% } %>

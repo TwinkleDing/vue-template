@@ -5,7 +5,6 @@ const webpack = require('webpack');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin; // 显示构建包大小
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const productionGzipExtensions = ['js', 'css'];
-const IsProduction = process.env.NODE_ENV === 'production' ? true : false;
 
 function resolve(dir) {
   return path.join(__dirname, dir);
@@ -39,7 +38,7 @@ module.exports = {
   assetsDir: 'static',
   indexPath: 'index.html',
   filenameHashing: true ,
-  lintOnSave: !IsProduction,
+  lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
   css: {
     extract: true,
@@ -66,7 +65,7 @@ module.exports = {
     //   maxEntrypointSize: 500000 // 整数类型（以字节为单位）
     // },
     plugins: [
-      // new BundleAnalyzerPlugin(),
+      new BundleAnalyzerPlugin(),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       // 下面是下载的插件的配置
       new CompressionWebpackPlugin({
@@ -76,12 +75,18 @@ module.exports = {
         minRatio: 0.8
       }),
       new webpack.optimize.LimitChunkCountPlugin({
-        // maxChunks: 5,
+        maxChunks: 5,
         minChunkSize: 100
       })
     ]
   },
   chainWebpack: (config) => {
+    // 移除 prefetch 插件
+    config.plugins.delete('prefetch-index');
+    // 移除 preload 插件，避免加载多余的资源
+    config.plugins.delete('preload-index');
+    config.plugins.delete('preload'); // TODO: need test
+    config.plugins.delete('prefetch'); // TODO: need test
     // 配置cdn引入
     config.plugin('html').tap((args) => {
       args[0].cdn = cdn;
@@ -102,11 +107,11 @@ module.exports = {
 
     config
       // https://webpack.js.org/configuration/devtool/#development
-      .when(!IsProduction,
+      .when(process.env.NODE_ENV === 'development',
         config => config.devtool('cheap-source-map')
       );
     config
-      .when(IsProduction,
+      .when(process.env.NODE_ENV !== 'development',
         config => {
           config
             .plugin('ScriptExtHtmlWebpackPlugin')
