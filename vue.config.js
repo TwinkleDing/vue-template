@@ -14,11 +14,10 @@ const cdn = {
   // 忽略打包的第三方库
   externals: {
     vue: 'Vue',
-    vuex: 'Vuex',
     'vue-router': 'VueRouter',
+    vuex: 'Vuex',
     axios: 'axios',
-    'element-ui': 'ElementUI',
-    three: 'THREE'
+    echarts: 'echarts'
   },
 
   // 通过cdn方式使用
@@ -27,8 +26,7 @@ const cdn = {
     'https://cdn.bootcss.com/vue-router/3.1.2/vue-router.min.js',
     'https://cdn.bootcss.com/vuex/3.1.2/vuex.min.js',
     'https://cdn.bootcss.com/axios/0.19.2/axios.min.js',
-    'https://cdn.bootcss.com/moment.js/2.24.0/moment.min.js',
-    'https://cdn.bootcss.com/echarts/4.6.0/echarts.min.js',
+    'https://cdn.bootcss.com/echarts/4.6.0/echarts.min.js'
   ],
   css: [],
 };
@@ -36,9 +34,8 @@ const cdn = {
 module.exports = {
   publicPath: './',
   outputDir:'dist',
-  // assetsDir: 'static',
   indexPath: 'index.html',
-  filenameHashing: true ,
+  filenameHashing: false ,
   lintOnSave: !IsProduction,
   productionSourceMap: false,
   css: {
@@ -54,6 +51,8 @@ module.exports = {
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
     name: 'vue-template',
+    // 忽略打包配置
+    externals: cdn.externals,
     resolve: {
       alias: {
         '@': resolve('src')
@@ -87,8 +86,6 @@ module.exports = {
       args[0].cdn = cdn;
       return args;
     });
-    // 忽略打包配置
-    config.externals = cdn.externals;
     // set preserveWhitespace
     config.module
       .rule('vue')
@@ -108,14 +105,14 @@ module.exports = {
     config
       .when(IsProduction,
         config => {
-          config
-            .plugin('ScriptExtHtmlWebpackPlugin')
-            .after('html')
-            .use('script-ext-html-webpack-plugin', [{
-            // `runtime` must same as runtimeChunk name. default is `runtime`
-              inline: /runtime\..*\.js$/
-            }])
-            .end();
+          // config
+          //   .plugin('ScriptExtHtmlWebpackPlugin')
+          //   .after('html')
+          //   .use('script-ext-html-webpack-plugin', [{
+          //   // `runtime` must same as runtimeChunk name. default is `runtime`
+          //     inline: /runtime\..*\.js$/
+          //   }])
+          //   .end();
           // 打包文件处理
           config
             .optimization.splitChunks({

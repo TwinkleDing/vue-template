@@ -37,7 +37,7 @@ export default {
   }
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 $url: '../../assets/img/beach.jpg';
 .pages {
   background-image: url($url);

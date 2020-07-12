@@ -1,5 +1,5 @@
 <template>
-  <theme-picker style="float: right;height: 26px;margin: -3px 8px 0 0;" @change="themeChange" />
+  <theme-picker @change="themeChange" />
 </template>
 
 <script>
