@@ -34,7 +34,7 @@ const env = process.env;
 if (env.NODE_ENV === 'development') {
   _import = file => require('@/views/' + file + '.vue').default; //开发
 } else if (env.NODE_ENV === 'production') {
-  _import = file => import('@/views/' + file + '.vue'); //生产
+  _import = file => () => import('@/views/' + file + '.vue'); //生产
 }
 var Router = new VueRouter({
   routes : [...routes, ...routerList],
