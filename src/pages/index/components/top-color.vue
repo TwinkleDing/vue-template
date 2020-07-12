@@ -1,5 +1,5 @@
 <template>
-  <theme-picker @change="themeChange" />
+  <theme-picker style="float: right;height: 26px;margin: -3px 8px 0 0;" @change="themeChange" />
 </template>
 
 <script>
@@ -22,5 +22,12 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped>
+<style>
+.theme-picker .el-color-picker__trigger {
+  vertical-align: middle;
+}
+
+.theme-picker-dropdown .el-color-dropdown__link-btn {
+  display: none;
+}
 </style>
