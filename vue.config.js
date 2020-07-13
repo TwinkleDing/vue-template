@@ -105,14 +105,6 @@ module.exports = {
     config
       .when(IsProduction,
         config => {
-          // config
-          //   .plugin('ScriptExtHtmlWebpackPlugin')
-          //   .after('html')
-          //   .use('script-ext-html-webpack-plugin', [{
-          //   // `runtime` must same as runtimeChunk name. default is `runtime`
-          //     inline: /runtime\..*\.js$/
-          //   }])
-          //   .end();
           // 打包文件处理
           config
             .optimization.splitChunks({
