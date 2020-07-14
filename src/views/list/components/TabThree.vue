@@ -7,6 +7,7 @@
       <el-alert
         title="成功提示的文案"
         type="success"
+        @close='closed'
         effect="dark">
       </el-alert>
       <el-alert
@@ -48,9 +49,6 @@
         </el-carousel-item>
       </el-carousel>
     </div>
-    <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto">
-      <li :key='i' v-for="i in count" class="infinite-list-item">{{ i }}</li>
-    </ul>
   </div>
 </template>
 
@@ -59,7 +57,7 @@ export default {
   name: 'tabThree',
   data() {
     return {
-       count: 0,
+      count: 0,
       currentDate: new Date(),
     };
   },
@@ -67,17 +65,14 @@ export default {
     goBack() {
       this.$router.go(-1);
     },
-    load () {
-      this.count += 2;
+    closed() {
+      console.log('关闭');
     }
   },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .tab-three{
-  ul{
-    height: 300px;
-  }
 }
 </style>

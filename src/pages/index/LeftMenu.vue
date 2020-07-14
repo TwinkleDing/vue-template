@@ -1,5 +1,5 @@
 <template>
-  <div class='left-menu'>
+  <div class='left-menu' v-ding='ding'>
     <el-menu  :default-active='metaKey'
               mode='vertical'
               class="el-menu-vertical-demo">
@@ -20,11 +20,12 @@ export default {
   data() {
     return {
       menu: [],
-      metaKey: 'Homes'
+      metaKey: 'Homes',
+      ding: 'ding'
     };
   },
   created() {
-    this.metaKey = this.$route.meta.key;
+    this.metaKey = this.$route.name;
     this.menu = this.route[0].children;
   },
   computed: {

@@ -11,6 +11,12 @@ import './plugins/element.js';
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
 Vue.use(GoTop);
+Vue.directive('ding', {
+  inserted(el, binding) {
+    console.log(el);
+    console.log(binding);
+  }
+});
 new Vue({
   router,
   store,

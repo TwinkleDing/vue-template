@@ -9,6 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "compression-webpack-plugin": "^4.0.0",
     "core-js": "^3.6.5",
     "dat.gui": "^0.7.7",
     "echarts": "^4.8.0",
