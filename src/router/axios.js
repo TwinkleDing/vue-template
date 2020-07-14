@@ -68,7 +68,7 @@ axios.interceptors.response.use(
       });
       return Promise.reject(new Error(message));
     }
-    return res;
+    return res.data;
   },
   error => {
     NProgress.done();

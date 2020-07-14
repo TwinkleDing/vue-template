@@ -40,24 +40,25 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="pages.currentPage"
+        :current-page="pagination.page"
         :page-sizes="[10, 20, 30, 50]"
         :page-size="100"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="pages.total">
+        :total="pagination.total">
       </el-pagination>
     </div>
   </div>
 </template>
 
 <script>
+import { commentList } from '@/api/comment';
 export default {
   name: 'Lists',
   data() {
     return {
-      pages: {
-        currentPage:1,
-        total: 100
+      pagination: {
+        page:1,
+        size: 10
       },
       tableData: [
         {
@@ -80,18 +81,37 @@ export default {
       ],
     };
   },
+  created() {
+    this.getList();
+  },
   methods: {
+    getList() {
+      let params = {...this.pagination};
+      commentList(params).then(res=> {
+        this.pagination = res.data.pagination;
+        this.tableData = res.data.list.map(item=> {
+          return {
+            date: new Date(Number(item.create_time)).toLocaleString(),
+            name: item.user_name,
+            address: item.user_id
+          };
+        });
+      });
+    },
     handleClick(row) {
       this.$router.push('/info?name='+row.name);
     },
     handleSelectionChange() {
 
     },
-    handleSizeChange() {
-      // console.log(`每页 ${val} 条`);
+    handleSizeChange(val) {
+      this.pagination.page = 1;
+      this.pagination.size = val;
+      this.getList();
     },
-    handleCurrentChange() {
-      // console.log(`当前页: ${val}`);
+    handleCurrentChange(val) {
+      this.pagination.page = val;
+      this.getList();
     }
   }
 };
