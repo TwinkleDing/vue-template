@@ -13,8 +13,6 @@ Vue.use(VueAxios, axios);
 Vue.use(GoTop);
 Vue.directive('ding', {
   inserted(el, binding) {
-    console.log(el);
-    console.log(binding);
   }
 });
 new Vue({

@@ -38,12 +38,9 @@ export default {
     };
   },
   mounted() {
-    // this.name = this.$route.params.name;
+    this.name = this.$route.query.name;
   },
   methods: {
-    // handleClickTabs(tab, event) {
-    //   console.log(tab, event);
-    // },
     handleClickTabs() {}
   },
 };

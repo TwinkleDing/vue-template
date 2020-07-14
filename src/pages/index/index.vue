@@ -41,6 +41,7 @@ export default {
 $url: '../../assets/img/beach.jpg';
 .pages {
   background-image: url($url);
+  background-size: 100% 100%;
   height: 100%;
   width: 100%;
   .content {
@@ -48,12 +49,14 @@ $url: '../../assets/img/beach.jpg';
     .left {
       width: 200px;
       height: 100%;
+      box-sizing: border-box;
       border-right: 1px solid #999;
       float: left;
+      overflow-y: auto;
     };
     .right {
       height: 100%;
-      width: calc(100% - 201px);
+      width: calc(100% - 200px);
       float: right;
       box-sizing: border-box;
       padding-bottom: 20px;

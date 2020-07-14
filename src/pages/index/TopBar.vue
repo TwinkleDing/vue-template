@@ -2,6 +2,7 @@
   <div class='top-bar'>
     <div class='logo'>
       <img src='@/assets/logo.png' alt='no' />
+      <span>vue-template</span>
     </div>
     <div class='logout'>
       <top-color />
@@ -67,6 +68,10 @@ export default {
     height: 60px;
     img {
       height: 100%;
+    }
+    span{
+      line-height: 60px;
+      float: right;
     }
   }
   .logout {

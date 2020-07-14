@@ -81,8 +81,8 @@ export default {
     };
   },
   methods: {
-    handleClick() {
-      this.$router.push('/info');
+    handleClick(row) {
+      this.$router.push('/info?name='+row.name);
     },
     handleSelectionChange() {
 
