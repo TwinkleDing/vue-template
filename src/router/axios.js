@@ -2,10 +2,11 @@ import axios from 'axios';
 import router from '@/router';
 import { serialize } from '@/util/util';
 import { Message } from 'element-ui';
-import NProgress from 'nprogress'; // progress bar
-import 'nprogress/nprogress.css'; // progress bar style
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 // import { getToken } from '@/util/auth';
 
+// 设置超时时间
 axios.defaults.timeout = 100000;
 //返回其他状态吗
 axios.defaults.validateStatus = function(status) {
@@ -52,10 +53,7 @@ axios.interceptors.response.use(
   res => {
     NProgress.done();
     const status = res.data.code || 200,
-    // const statusWhiteList = website.statusWhiteList || [];
-     message = res.data.msg || '未知错误';
-    //如果在白名单里则自行catch逻辑处理
-    // if (statusWhiteList.includes(status)) return Promise.reject(res);
+    message = res.data.msg || '未知错误';
     //如果是401则跳转到登录页面
     if (status === 401) {
       router.push({ path: '/login' });

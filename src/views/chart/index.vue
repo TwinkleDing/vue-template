@@ -18,6 +18,7 @@
 
 <script>
 import ECharts from '@/components/Charts';
+
 export default {
   name: 'Charts',
   components: {
@@ -377,15 +378,11 @@ export default {
         ]
       },
     };
-  },
-  mounted(){
-  },
-  methods: {
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .charts {
   height: 150%;
   width: 100%;

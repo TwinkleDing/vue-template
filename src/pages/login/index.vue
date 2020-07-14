@@ -10,8 +10,9 @@
 <script>
 import Login from './components/Login';
 import Registered from './components/Registered';
+
 export default {
-  name: 'loginBox',
+  name: 'LoginBox',
   components: {
     Login,
     Registered

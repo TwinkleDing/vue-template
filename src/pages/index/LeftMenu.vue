@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import leftItem from './components/leftItem';
+import leftItem from './components/LeftItem';
 import {mapGetters} from 'vuex';
 
 export default {
@@ -34,6 +34,4 @@ export default {
 };
 </script>
 <style lang='scss' scoped>
-.left-menu {
-}
 </style>

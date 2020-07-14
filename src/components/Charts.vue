@@ -42,11 +42,6 @@ export default {
       deep: true
     }
   },
-  data () {
-    return {
-
-    };
-  },
   mounted(){
     this.drawLine();
   },
@@ -59,6 +54,6 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 </style>

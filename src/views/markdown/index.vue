@@ -12,6 +12,7 @@
 // 导入组件 及 组件样式
 import { mavonEditor } from 'mavon-editor';
 import 'mavon-editor/dist/css/index.css';
+
 export default {
   name: 'MarkDowns',
   components: {

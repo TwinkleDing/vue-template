@@ -23,6 +23,7 @@ import TabOne from './components/TabOne';
 import TabTwo from './components/TabTwo';
 import TabThree from './components/TabThree';
 // import TabFour from './components/TabFour';
+
 export default {
   name: 'Infos',
   components: {

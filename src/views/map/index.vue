@@ -5,6 +5,7 @@
 
 <script>
 import MapLoader from '@/util/amap';
+
 export default {
   name: 'Maps',
   mounted() {
@@ -21,9 +22,9 @@ export default {
 };
 </script>
 
-<style lang="scss">
-  #container {
-    height: 100%;
-    width: 100%;
-  }
+<style lang="scss" scoped>
+#container {
+  height: 100%;
+  width: 100%;
+}
 </style>

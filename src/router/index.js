@@ -1,10 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '@/store/index';
-import Pages from '@/pages/index';
-import NotFound from '@/pages/notFound';
-import Login from '@/pages/login';
-import Empty from '@/pages/index/empty.vue';
 import routerList from './router';
 
 var routes = [
@@ -15,16 +11,16 @@ var routes = [
   {
     path: '/index',
     redirect: '/dashboard', //重定向
-    component: Pages,
+    component: ()=> import('@/pages/index')
   },
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: ()=> import('@/pages/login')
   },
   {
     path: '/404', //重定向
-    component: NotFound
+    component: ()=> import('@/pages/notFound')
   }
 ];
 
@@ -40,6 +36,7 @@ var Router = new VueRouter({
   routes : [...routes, ...routerList],
   scrollBehavior: () => ({ x: 0, y: 0 }),
 });
+
 Router.beforeEach((to, from, next) => {
   if(store.getters.route.length) {
     if(!getRoute) {
@@ -68,17 +65,18 @@ VueRouter.prototype.push = function push(location, onResolve, onReject) {
   return originalPush.call(this, location).catch(err => err);
 };
 
-function filterAsyncRouter(asyncRouterMap) { //遍历后台传来的路由字符串，转换为组件对象
+// 遍历后台传来的路由字符串，转换为组件对象
+function filterAsyncRouter(asyncRouterMap) {
   const accessedRouters = asyncRouterMap.filter(route => {
     if(route.name === 'Pages') {
-      route.component = Pages;
+      route.component = import('@/pages/index');
     }else if(route.name === 'NotFound') {
-      route.component = NotFound;
+      route.component = import('@/pages/notFound');
     }else {
       if (route.component) {
         route.component = _import(route.component);
       }else {
-        route.component = Empty;
+        route.component = import('@/pages/index/empty');
       }
     }
     if (route.children && route.children.length) {

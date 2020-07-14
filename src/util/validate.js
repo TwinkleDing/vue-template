@@ -27,7 +27,7 @@ export function isEmail(s) {
  * @param {*} s
  */
 export function isMobile(s) {
-  return /^[1][34578]\d{9}$/.test(s);
+  return /^[1][3456789]\d{9}$/.test(s);
 }
 
 /**
@@ -176,32 +176,6 @@ export function cardid(code) {
   return list;
 }
 /**
- * 判断手机号码是否正确
- */
-export function isvalidatemobile(phone) {
-  let list = [],
-   result = true,
-   msg = '';
-  var isPhone = /^0\d{2,3}-?\d{7,8}$/;
-  //增加134 减少|1349[0-9]{7}，增加181,增加145，增加17[678]
-  if (!validatenull(phone)) {
-    if (phone.length === 11) {
-      if (isPhone.test(phone)) {
-        msg = '手机号码格式不正确';
-      } else {
-        result = false;
-      }
-    } else {
-      msg = '手机号码长度不为11位';
-    }
-  } else {
-    msg = '手机号码不能为空';
-  }
-  list.push(result);
-  list.push(msg);
-  return list;
-}
-/**
  * 判断姓名是否正确
  */
 export function validatename(name) {
@@ -218,13 +192,13 @@ export function validatenum(num, type) {
   let regName = /[^\d.]/g;
   if (type === 1) {
     if (!regName.test(num)) {
-return false;
-}
+      return false;
+    }
   } else if (type === 2) {
     regName = /[^\d]/g;
     if (!regName.test(num)) {
-return false;
-}
+      return false;
+    }
   }
   return true;
 }
@@ -235,13 +209,13 @@ export function validatenumord(num, type) {
   let regName = /[^\d.]/g;
   if (type === 1) {
     if (!regName.test(num)) {
-return false;
-}
+      return false;
+    }
   } else if (type === 2) {
     regName = /[^\d.]/g;
     if (!regName.test(num)) {
-return false;
-}
+      return false;
+    }
   }
   return true;
 }
@@ -251,8 +225,8 @@ return false;
 export function greaterZeroNum(num) {
   let regName = /^(?!(0[0-9]{0,}$))[0-9]{1,}[.]{0,}[0-9]{0,}$/;
   if (!regName.test(num)) {
-return false;
-}
+    return false;
+  }
   return true;
 }
 
@@ -268,12 +242,12 @@ export function validatenull(val) {
   }
   if (val instanceof Array) {
     if (val.length === 0) {
-return true;
-}
+      return true;
+    }
   } else if (val instanceof Object) {
     if (JSON.stringify(val) === '{}') {
-return true;
-}
+      return true;
+    }
   } else {
     if (
       val === 'null' ||
@@ -282,8 +256,8 @@ return true;
       val === undefined ||
       val === ''
     ) {
-return true;
-}
+      return true;
+    }
     return false;
   }
   return false;

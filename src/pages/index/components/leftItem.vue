@@ -5,7 +5,7 @@
                     :key='item.key'
                     :index='item.key'
                     @click='open(item)'>
-          <span slot="title" >{{item.label}}</span>
+        <span slot="title" >{{item.label}}</span>
       </el-menu-item>
       <el-submenu v-if='item.children && item.children.length'
                   :key='item.key'
@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  name: 'leftItem',
+  name: 'LeftItem',
   props: {
     menu: {
       type: Array,

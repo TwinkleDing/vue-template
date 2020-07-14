@@ -1,7 +1,7 @@
 import request from '@/router/axios';
 import { baseUrl } from '@/config/env';
 
-// 登录
+// 评论列表
 export const commentList = data =>
   request({
     url: baseUrl+'/leave',

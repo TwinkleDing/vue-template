@@ -5,8 +5,9 @@
 
 <script>
 import * as THREE from 'three';
+
 export default {
-  name: 'three',
+  name: 'Three',
   data() {
     return {
 
@@ -56,7 +57,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #box{
   height: 300px;
 }

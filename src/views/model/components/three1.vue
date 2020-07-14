@@ -8,8 +8,9 @@
 <script>
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+
 export default {
-  name: 'three',
+  name: 'Three1',
   data() {
     return {
       scene: {},

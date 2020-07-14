@@ -14,8 +14,9 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import TopColor from './components/top-color';
+import TopColor from './components/Top-color';
 import Hello from '@/mixins/hello';
+
 export default {
   components: {
     TopColor

@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: 'regest',
+  name: 'Regest',
   data() {
     return {
       form: {}

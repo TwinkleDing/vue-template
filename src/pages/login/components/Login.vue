@@ -17,8 +17,9 @@
 
 <script>
 import { loginByUsername } from '@/api/user';
+
 export default {
-  name: 'login',
+  name: 'Login',
   data() {
     return {
       form: {

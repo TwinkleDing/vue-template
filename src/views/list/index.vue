@@ -52,6 +52,7 @@
 
 <script>
 import { commentList } from '@/api/comment';
+
 export default {
   name: 'Lists',
   data() {

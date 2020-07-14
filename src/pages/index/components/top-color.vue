@@ -3,10 +3,10 @@
 </template>
 
 <script>
-import ThemePicker from './themePicker';
+import ThemePicker from './ThemePicker';
 
 export default {
-  name: 'topColor',
+  name: 'TopColor',
   components: {
     ThemePicker
   },

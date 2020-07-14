@@ -10,8 +10,9 @@ import * as THREE from 'three';
 import Stats from 'three/examples/jsm/libs/stats.module.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import Three6 from './components/three6';
+
 export default {
-  name: 'models',
+  name: 'Models',
   components: {
     Three6
   },
@@ -423,9 +424,9 @@ export default {
 .model-ca{
   position:relative;
 }
-  .dg.ac{
-    position: absolute;
-    right: 0;
-    top: 60px;
-  }
+.dg.ac{
+  position: absolute;
+  right: 0;
+  top: 60px;
+}
 </style>

@@ -10,8 +10,9 @@ import { GUI } from 'three/examples/jsm/libs/dat.gui.module.js';
 import Stats from 'three/examples/jsm/libs/stats.module.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+
 export default {
-  name: 'robbot',
+  name: 'Robbot',
   data() {
     return {
       scene: {},

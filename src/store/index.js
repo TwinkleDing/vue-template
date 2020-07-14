@@ -5,6 +5,7 @@ import common from './modules/common';
 import themeColor from './modules/themeColor';
 
 Vue.use(Vuex);
+
 export default new Vuex.Store({
   modules: {
     common,

@@ -7,12 +7,12 @@ const validatenull = val => {
   }
   if (val instanceof Array) {
     if (val.length === 0) {
-return true;
-}
+      return true;
+    }
   } else if (val instanceof Object) {
     if (JSON.stringify(val) === '{}') {
-return true;
-}
+      return true;
+    }
   } else {
     if (
       val === 'null' ||
@@ -21,8 +21,8 @@ return true;
       val === undefined ||
       val === ''
     ) {
-return true;
-}
+      return true;
+    }
     return false;
   }
   return false;
@@ -49,16 +49,14 @@ export const setStore = (params = {}) => {
  */
 
 export const getStore = (params = {}) => {
-  let { name, debug } = params,
-   obj = {},
-    content;
+  let { name, debug } = params, obj = {}, content;
   obj = window.sessionStorage.getItem(name);
   if (validatenull(obj)) {
-obj = window.localStorage.getItem(name);
-}
+    obj = window.localStorage.getItem(name);
+  }
   if (validatenull(obj)) {
-return;
-}
+    return;
+  }
   try {
     obj = JSON.parse(obj);
   } catch {
@@ -94,8 +92,7 @@ export const removeStore = (params = {}) => {
  * 获取全部localStorage
  */
 export const getAllStore = (params = {}) => {
-  let list = [],
-   { type } = params;
+  let list = [], { type } = params;
   if (type) {
     for (let i = 0; i <= window.sessionStorage.length; i++) {
       list.push({

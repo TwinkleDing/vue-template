@@ -192,7 +192,7 @@ export const loadStyle = url => {
 export const diff = (obj1, obj2) => {
   delete obj1.close;
   var o1 = obj1 instanceof Object,
-   o2 = obj2 instanceof Object;
+  o2 = obj2 instanceof Object;
   if (!o1 || !o2) {
     /*  判断不是对象  */
     return obj1 === obj2;
