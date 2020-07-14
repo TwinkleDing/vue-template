@@ -2,10 +2,11 @@ import Layout from '@/pages/index';
 
 export default [
   {
-    path: '/info',
+    path: '/info/:name',
     component: Layout,
+    props: true,
     children: [{
-      path: '/info',
+      path: '/info/:name',
       name: 'Infos',
       component: () => import( /* webpackChunkName: "views" */ '@/views/list/info')
     }]

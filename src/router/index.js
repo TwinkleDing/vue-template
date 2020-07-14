@@ -1,6 +1,9 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '@/store/index';
+import Pages from '@/pages/index';
+import Empty from '@/pages/index/empty';
+import NotFound from '@/pages/notFound';
 import routerList from './router';
 
 var routes = [
@@ -36,7 +39,6 @@ var Router = new VueRouter({
   routes : [...routes, ...routerList],
   scrollBehavior: () => ({ x: 0, y: 0 }),
 });
-
 Router.beforeEach((to, from, next) => {
   if(store.getters.route.length) {
     if(!getRoute) {
@@ -65,18 +67,17 @@ VueRouter.prototype.push = function push(location, onResolve, onReject) {
   return originalPush.call(this, location).catch(err => err);
 };
 
-// 遍历后台传来的路由字符串，转换为组件对象
-function filterAsyncRouter(asyncRouterMap) {
+function filterAsyncRouter(asyncRouterMap) { //遍历后台传来的路由字符串，转换为组件对象
   const accessedRouters = asyncRouterMap.filter(route => {
     if(route.name === 'Pages') {
-      route.component = import('@/pages/index');
+      route.component = Pages;
     }else if(route.name === 'NotFound') {
-      route.component = import('@/pages/notFound');
+      route.component = NotFound;
     }else {
       if (route.component) {
         route.component = _import(route.component);
       }else {
-        route.component = import('@/pages/index/empty');
+        route.component = Empty;
       }
     }
     if (route.children && route.children.length) {

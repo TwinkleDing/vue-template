@@ -26,6 +26,7 @@ import TabThree from './components/TabThree';
 
 export default {
   name: 'Infos',
+  props: ['name'],
   components: {
     TabOne,
     TabTwo,
@@ -34,12 +35,8 @@ export default {
   },
   data() {
     return {
-      name: '',
       activeName: 'third',
     };
-  },
-  mounted() {
-    this.name = this.$route.query.name;
   },
   methods: {
     handleClickTabs() {}

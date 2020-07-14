@@ -100,7 +100,12 @@ export default {
       });
     },
     handleClick(row) {
-      this.$router.push('/info?name='+row.name);
+      this.$router.push({
+        name: 'Infos',
+        params: {
+          name: row.name
+        }
+      });
     },
     handleSelectionChange() {
 
