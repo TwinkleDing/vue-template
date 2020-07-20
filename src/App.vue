@@ -1,10 +1,10 @@
 <template>
-  <div id="app">
+  <div id='app'>
     <router-view />
   </div>
 </template>
 
-<style lang="scss">
+<style lang='scss'>
 html,
 body {
   width: 100%;

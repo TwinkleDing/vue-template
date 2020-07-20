@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id='model' class="model-ca"></div>
+    <div id='model' class='model-ca'></div>
   </div>
 </template>
 
@@ -217,7 +217,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 .model-ca{
   position:relative;
 }

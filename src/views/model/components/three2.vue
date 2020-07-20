@@ -1,8 +1,8 @@
 <template>
   <div>
     <div id='box2' class='box'></div>
-    <el-button @click="setD">点模型</el-button>
-    <el-button @click="setM">面模型</el-button>
+    <el-button @click='setD'>点模型</el-button>
+    <el-button @click='setM'>面模型</el-button>
   </div>
 </template>
 
@@ -139,7 +139,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 .box{
   height: 300px;
 }

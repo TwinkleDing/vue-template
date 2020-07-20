@@ -2,7 +2,7 @@
   <div class='pages'>
     <top-bar />
     <div class='content'>
-      <div class="left">
+      <div class='left'>
         <left-menu/>
       </div>
       <div class='right'>
@@ -37,7 +37,7 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 $url: '../../assets/img/beach.jpg';
 .pages {
   background-image: url($url);

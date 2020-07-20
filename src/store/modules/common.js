@@ -8,7 +8,7 @@ const common = {
     user: getStore({ name: 'user' }) || '',
     color: getStore({ name: 'color' }) || '#409eff',
     route: getStore({ name: 'route' }) || [],
-    colorName: '#409EFF' || '#409EFF',
+    language: getStore({ name: 'language'} ) || 'zh',
   },
   mutations: {
     SET_USER_INFO: (state, userInfo) => {
@@ -60,13 +60,6 @@ const common = {
         content: state.route
       });
     },
-    SET_COLOR_NAME: (state, colorName) => {
-      state.colorName = colorName;
-      setStore({
-          name: 'colorName',
-          content: state.colorName,
-      });
-    },
     SET_LOGIN_IN: (state, loginIn) => {
       state.loginIn = loginIn;
       setStore({
@@ -79,6 +72,13 @@ const common = {
       setStore({
         name: 'loginOut',
         content: state.loginOut
+      });
+    },
+    SET_LANGUAGE: (state, language) => {
+      state.language = language;
+      setStore({
+        name: 'language',
+        content: state.language
       });
     }
   },

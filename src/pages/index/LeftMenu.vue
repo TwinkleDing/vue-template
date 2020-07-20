@@ -2,7 +2,7 @@
   <div class='left-menu' v-ding='ding'>
     <el-menu  :default-active='metaKey'
               mode='vertical'
-              class="el-menu-vertical-demo">
+              class='el-menu-vertical-demo'>
       <left-item :menu='menu' />
     </el-menu>
   </div>

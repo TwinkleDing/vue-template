@@ -1,5 +1,5 @@
 <template>
-  <theme-picker @change="themeChange" />
+  <theme-picker @change='themeChange' />
 </template>
 
 <script>

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="message">
+    <div class='message'>
       {{ message }}
     </div>
-    Enter your username: <input v-model="username" />
-    <div v-if="error" class="error">
+    Enter your username: <input v-model='username' />
+    <div v-if='error' class='error'>
       Please enter a username with at least seven letters.
     </div>
   </div>

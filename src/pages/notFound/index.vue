@@ -1,7 +1,7 @@
 <template>
   <div>
     404
-    <el-button @click="goIndex">返回首页</el-button>
+    <el-button @click='goIndex'>返回首页</el-button>
   </div>
 </template>
 
@@ -16,5 +16,5 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 </style>

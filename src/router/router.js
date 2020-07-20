@@ -8,7 +8,7 @@ export default [
     children: [{
       path: '/info/:name',
       name: 'Infos',
-      component: () => import( /* webpackChunkName: "views" */ '@/views/list/info')
+      component: () => import( /* webpackChunkName: 'views' */ '@/views/list/info')
     }]
   }
 ];

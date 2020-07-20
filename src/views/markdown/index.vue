@@ -1,14 +1,14 @@
 <template>
   <div class='pages-markdown'>
-    <mavon-editor v-model="content"
-      ref="md" @change="change"
-      @imgAdd="$imgAdd"
-      style="min-height: 600px" />
-      <div v-html="html"></div>
+    <mavon-editor v-model='content'
+      ref='md' @change='change'
+      @imgAdd='$imgAdd'
+      style='min-height: 600px' />
+      <div v-html='html'></div>
   </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script type='text/ecmascript-6'>
 // 导入组件 及 组件样式
 import { mavonEditor } from 'mavon-editor';
 import 'mavon-editor/dist/css/index.css';
@@ -50,7 +50,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang='scss'>
 .pages-markdown{
   height: calc(100% - 20px);
 }

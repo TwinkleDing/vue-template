@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :id="setOption.id" :style="{width: width, height: height}"></div>
+    <div :id='setOption.id' :style='{width: width, height: height}'></div>
   </div>
 </template>
 
@@ -54,6 +54,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 
 </style>

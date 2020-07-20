@@ -5,7 +5,7 @@ const getters = {
   user: state => state.common.user,
   color: state => state.common.color,
   route: state => state.common.route,
-  colorName: state => state.common.colorName,
+  language: state => state.common.language,
   themeColor: state => state.themeColor.themeColor,
 };
 export default getters;

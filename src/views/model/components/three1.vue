@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id='box' class='box'></div>
-    <el-button @click="changeQ">添加球</el-button>
+    <el-button @click='changeQ'>添加球</el-button>
   </div>
 </template>
 
@@ -132,7 +132,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 .box{
   height: 300px;
 }

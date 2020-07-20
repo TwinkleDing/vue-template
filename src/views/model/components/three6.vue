@@ -446,7 +446,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 .box{
   height: 500px;
   margin-bottom: 300px;

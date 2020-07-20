@@ -1,15 +1,15 @@
 <template>
   <div class='charts'>
-    <div class="item">
+    <div class='item'>
     <e-charts :setOption='setOptionLine' height='300px' width='400px' />
     </div>
-    <div class="item">
+    <div class='item'>
     <e-charts :setOption='setOptionBar' height='300px' width='400px' />
     </div>
-    <div class="item">
+    <div class='item'>
     <e-charts :setOption='setOptionPie' height='300px' width='400px' />
     </div>
-    <div class="item">
+    <div class='item'>
     <e-charts :setOption='setOptionCar' height='450px' width='600px' />
     </div>
     <go-top :message='message' />
@@ -382,7 +382,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 .charts {
   height: 150%;
   width: 100%;

@@ -1,16 +1,16 @@
 <template>
   <div>
-    <template v-for="item in menu">
+    <template v-for='item in menu'>
       <el-menu-item v-if='!item.children || !item.children.length'
                     :key='item.key'
                     :index='item.key'
                     @click='open(item)'>
-        <span slot="title" >{{item.label}}</span>
+        <span slot='title' >{{item.label}}</span>
       </el-menu-item>
       <el-submenu v-if='item.children && item.children.length'
                   :key='item.key'
                   :index='item.key'>
-        <span slot="title" >{{item.label}}</span>
+        <span slot='title' >{{item.label}}</span>
         <left-item :menu='item.children' />
       </el-submenu>
     </template>
@@ -38,5 +38,5 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang='scss'>
 </style>

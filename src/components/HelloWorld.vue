@@ -1,7 +1,7 @@
 <template>
-  <div class="hello">
+  <div class='hello'>
     <h1>{{ msg }}</h1>
-    <el-button type="primary" @click="ss">{{ name }}</el-button>
+    <el-button type='primary' @click='ss'>{{ name }}</el-button>
     <h1>{{ user }}</h1>
   </div>
 </template>
@@ -29,8 +29,8 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
+<!-- Add 'scoped' attribute to limit CSS to this component only -->
+<style scoped lang='scss'>
 h3 {
   margin: 40px 0 0;
 }

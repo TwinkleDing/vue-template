@@ -19,7 +19,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang='scss'>
 .home-index {
   min-height: calc(100% - 20px);
 }

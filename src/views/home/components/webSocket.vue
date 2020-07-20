@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class='websocket-msg'>{{showMsg}}</div>
-    <el-button type="primary" @click="connect">连接websocket</el-button>
-    <el-button v-show="connected" type="primary" @click="send">发送一条消息</el-button>
-    <el-button type="primary" @click="close">断开websocket服务</el-button>
-    <div class="websocket-tips">发送消息后会收到一条服务器返回的消息（与发送的消息内容一致）</div>
+    <el-button type='primary' @click='connect'>连接websocket</el-button>
+    <el-button v-show='connected' type='primary' @click='send'>发送一条消息</el-button>
+    <el-button type='primary' @click='close'>断开websocket服务</el-button>
+    <div class='websocket-tips'>发送消息后会收到一条服务器返回的消息（与发送的消息内容一致）</div>
   </div>
 </template>
 
@@ -63,5 +63,5 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang='scss'>
 </style>

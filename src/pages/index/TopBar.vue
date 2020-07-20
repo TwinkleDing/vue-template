@@ -5,21 +5,24 @@
       <span>vue-template</span>
     </div>
     <div class='logout'>
+      <top-language />
       <top-color />
-      <div><i class="el-icon-user"></i>用户id：{{ user }}</div>
-      <el-button type='primary' @click='logout'>退出登录</el-button>
+      <div><i class='el-icon-user'></i>用户id：{{ user }}</div>
+      <el-button type='primary' @click='logout'>{{$t('common.logout')}}</el-button>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import TopColor from './components/Top-color';
+import TopColor from './components/TopColor';
+import TopLanguage from './components/TopLanguage';
 import Hello from '@/mixins/hello';
 
 export default {
   components: {
-    TopColor
+    TopColor,
+    TopLanguage
   },
   mixins: [Hello],
   data() {
@@ -35,9 +38,9 @@ export default {
   },
   methods: {
     logout() {
-      this.$confirm('即将退出登录状态, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('即将退出登录状态, 是否继续?', this.$t('common.tip'), {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancle'),
         type: 'warning'
       }).then(() => {
         this.$store.dispatch('logOut').then(() => {

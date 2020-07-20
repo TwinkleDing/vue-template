@@ -1,5 +1,5 @@
 <template>
-  <div v-if="show" class='go-top' @click="goTop">
+  <div v-if='show' class='go-top' @click='goTop'>
     {{message}}
   </div>
 </template>
@@ -49,7 +49,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
   $url: '../../assets/img/go-top.jpg';
   .go-top {
     position: fixed;

@@ -1,50 +1,50 @@
 <template>
   <div class='pages-lists'>
-    <div class="list-1">
+    <div class='list-1'>
       <el-table
-        :data="tableData"
-        style="width: 800px"
-        @selection-change="handleSelectionChange">
+        :data='tableData'
+        style='width: 800px'
+        @selection-change='handleSelectionChange'>
         <el-table-column
-          type="selection"
-          width="55">
+          type='selection'
+          width='55'>
         </el-table-column>
         <el-table-column
-          prop="date"
-          label="日期"
-          width="180">
+          prop='date'
+          label='日期'
+          width='180'>
         </el-table-column>
         <el-table-column
-          prop="name"
-          label="姓名"
-          width="180">
-          <template slot-scope="scope">
-            <el-tag size="medium">{{ scope.row.name }}</el-tag>
+          prop='name'
+          label='姓名'
+          width='180'>
+          <template slot-scope='scope'>
+            <el-tag size='medium'>{{ scope.row.name }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column
-          prop="address"
-          label="地址">
+          prop='address'
+          label='地址'>
         </el-table-column>
         <el-table-column
-          fixed="right"
-          label="操作"
-          width="100">
-          <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)"
-                        type="text" size="small">查看</el-button>
-            <el-button type="text" size="small">编辑</el-button>
+          fixed='right'
+          label='操作'
+          width='100'>
+          <template slot-scope='scope'>
+            <el-button @click='handleClick(scope.row)'
+                        type='text' size='small'>查看</el-button>
+            <el-button type='text' size='small'>编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
       <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="pagination.page"
-        :page-sizes="[10, 20, 30, 50]"
-        :page-size="100"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="pagination.total">
+        @size-change='handleSizeChange'
+        @current-change='handleCurrentChange'
+        :current-page='pagination.page'
+        :page-sizes='[10, 20, 30, 50]'
+        :page-size='100'
+        layout='total, sizes, prev, pager, next, jumper'
+        :total='pagination.total'>
       </el-pagination>
     </div>
   </div>
@@ -123,7 +123,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang='scss'>
 .pages-lists{
   height: auto;
   padding: 20px;
