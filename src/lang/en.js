@@ -7,7 +7,7 @@ export default {
   },
   common: {
     cancle: 'Cancle',
-    confirm: 'Confirm',
+    confirm: 'OK',
     language: 'Language',
     logout: 'Logout',
     tip: 'Tip'
