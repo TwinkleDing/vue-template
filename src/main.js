@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueAxios from 'vue-axios';
-import Element from 'element-ui';
+import ELEMENT from 'element-ui';
 import VueParticles from 'vue-particles';
 import axios from './router/axios';
 import App from './App.vue';
@@ -18,7 +18,7 @@ Vue.use(GoTop);
 //   inserted(el, binding) {
 //   }
 // });
-Vue.use(Element, {
+Vue.use(ELEMENT, {
   i18n: (key, value) => i18n.t(key, value)
 });
 

@@ -17,7 +17,8 @@ const cdn = {
     'vue-router': 'VueRouter',
     vuex: 'Vuex',
     axios: 'axios',
-    echarts: 'echarts'
+    echarts: 'echarts',
+    'element-ui': 'ELEMENT'
   },
 
   // 通过cdn方式使用
