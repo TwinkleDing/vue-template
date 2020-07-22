@@ -58,7 +58,7 @@ module.exports = {
         '@': resolve('src')
       }
     },
-    devtool: 'none',
+    // devtool: 'none',
     performance: {
       hints: false, //error
       maxAssetSize: 300000, // 整数类型（以字节为单位）
