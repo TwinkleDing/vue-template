@@ -2,10 +2,10 @@
   <div class='login'>
     <el-form ref='form' :model='form' label-width='0px'>
       <el-form-item>
-        <el-input v-model='form.account' placeholder='请输入用户ID'></el-input>
+        <el-input v-model='form.account' placeholder='请输入用户ID' prefix-icon='el-icon-user'></el-input>
       </el-form-item>
       <el-form-item>
-        <el-input v-model='form.password' placeholder='请输入密码'></el-input>
+        <el-input v-model='form.password' placeholder='请输入密码' prefix-icon='el-icon-user-solid'></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type='primary' @click='regest'>{{$t('login.register')}}</el-button>

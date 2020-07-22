@@ -49,7 +49,6 @@ module.exports = {
     'no-undef-init': 2,//变量初始化时不能直接给它赋值为undefined
     'curly': [2, 'all'],//必须使用 if(){} 中的{}
     'dot-location': 0,//对象访问符的位置，换行的时候在行首还是行尾
-    'eqeqeq': 2,//必须使用全等
     'func-names': 0,//函数表达式必须有名字
     'object-shorthand': 0,//强制对象字面量缩写语法
     'quotes': [1, 'single'],//引号类型 `` "" ''

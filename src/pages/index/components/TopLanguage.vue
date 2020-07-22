@@ -40,6 +40,7 @@ export default {
   methods: {
     handleCommand(lang) {
       this.$i18n.locale = lang;
+      console.log(this.$i18n);
       this.$store.commit('SET_LANGUAGE', lang);
     }
   }

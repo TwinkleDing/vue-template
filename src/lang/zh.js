@@ -1,5 +1,6 @@
 export default {
   login: {
+    title: 'Vue 模板',
     login: '登录',
     register: '注册',
     back: '返回登陆',

@@ -1,5 +1,6 @@
 export default {
   login: {
+    title: 'Vue Template',
     login: 'Login',
     register: 'Register',
     back: 'Return login',

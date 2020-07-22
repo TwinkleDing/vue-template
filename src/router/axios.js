@@ -70,6 +70,10 @@ axios.interceptors.response.use(
   },
   error => {
     NProgress.done();
+    Message({
+      message: error,
+      type: 'error'
+    });
     return Promise.reject(new Error(error));
   }
 );

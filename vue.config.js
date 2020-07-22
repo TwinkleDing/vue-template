@@ -58,12 +58,12 @@ module.exports = {
         '@': resolve('src')
       }
     },
-    // devtool: 'source-map',
-    // performance: {
-    //   hints: false,
-    //   maxAssetSize: 300000, // 整数类型（以字节为单位）
-    //   maxEntrypointSize: 500000 // 整数类型（以字节为单位）
-    // },
+    devtool: 'none',
+    performance: {
+      hints: false, //error
+      maxAssetSize: 300000, // 整数类型（以字节为单位）
+      maxEntrypointSize: 500000 // 整数类型（以字节为单位）
+    },
     plugins: [
       // new BundleAnalyzerPlugin(),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
@@ -75,12 +75,17 @@ module.exports = {
         minRatio: 0.8
       }),
       new webpack.optimize.LimitChunkCountPlugin({
-        // maxChunks: 5,
         minChunkSize: 100
       })
     ]
   },
   chainWebpack: (config) => {
+     // 压缩代码
+     config.optimization.minimize(true);
+     // 分割代码
+     config.optimization.splitChunks({
+         chunks: 'all'
+     });
     // 配置cdn引入
     config.plugin('html').tap((args) => {
       args[0].cdn = cdn;
@@ -144,11 +149,15 @@ module.exports = {
     proxy: {
       '/': {
         /* 目标代理服务器地址 */
-        target: 'http://localhost:3333/api',
+        target: 'http://v.juhe.cn/',
         ws: true,
         /* 允许跨域 */
         changeOrigin: true
       }
-    }
+    },
+    overlay: {
+      warnings: false,
+      errors: true
+    },
   }
 };

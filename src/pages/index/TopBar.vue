@@ -7,6 +7,7 @@
     <div class='logout'>
       <top-language />
       <top-color />
+      <i class='icon-font icon-home'></i>
       <div><i class='el-icon-user'></i>用户id：{{ user }}</div>
       <el-button type='primary' @click='logout'>{{$t('common.logout')}}</el-button>
     </div>
