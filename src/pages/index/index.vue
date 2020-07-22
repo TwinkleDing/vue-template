@@ -53,6 +53,7 @@ $url: '../../assets/img/beach.jpg';
       border-right: 1px solid #999;
       float: left;
       overflow-y: auto;
+      overflow-x: hidden;
     };
     .right {
       height: 100%;
