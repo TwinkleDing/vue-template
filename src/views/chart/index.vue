@@ -1,17 +1,25 @@
 <template>
   <div class='charts'>
-    <div class='item'>
-    <e-charts :setOption='setOptionLine' height='300px' width='400px' />
-    </div>
-    <div class='item'>
-    <e-charts :setOption='setOptionBar' height='300px' width='400px' />
-    </div>
-    <div class='item'>
-    <e-charts :setOption='setOptionPie' height='300px' width='400px' />
-    </div>
-    <div class='item'>
-    <e-charts :setOption='setOptionCar' height='450px' width='600px' />
-    </div>
+    <el-row :gutter="32" class='charts-row'>
+      <el-col :xs="24" :sm="24" :lg="8">
+        <div class='item'>
+          <e-charts :setOption='setOptionLine' height='300px' width='100%' />
+        </div>
+      </el-col>
+      <el-col :xs="24" :sm="24" :lg="8">
+        <div class='item'>
+          <e-charts :setOption='setOptionBar' height='300px' width='100%' />
+        </div>
+      </el-col>
+      <el-col :xs="24" :sm="24" :lg="8">
+        <div class='item'>
+          <e-charts :setOption='setOptionPie' height='300px' width='100%' />
+        </div>
+      </el-col>
+    </el-row>
+    <!-- <div class='item'>
+      <e-charts :setOption='setOptionCar' height='300px' width='100%' />
+    </div> -->
     <go-top :message='message' />
   </div>
 </template>
@@ -59,6 +67,13 @@ export default {
           axisPointer: {// 坐标轴指示器，坐标轴触发有效
               type: 'shadow'// 默认为直线，可选为：'line' | 'shadow'
           }
+        },
+        grid: {
+          top: 10,
+          left: '2%',
+          right: '2%',
+          bottom: '3%',
+          containLabel: true
         },
         xAxis: [{
           type: 'category',
@@ -386,9 +401,8 @@ export default {
 .charts {
   height: 150%;
   width: 100%;
-  .item {
-    float: left;
-    width: 30%;
+  &-row{
+    margin: 0!important;
   }
 }
 </style>
