@@ -1,6 +1,6 @@
 import axios from 'axios';
 import router from '@/router';
-import { serialize } from '@/util/util';
+import { serialize } from '@/utils/util';
 import { Message } from 'element-ui';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';

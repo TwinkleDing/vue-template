@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import MapLoader from '@/util/amap';
+import MapLoader from '@/utils/amap';
 
 export default {
   name: 'Maps',

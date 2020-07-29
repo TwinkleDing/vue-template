@@ -6,7 +6,10 @@
 
 <script>
 import echarts from 'echarts';
+import resize from './resize';
+
 export default {
+  mixins: [resize],
   name: 'Charts',
   props: {
     height: {
@@ -15,7 +18,7 @@ export default {
     },
     width: {
       type: String,
-      default: '400px'
+      default: '100%'
     },
     setOption: {
       type: Object,
@@ -34,6 +37,11 @@ export default {
       }
     }
   },
+  data() {
+    return {
+      myChart: null
+    };
+  },
   watch: {
     setOption: {
       handler(data) {
@@ -47,8 +55,8 @@ export default {
   },
   methods: {
     drawLine(){
-      let myChart = echarts.init(document.getElementById(this.setOption.id));
-      myChart.setOption(this.setOption);
+      this.myChart = echarts.init(document.getElementById(this.setOption.id));
+      this.myChart.setOption(this.setOption);
     }
   }
 };

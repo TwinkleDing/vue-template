@@ -1,4 +1,4 @@
-import { setStore, getStore } from '@/util/store';
+import { setStore, getStore } from '@/utils/store';
 import variables from '@/styles/element-variables.scss';
 const themeColor = {
   state: {
