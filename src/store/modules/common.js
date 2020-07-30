@@ -119,22 +119,22 @@ const common = {
                 component: 'home/index',
               },
               {
-                label: '常用',
+                label: '嵌套路由',
                 name: 'normal',
                 path: '/normal',
                 key: 'normal',
                 children: [
                   {
-                    label: '列表',
+                    label: '嵌套路由',
                     name: 'Lists',
                     path: '/lists',
                     key: 'Lists',
                     component: 'list/index',
                     children: [
                       {
-                        label: '列表',
-                        name: 'Listss',
-                        path: '/listss',
+                        label: '嵌套路由',
+                        name: 'Lists',
+                        path: '/lists',
                         key: 'Listss',
                         component: 'list/index',
                       },

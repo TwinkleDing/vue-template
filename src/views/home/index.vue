@@ -45,7 +45,7 @@ export default {
 
 <style lang='scss'>
 .home-index {
-  min-height: calc(100% - 20px);
+  height: 100%;
   padding-top: 20px;
   box-sizing: border-box;
 }
