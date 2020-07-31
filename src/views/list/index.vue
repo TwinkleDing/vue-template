@@ -102,7 +102,7 @@ export default {
     handleClick(row) {
       this.$router.push({
         name: 'Infos',
-        params: {
+        query: {
           name: row.name
         }
       });

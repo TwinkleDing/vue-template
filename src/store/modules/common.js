@@ -132,7 +132,7 @@ const common = {
                     component: 'list/index',
                     children: [
                       {
-                        label: '嵌套路由',
+                        label: '表格',
                         name: 'Lists',
                         path: '/lists',
                         key: 'Listss',
@@ -155,6 +155,13 @@ const common = {
                 path: '/markdowns',
                 key: 'MarkDowns',
                 component: 'markdown/index',
+              },
+              {
+                label: 'Tab',
+                name: 'Infos',
+                path: '/info',
+                key: 'Infos',
+                component: 'list/info',
               },
               {
                 label: '图表',

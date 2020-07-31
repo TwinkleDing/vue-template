@@ -36,6 +36,5 @@ export default {
 <style lang='scss' scoped>
 .left-menu{
   text-align: left;
-  padding-left: 40px;
 }
 </style>
