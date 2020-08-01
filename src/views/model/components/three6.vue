@@ -441,6 +441,7 @@ export default {
     },
   },
   beforeDestroy() {
+    document.getElementsByClassName('dg ac')[0].removeChild(document.getElementsByClassName('dg main a')[0]);
     this.gui = '';
   },
 };
