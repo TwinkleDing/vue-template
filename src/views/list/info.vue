@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class='info'>
     {{name}}
     <el-tabs v-model='activeName' @tab-click='handleClickTabs'>
       <el-tab-pane label='静态样式' name='first'>
@@ -26,7 +26,6 @@ import TabThree from './components/TabThree';
 
 export default {
   name: 'Infos',
-  props: ['name'],
   components: {
     TabOne,
     TabTwo,
@@ -35,8 +34,12 @@ export default {
   },
   data() {
     return {
-      activeName: 'third',
+      name: '',
+      activeName: 'first',
     };
+  },
+  mounted() {
+    this.name = this.$route.query.name;
   },
   methods: {
     handleClickTabs() {}
@@ -45,6 +48,10 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+.info {
+  height: 100%;
+  overflow: auto;
+}
 .progress{
   width: 400px;
 }

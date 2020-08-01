@@ -6,7 +6,9 @@
         <left-menu/>
       </div>
       <div class='right'>
-        <router-view />
+        <div class='main-content'>
+          <router-view />
+        </div>
         <div class='copy-right'>Copyright ©2020 , All Rights Reserved.</div>
       </div>
     </div>
@@ -60,12 +62,16 @@ $url: '../../assets/img/beach.jpg';
       width: calc(100% - 200px);
       float: right;
       box-sizing: border-box;
-      padding-bottom: 20px;
       overflow-y: auto;
+      .main-content{
+        height: calc(100% - 40px);
+        box-sizing: border-box;
+      }
     }
   }
   .copy-right {
-    height: 20px;
+    height: 40px;
+    line-height: 40px;
     position: relative;
   }
 }
