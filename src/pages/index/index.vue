@@ -1,7 +1,7 @@
 <template>
   <div class='pages'>
     <top-bar />
-    <div class='content'>
+    <div class='pages-content'>
       <div class='left'>
         <left-menu/>
       </div>
@@ -11,6 +11,7 @@
         </div>
         <div class='copy-right'>Copyright ©2020 , All Rights Reserved.</div>
       </div>
+      <go-top :message='message' />
     </div>
   </div>
 </template>
@@ -26,6 +27,11 @@ export default {
   components: {
     TopBar,
     LeftMenu
+  },
+  data() {
+    return {
+      message: '',
+    };
   },
   computed: {
     ...mapGetters(['user'])
@@ -46,7 +52,7 @@ $url: '../../assets/img/beach.jpg';
   background-size: 100% 100%;
   height: 100%;
   width: 100%;
-  .content {
+  &-content {
     height: calc(100% - 61px);
     .left {
       width: 200px;
@@ -63,8 +69,9 @@ $url: '../../assets/img/beach.jpg';
       float: right;
       box-sizing: border-box;
       overflow-y: auto;
+      overflow-x: hidden;
       .main-content{
-        height: calc(100% - 40px);
+        min-height: calc(100% - 40px);
         box-sizing: border-box;
       }
     }
