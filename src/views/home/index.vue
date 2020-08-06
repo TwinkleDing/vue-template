@@ -1,20 +1,42 @@
 <template>
   <div class='home-index'>
     <card-panel :list='cardPanel'></card-panel>
+    <d-slot>
+      <template #userName>
+        <div>
+          userName: {{dSlot.userName}}
+        </div>
+      </template>
+      <template #account='slotProps'>
+        <div>
+          account: {{ slotProps }}
+        </div>
+      </template>
+      <template #password='slotProps'>
+        <div>
+          password: {{ slotProps }}
+        </div>
+      </template>
+    </d-slot>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import CardPanel from './components/CardPanel';
+import CardPanel from './Components/CardPanel';
+import DSlot from './Components/DSlot';
 
 export default {
   name: 'Pages',
   components: {
-    CardPanel
+    CardPanel,
+    DSlot
   },
   data() {
     return {
+      dSlot: {
+        userName: 'ding'
+      },
       cardPanel: [
         {
           title: 'qwe',

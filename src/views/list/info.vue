@@ -19,10 +19,10 @@
 </template>
 
 <script>
-import TabOne from './components/TabOne';
-import TabTwo from './components/TabTwo';
-import TabThree from './components/TabThree';
-// import TabFour from './components/TabFour';
+import TabOne from './Components/TabOne';
+import TabTwo from './Components/TabTwo';
+import TabThree from './Components/TabThree';
+// import TabFour from './Components/TabFour';
 
 export default {
   name: 'Infos',
