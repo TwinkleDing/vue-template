@@ -26,6 +26,8 @@
         /
         <span @click='changeLan("en")' :style='language === "en" ? `color: #fff` : ""'>En</span>
       </div>
+      <div class='node-path'>vue path: <a :href="vuePath">{{ vuePath }}</a></div>
+      <div class='node-path'>node path: <a :href="nodePath">{{ nodePath }}</a></div>
     </div>
   </div>
 </template>
@@ -59,6 +61,8 @@ export default {
       regest: false,
       regestAni: 'tranx',
       thimer: false,
+      vuePath: 'https://github.com/TwinkleDing/vue-template',
+      nodePath: 'https://github.com/TwinkleDing/koa-mongodb'
     };
   },
   components: {
@@ -143,6 +147,12 @@ export default {
       transform: rotate(-45deg);
       span{
         cursor: pointer;
+      }
+    }
+    .node-path{
+      font-size: 14px;
+      a{
+        color: gray;
       }
     }
   }

@@ -2,6 +2,9 @@
 
 此项目是一个普通的基础后台项目模板，使用了vue和element-ui。可以快速搭建产品原型。
 
+## 项目地址
+预览地址[twinkleding.top](twinkleding.top)，后台使用了node+koa+mongodb实现，需安装mongodb。提供游客登录
+
 ## 功能
 
 ```
