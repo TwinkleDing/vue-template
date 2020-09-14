@@ -4,7 +4,8 @@ export default {
     login: '登录',
     register: '注册',
     back: '返回登陆',
-    sure: '确认注册'
+    sure: '确认注册',
+    touristsLogin: '游客登陆'
   },
   common: {
     cancle: '取消',

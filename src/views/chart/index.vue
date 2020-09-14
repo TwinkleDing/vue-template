@@ -20,7 +20,6 @@
     <!-- <div class='item'>
       <e-charts :setOption='setOptionCar' height='300px' width='100%' />
     </div> -->
-    <go-top :message='message' />
   </div>
 </template>
 

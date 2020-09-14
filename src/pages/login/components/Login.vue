@@ -10,6 +10,7 @@
       <el-form-item>
         <el-button type='primary' @click='regest'>{{$t('login.register')}}</el-button>
         <el-button type='primary' @click='login'>{{$t('login.login')}}</el-button>
+        <el-button type='primary' @click='tourists'>{{$t('login.touristsLogin')}}</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -44,25 +45,38 @@ export default {
           this.$store.dispatch('userInfo', res.data.data);
           this.$store.dispatch('route');
         }).then(() => {
-          this.$store.dispatch('logIn', this.form.account).then(() => {
-            // 页面跳转
-            const loading = this.$loading({
-              lock: true,
-              text: 'Loading',
-              spinner: 'el-icon-loading',
-              background: 'rgba(0, 0, 0, 0.7)'
-            });
-            setTimeout(() => {
-              loading.close();
-              this.$router.push({ path: '/index' });
-            }, 1000);
-          }).catch(() => {
-          });
+          this.goIndex();
         });
       }
     },
     regest() {
       this.$emit('regest');
+    },
+    tourists() {
+      let data = {
+        'account': 'bilibili',
+        'password': 'bilibili'
+      };
+      this.$store.dispatch('userInfo', data);
+      this.$store.dispatch('route');
+      this.form = data;
+      this.goIndex();
+    },
+    goIndex() {
+      this.$store.dispatch('logIn', this.form.account).then(() => {
+        // 页面跳转
+        const loading = this.$loading({
+          lock: true,
+          text: 'Loading',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        });
+        setTimeout(() => {
+          loading.close();
+          this.$router.push({ path: '/index' });
+        }, 1000);
+      }).catch(() => {
+      });
     }
   }
 };
