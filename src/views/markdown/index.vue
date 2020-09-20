@@ -1,14 +1,16 @@
 <template>
   <div class='pages-markdown'>
-    <div class='file-content'>
-      <div>
+    <div class='file'>
+      <div class='file-title'>
         <i class='el-icon-back' @click="backDir"></i>
         当前文件夹： {{ dirName }}
       </div>
-      <div v-for="(item, index) in fileList" :key='index'>
-        <div class='file-item' @dblclick="openFile(item)">
-          <i :class='item.type === "file" ? "el-icon-files" : "el-icon-folder"'></i>
-          {{ item.name }}</div>
+      <div class='file-content'>
+        <div v-for="(item, index) in fileList" :key='index'>
+          <div class='file-item' @dblclick="openFile(item)">
+            <i :class='item.type === "file" ? "el-icon-files" : "el-icon-folder"'></i>
+            {{ item.name }}</div>
+        </div>
       </div>
     </div>
     <mavon-editor v-model='content'
@@ -43,7 +45,6 @@ export default {
   methods: {
     getFileList() {
       fileList({dirName: this.dirName}).then( res => {
-        console.log(res);
         this.fileList = res;
       });
     },
@@ -56,8 +57,8 @@ export default {
     openFile(item) {
       this.dirName += '\\' + item.name;
       if(item.type === 'file') {
+        this.fileList = [];
         fileInfo({file: this.dirName}).then( res => {
-          console.log(res);
           this.content = res.toString();
         });
       }else {
@@ -99,12 +100,23 @@ export default {
 <style lang='scss'>
 .pages-markdown{
   height: calc(100% - 20px);
-  .file-content{
-    height: 200px;
+  .file{
     text-align: left;
-    padding: 30px;
+    padding: 10px;
     font-size: 20px;
+    &-title{
+      padding: 10px;
+    }
+    &-content{
+      padding: 10px;
+      max-height: 200px;
+      box-sizing: border-box;
+      overflow: auto;
+    }
     .file-item{
+      cursor: pointer;
+    }
+    .el-icon-back{
       cursor: pointer;
     }
   }
