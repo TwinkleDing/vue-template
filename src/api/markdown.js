@@ -11,6 +11,16 @@ export const fileList = data =>
     }
   });
 
+// 文件路径
+export const filePath = data =>
+  request({
+    url: baseUrl+'/file/path',
+    method: 'get',
+    params: {
+      ...data
+    }
+  });
+
 // 文件详情
 export const fileInfo = data =>
   request({
@@ -21,7 +31,7 @@ export const fileInfo = data =>
     }
   });
 
-// 文件详情
+// 文件状态
 export const fileStat = data =>
   request({
     url: baseUrl+'/file/stat',

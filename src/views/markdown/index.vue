@@ -1,10 +1,13 @@
 <template>
   <div class='pages-markdown'>
     <div class='file-content'>
-      <div>当前文件夹： {{ dirName }}</div>
+      <div>
+        <i class='el-icon-back' @click="backDir"></i>
+        当前文件夹： {{ dirName }}
+      </div>
       <div v-for="(item, index) in fileList" :key='index'>
         <div class='file-item' @dblclick="openFile(item)">
-          <i :class='item.type === "file" ? "el-icon-postcard" : "el-icon-files"'></i>
+          <i :class='item.type === "file" ? "el-icon-files" : "el-icon-folder"'></i>
           {{ item.name }}</div>
       </div>
     </div>
@@ -12,7 +15,6 @@
       ref='md' @change='change'
       @imgAdd='$imgAdd'
       style='min-height: 600px' />
-      <div v-html='html'></div>
   </div>
 </template>
 
@@ -20,7 +22,7 @@
 // 导入组件 及 组件样式
 import { mavonEditor } from 'mavon-editor';
 import 'mavon-editor/dist/css/index.css';
-import { fileList, fileInfo, fileStat } from '@/api/markdown';
+import { fileList, fileInfo, filePath } from '@/api/markdown';
 
 export default {
   name: 'MarkDowns',
@@ -32,12 +34,11 @@ export default {
       content:'', // 输入的markdown
       html:'',// 转成的html,
       fileList: [],
-      dirName: 'file'
+      dirName: ''
     };
   },
-  mounted() {
-    this.getFileList();
-    this.getFileStat();
+  created() {
+    this.getFilePath();
   },
   methods: {
     getFileList() {
@@ -46,27 +47,34 @@ export default {
         this.fileList = res;
       });
     },
-    getFileStat() {
-      fileStat({file: this.dirName}).then( res => {
-        console.log(res);
+    getFilePath() {
+      filePath({dirName: this.dirName}).then( res => {
+        this.dirName = res;
+        this.getFileList();
       });
     },
     openFile(item) {
+      this.dirName += '\\' + item.name;
       if(item.type === 'file') {
-        fileInfo({file: this.dirName+ '/' +item.name}).then( res => {
+        fileInfo({file: this.dirName}).then( res => {
           console.log(res);
+          this.content = res.toString();
         });
       }else {
-        fileList({dirName: this.dirName+ '/' +item.name}).then( res => {
-          console.log(res);
+        fileList({dirName: this.dirName}).then( res => {
           this.fileList = res;
         });
       }
     },
+    backDir() {
+      let index= this.dirName.lastIndexOf('\\');
+      this.dirName = this.dirName.slice(0, index);
+      this.getFileList();
+      this.content = '';
+    },
     change(value, render) {
       //实时获取转成html的数据
       this.html = render;
-      console.log(this.html);
     },
     // 将图片上传到服务器，返回地址替换到md中
     $imgAdd(pos, $file){
