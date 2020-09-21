@@ -3,7 +3,8 @@
     <div class='file'>
       <div class='file-title'>
         <i class='el-icon-back' @click="backDir"></i>
-        当前文件夹： {{ dirName }}
+        <span>当前文件夹： {{ dirName }}</span>
+        <el-button @click="addFile">新增文件</el-button>
       </div>
       <div class='file-content'>
         <div v-for="(item, index) in fileList" :key='index'>
@@ -24,7 +25,7 @@
 // 导入组件 及 组件样式
 import { mavonEditor } from 'mavon-editor';
 import 'mavon-editor/dist/css/index.css';
-import { fileList, fileInfo, filePath } from '@/api/markdown';
+import { fileList, fileInfo, filePath, fileAdd } from '@/api/markdown';
 
 export default {
   name: 'MarkDowns',
@@ -54,17 +55,47 @@ export default {
         this.getFileList();
       });
     },
+    getFileInfo() {
+      fileInfo({file: this.dirName}).then( res => {
+        this.content = res.toString();
+      });
+    },
+    addFile() {
+      if(!this.content) {
+        this.$message({
+          type: 'warning',
+          message: '未添加内容'
+        });
+        return false;
+      }
+      this.$prompt('请输入文件名', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        // inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+        // inputErrorMessage: '邮箱格式不正确'
+      }).then(({ value }) => {
+        let params = {
+          file: this.dirName + '\\' + value,
+          content: this.content
+        };
+        fileAdd(params).then( res => {
+          console.log(res);
+          this.getFileList();
+        });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消输入'
+        });
+      });
+    },
     openFile(item) {
       this.dirName += '\\' + item.name;
       if(item.type === 'file') {
         this.fileList = [];
-        fileInfo({file: this.dirName}).then( res => {
-          this.content = res.toString();
-        });
+        this.getFileInfo();
       }else {
-        fileList({dirName: this.dirName}).then( res => {
-          this.fileList = res;
-        });
+        this.getFileList();
       }
     },
     backDir() {

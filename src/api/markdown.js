@@ -31,12 +31,22 @@ export const fileInfo = data =>
     }
   });
 
-// 文件状态
-export const fileStat = data =>
-  request({
-    url: baseUrl+'/file/stat',
-    method: 'post',
-    data: {
-      ...data
-    }
-  });
+  // 文件状态
+  export const fileStat = data =>
+    request({
+      url: baseUrl+'/file/stat',
+      method: 'post',
+      data: {
+        ...data
+      }
+    });
+
+    // 新增文件
+    export const fileAdd = data =>
+      request({
+        url: baseUrl+'/file/add',
+        method: 'post',
+        data: {
+          ...data
+        }
+      });
