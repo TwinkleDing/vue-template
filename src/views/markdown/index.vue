@@ -4,7 +4,7 @@
       <div class='file-title'>
         <i class='el-icon-back' @click="backDir"></i>
         <span>当前文件夹： {{ dirName }}</span>
-        <el-button @click="addFile">新增文件</el-button>
+        <el-button type='primary' @click="addFile">保存文件</el-button>
       </div>
       <div class='file-content'>
         <div v-for="(item, index) in fileList" :key='index'>
@@ -37,7 +37,8 @@ export default {
       content:'', // 输入的markdown
       html:'',// 转成的html,
       fileList: [],
-      dirName: ''
+      dirName: '',
+      dirType: ''
     };
   },
   created() {
@@ -68,9 +69,14 @@ export default {
         });
         return false;
       }
+      let currentName = '';
+      if(this.dirType === 'file') {
+        currentName = this.dirName.split('\\').pop();
+      }
       this.$prompt('请输入文件名', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
+        inputValue: currentName,
         // inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
         // inputErrorMessage: '邮箱格式不正确'
       }).then(({ value }) => {
@@ -92,9 +98,11 @@ export default {
     openFile(item) {
       this.dirName += '\\' + item.name;
       if(item.type === 'file') {
+        this.dirType = 'file';
         this.fileList = [];
         this.getFileInfo();
       }else {
+        this.dirType = 'folder';
         this.getFileList();
       }
     },
