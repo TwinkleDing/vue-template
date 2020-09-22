@@ -70,8 +70,11 @@ export default {
         return false;
       }
       let currentName = '';
+      let currentFloder = '';
       if(this.dirType === 'file') {
-        currentName = this.dirName.split('\\').pop();
+        let arr = this.dirName.split('\\');
+        currentName = arr.pop();
+        currentFloder = arr.join('\\');
       }
       this.$prompt('请输入文件名', '提示', {
         confirmButtonText: '确定',
@@ -81,12 +84,12 @@ export default {
         // inputErrorMessage: '邮箱格式不正确'
       }).then(({ value }) => {
         let params = {
-          file: this.dirName + '\\' + value,
+          file: currentFloder + '\\' + value,
           content: this.content
         };
         fileAdd(params).then( res => {
           console.log(res);
-          this.getFileList();
+          // this.getFileList();
         });
       }).catch(() => {
         this.$message({
