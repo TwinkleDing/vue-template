@@ -14,10 +14,11 @@ Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
 Vue.use(VueParticles);
 Vue.use(GoTop);
-// Vue.directive('ding', {
-//   inserted(el, binding) {
-//   }
-// });
+Vue.directive('ding', {
+  inserted(el, binding) {
+    console.log(el, binding);
+  }
+});
 Vue.use(ELEMENT, {
   i18n: (key, value) => i18n.t(key, value)
 });

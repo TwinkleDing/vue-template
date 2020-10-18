@@ -10,21 +10,29 @@
           width='55'>
         </el-table-column>
         <el-table-column
-          prop='date'
-          label='日期'
-          width='180'>
-        </el-table-column>
-        <el-table-column
           prop='name'
           label='姓名'
-          width='180'>
+          width='100'>
           <template slot-scope='scope'>
             <el-tag size='medium'>{{ scope.row.name }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column
-          prop='address'
-          label='地址'>
+          prop='avatar'
+          label='头像'
+          width='80'>
+          <template slot-scope='scope'>
+            <el-avatar :src="scope.row.avatar" />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop='date'
+          label='评论日期'
+          width='180'>
+        </el-table-column>
+        <el-table-column
+          prop='content'
+          label='评论内容'>
         </el-table-column>
         <el-table-column
           fixed='right'
@@ -61,25 +69,7 @@ export default {
         page:1,
         size: 10
       },
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }
-      ],
+      tableData: []
     };
   },
   created() {
@@ -94,7 +84,8 @@ export default {
           return {
             date: new Date(Number(item.create_time)).toLocaleString(),
             name: item.user_name,
-            address: item.user_id
+            content: item.content,
+            avatar: item.avatar
           };
         });
       });
@@ -129,7 +120,6 @@ export default {
   padding: 20px;
 }
 .list-1{
-  background: #fff;
   width: 800px;
 }
 </style>
