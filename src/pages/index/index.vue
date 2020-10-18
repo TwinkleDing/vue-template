@@ -1,5 +1,22 @@
 <template>
   <div class='pages'>
+    <vue-particles
+      color="#47CD88"
+      linesColor="#47CD88"
+      shapeType="star"
+      hoverMode="grab"
+      clickMode="remove"
+      :particleOpacity="0.7"
+      :particlesNumber="80"
+      :particleSize="4"
+      :linesWidth="1"
+      :lineLinked="true"
+      :lineOpacity="0.4"
+      :linesDistance="150"
+      :moveSpeed="3"
+      :hoverEffect="true"
+      :clickEffect="true">
+    </vue-particles>
     <top-bar />
     <div class='pages-content'>
       <div class='left'>
@@ -46,9 +63,9 @@ export default {
 };
 </script>
 <style lang='scss' scoped>
-$url: '../../assets/img/beach.jpg';
+// $url: '../../assets/img/beach.jpg';
 .pages {
-  background-image: url($url);
+  // background-image: url($url);
   background-size: 100% 100%;
   height: 100%;
   width: 100%;
@@ -80,6 +97,13 @@ $url: '../../assets/img/beach.jpg';
     height: 40px;
     line-height: 40px;
     position: relative;
+  }
+  #particles-js{
+    background: oldlace;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: -1;
   }
 }
 </style>

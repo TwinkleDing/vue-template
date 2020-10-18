@@ -1,17 +1,17 @@
 <template>
   <div class='charts'>
     <el-row :gutter="32" class='charts-row'>
-      <el-col :xs="24" :sm="24" :lg="8">
+      <el-col :xs="24" :sm="12" :lg="8">
         <div class='item'>
           <e-charts :setOption='setOptionLine' height='300px' width='100%' />
         </div>
       </el-col>
-      <el-col :xs="24" :sm="24" :lg="8">
+      <el-col :xs="24" :sm="12" :lg="8">
         <div class='item'>
           <e-charts :setOption='setOptionBar' height='300px' width='100%' />
         </div>
       </el-col>
-      <el-col :xs="24" :sm="24" :lg="8">
+      <el-col :xs="24" :sm="12" :lg="8">
         <div class='item'>
           <e-charts :setOption='setOptionPie' height='300px' width='100%' />
         </div>

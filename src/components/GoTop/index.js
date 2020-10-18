@@ -1,4 +1,4 @@
-import GoTopComponent from './GoTop.vue';
+import GoTopComponent from './index.vue';
 
 const GoTop = {
     install:function(Vue) {

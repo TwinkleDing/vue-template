@@ -3,14 +3,14 @@
     <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6" class='box' :key='index' v-for='(item, index) in list'>
       <div class='box-content'>
         <div class='l'>
-          P
+          {{ item.left }}
         </div>
         <div class='r'>
           <div class='r-t'>
-            {{item.title}}
+            {{ item.title }}
           </div>
           <div class='r-b'>
-            {{item.content}}
+            {{ item.content }}
           </div>
         </div>
       </div>
