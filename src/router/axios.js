@@ -1,5 +1,6 @@
 import axios from 'axios';
 import router from '@/router';
+import store from '@/store';
 import { serialize } from '@/utils/util';
 import { Message } from 'element-ui';
 import NProgress from 'nprogress';
@@ -24,17 +25,10 @@ axios.interceptors.request.use(
     NProgress.start(); // start progress bar
     const meta = config.meta || {};
     config.headers['Content-Type'] = 'application/json;charset=utf-8';
-    // let token = '';
-    // if(JSON.stringify(getToken.getState()).length>2) {
-    //   if(getToken.getState().user) {
-    //     token = getToken.getState().user.value.token;
-    //   }
-    // }
-    // if (token) {
-    //   //将token放到请求头发送给服务器,将tokenkey放在请求头中
-    //   config.headers.accessToken = token;
-    //   config.headers.Authorization = token;
-    // }
+    if(store.getters.loginIn) {
+      config.headers['Authorization'] = store.getters.userInfo.token;
+      config.headers['accessToken'] = store.getters.userInfo.token;
+    }
     //headers中配置serialize为true开启序列化
     if (config.method === 'post' && meta.isSerialize === true) {
       config.data = serialize(config.data);

@@ -46,18 +46,22 @@ export default {
     }
     .l{
       float: left;
-      height: 120px;
-      width: 120px;
-      line-height: 120px;
+      height: 100px;
+      width: 100px;
+      line-height: 100px;
       text-align: center;
       font-size: 26px;
+      margin: 10px;
+      border: 1px solid #ac0;
+      box-sizing: border-box;
     }
     .r{
       float: right;
       height: 100%;
       width: calc( 100% - 120px);
       &-t{
-        margin-top: 35px;
+        margin-top: 25px;
+        font-size: 20px;
       }
       &-b{
         margin-top: 15px;

@@ -16,7 +16,7 @@ Vue.use(VueParticles);
 Vue.use(GoTop);
 Vue.directive('ding', {
   inserted(el, binding) {
-    console.log(el, binding);
+    return {el, binding};
   }
 });
 Vue.use(ELEMENT, {

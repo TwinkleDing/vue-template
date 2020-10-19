@@ -4,7 +4,6 @@ const common = {
   state: {
     userInfo: getStore({ name: 'userInfo' }) || '',
     loginIn: getStore({ name: 'loginIn'}) || false ,
-    loginOut: getStore({ name: 'loginOut'}) || true ,
     user: getStore({ name: 'user' }) || '',
     color: getStore({ name: 'color' }) || '#409eff',
     route: getStore({ name: 'route' }) || [],
@@ -67,13 +66,6 @@ const common = {
         content: state.loginIn
       });
     },
-    SET_LOGIN_OUT: (state, loginOut) => {
-      state.loginOut = loginOut;
-      setStore({
-        name: 'loginOut',
-        content: state.loginOut
-      });
-    },
     SET_LANGUAGE: (state, language) => {
       state.language = language;
       setStore({
@@ -85,6 +77,7 @@ const common = {
   actions: {
     userInfo({ commit }, userInfo) {
       return new Promise(resolve => {
+        commit('SET_LOGIN_IN', true);
         commit('SET_USER_INFO', userInfo);
         resolve();
       });
@@ -97,6 +90,7 @@ const common = {
     },
     logOut({ commit }) {
       return new Promise(resolve => {
+        commit('SET_LOGIN_IN', false);
         commit('REMOVE_USER');
         commit('REMOVE_ROUTES');
         commit('REMOVE_USER_INFO');

@@ -30,29 +30,28 @@ export default {
       },
       cardPanel: [
         {
-          left: 'A',
-          title: 'title',
-          content: 'content'
+          left: '类型一',
+          title: '标题',
+          content: '我是内容一'
         },
         {
-          left: 'B',
-          title: 'title',
-          content: 'content'
+          left: '类型二',
+          title: '标题',
+          content: '我是内容二'
         },
         {
-          left: 'C',
-          title: 'title',
-          content: 'content'
+          left: '类型三',
+          title: '标题',
+          content: '我是内容三'
         },
         {
-          left: 'C',
-          title: 'title',
-          content: 'content'
+          left: '类型四',
+          title: '标题',
+          content: '我是内容四'
         },
       ],
       setOptionLine: {
         id: 'lineChart',
-        title: { text: '堆叠区域图' },
         tooltip: {
           trigger: 'axis',
           axisPointer: {
@@ -64,7 +63,10 @@ export default {
         },
         toolbox: {
           feature: {
-            saveAsImage: {}
+            dataView: {show: true, readOnly: false},
+            magicType: {show: true, type: ['line', 'bar']},
+            restore: {show: true},
+            saveAsImage: {show: true}
           }
         },
         grid: {
@@ -133,6 +135,14 @@ export default {
           trigger: 'axis',
           axisPointer: { // 坐标轴指示器，坐标轴触发有效
             type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+          }
+        },
+        toolbox: {
+          feature: {
+            dataView: {show: true, readOnly: false},
+            magicType: {show: true, type: ['line', 'bar']},
+            restore: {show: true},
+            saveAsImage: {show: true}
           }
         },
         legend: {

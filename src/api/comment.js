@@ -10,3 +10,13 @@ export const commentList = data =>
       ...data
     }
   });
+
+  // 评论列表
+  export const addComment = data =>
+    request({
+      url: baseUrl+'/leave',
+      method: 'post',
+      data: {
+        ...data
+      }
+    });
