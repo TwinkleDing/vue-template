@@ -17,7 +17,7 @@
       :hoverEffect="true"
       :clickEffect="true">
     </vue-particles>
-    <div class='login-box-content' :class='regestAni ? "tranx" : ""'>
+    <div class='login-box-content' :class='regestAnimation ? "tranx" : ""'>
       <div class='title'>{{$t('login.title')}}</div>
       <login v-if='!regest' @regest='regestOpen' />
       <Registered v-else @regest='regestClose' />
@@ -59,7 +59,7 @@ export default {
     */
     return{
       regest: false,
-      regestAni: 'tranx',
+      regestAnimation: 'tranx',
       thimer: false,
       vuePath: 'https://github.com/TwinkleDing/vue-template',
       nodePath: 'https://github.com/TwinkleDing/koa-mongodb'
@@ -81,17 +81,17 @@ export default {
       this.$store.commit('SET_LANGUAGE', lang);
     },
     regestOpen() {
-      this.regestAni = false;
+      this.regestAnimation = false;
       this.throttle(()=> {
         this.regest = true;
-        this.regestAni = 'tranx';
+        this.regestAnimation = 'tranx';
       }, 600);
     },
     regestClose() {
-      this.regestAni = false;
+      this.regestAnimation = false;
       this.throttle(()=> {
         this.regest = false;
-        this.regestAni = 'tranx';
+        this.regestAnimation = 'tranx';
       }, 600);
     },
     throttle(fn, wait) {

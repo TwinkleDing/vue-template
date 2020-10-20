@@ -3,7 +3,11 @@
 此项目是一个普通的基础后台项目模板，使用了vue和element-ui。可以快速搭建产品原型。
 
 ## 项目地址
-预览地址[twinkleding.top](twinkleding.top)，后台使用了node+koa+mongodb实现，需安装mongodb。提供游客登录
+预览地址[twinkleding.top](twinkleding.top)，后台使用了node+koa+mongodb实现，需安装mongodb。提供游客登录。
+
+登录，增删改查后台代码地址[node+koa+mongodb项目地址](http://github.com/twinkleding/koa-mongodb)
+
+其中包含文件操作系统，可打开，查看磁盘上的文本文件[项目地址](http://github.com/twinkleding/node-file)
 
 ## 功能
 

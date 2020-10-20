@@ -22,6 +22,7 @@ export default {
     },
     setOption: {
       type: Object,
+      required: true,
       default() {
         return {
           title: { text: '' },

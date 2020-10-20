@@ -63,5 +63,6 @@ export default {
     background-position: -15px -15px;
     border-radius: 50%;
     cursor: pointer;
+    z-index: 100;
   }
 </style>

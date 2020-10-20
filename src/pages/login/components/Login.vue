@@ -42,7 +42,7 @@ export default {
           'user_pwd': this.form.password
         };
         loginByUsername(params).then(res => {
-          this.$store.dispatch('userInfo', res.data.data);
+          this.$store.dispatch('userInfo', res.data);
           this.$store.dispatch('route');
         }).then(() => {
           this.goIndex();

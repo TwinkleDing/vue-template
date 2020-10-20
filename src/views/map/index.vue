@@ -23,7 +23,7 @@ export default {
 
 <style lang='scss' scoped>
 #container {
-  height: 100%;
+  height: 868px;
   width: 100%;
 }
 </style>
