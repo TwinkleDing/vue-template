@@ -46,8 +46,8 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   res => {
     NProgress.done();
-    const status = res.data.code || 200,
-    message = res.data.msg || '未知错误';
+    const status = res.status || 200,
+    message = res.data || '未知错误';
     //如果是401则跳转到登录页面
     if (status === 401) {
       router.push({ path: '/login' });

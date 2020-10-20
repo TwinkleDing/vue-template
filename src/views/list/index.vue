@@ -11,6 +11,7 @@
       >
       </el-input>
       <el-button @click='addComment' type='primary'>添加留言</el-button>
+      <el-button v-if='deleteBatchBtn' @click='deleteBatch' type='primary'>批量删除</el-button>
     </div>
     <div class='list-1'>
       <el-table
@@ -54,8 +55,7 @@
           label='操作'
           width='180'>
           <template slot-scope='scope'>
-            <el-button type='primary' size='small'>编辑</el-button>
-            <el-button @click='handleClick()' type='danger' size='small'>删除</el-button>
+            <el-button @click='deleteComment(scope.row.id)' type='danger' size='small'>删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import { commentList, addComment } from '@/api/comment';
+import { commentList, addComment, deleteComment } from '@/api/comment';
 
 export default {
   name: 'Lists',
@@ -84,7 +84,9 @@ export default {
         page:1,
         size: 10
       },
-      tableData: []
+      tableData: [],
+      deleteBatchBtn: false,
+      deleteBatchList: []
     };
   },
   created() {
@@ -97,6 +99,7 @@ export default {
         this.pagination = res.data.pagination;
         this.tableData = res.data.list.map(item=> {
           return {
+            id: item._id,
             date: new Date(Number(item.create_time)).toLocaleString(),
             name: item.user_name,
             content: item.content,
@@ -105,8 +108,13 @@ export default {
         });
       });
     },
-    handleSelectionChange() {
-
+    handleSelectionChange(val) {
+      this.deleteBatchList = val;
+      if(val.length) {
+        this.deleteBatchBtn = true;
+      }else {
+        this.deleteBatchBtn = false;
+      }
     },
     handleSizePage(val) {
       this.pagination.page = 1;
@@ -125,10 +133,40 @@ export default {
       addComment(params).then(res => {
         this.$message({
           message: res.msg,
-          type: res.code === 200 ? 'success' : 'danger'
+          type: 'success'
         });
+        this.addData = '';
         this.getList();
       });
+    },
+    deleteComment(id) {
+      this.$confirm('此操作将永久删除该评论, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        let params = {
+          id: id
+        };
+        deleteComment(params).then(res => {
+          this.$message({
+            message: res.msg,
+            type: 'success'
+          });
+          this.getList();
+        });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+    },
+    deleteBatch() {
+      let params = this.deleteBatchList.map(item => {
+        return item.id;
+      }).join(',');
+      this.deleteComment(params);
     }
   }
 };
@@ -148,13 +186,34 @@ export default {
   height: 200px;
   textarea{
     height: 100px;
+    background: none;
+    font-size: 18px;
+    color: darkcyan;
+  }
+  .el-textarea .el-input__count{
+    background: none;
+    font-size: 18px;
+    color: darkcyan;
   }
   .el-button{
     margin-top: 30px;
+    margin-left: 30px;
     float: right;
   }
 }
 .list-1{
   width: 1000px;
+  .el-table, .el-table th, .el-table tr{
+    background: none;
+  }
+  .el-pagination{
+    margin-top: 5px;
+    .el-dialog, .el-pager li, .el-pagination__editor.el-input .el-input__inner{
+      background: none;
+    }
+    input, button, button:disabled{
+      background: none;
+    }
+  }
 }
 </style>
