@@ -20,7 +20,7 @@
         @selection-change='handleSelectionChange'>
         <el-table-column
           type='selection'
-          width='55'>
+          width='60'>
         </el-table-column>
         <el-table-column
           prop='name'
@@ -41,7 +41,7 @@
         <el-table-column
           prop='date'
           label='评论日期'
-          width='180'>
+          width='200'>
         </el-table-column>
         <el-table-column
           prop='content'
@@ -53,7 +53,8 @@
         <el-table-column
           fixed='right'
           label='操作'
-          width='180'>
+          align='center'
+          width='80'>
           <template slot-scope='scope'>
             <el-button @click='deleteComment(scope.row.id)' type='danger' size='small'>删除</el-button>
           </template>

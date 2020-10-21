@@ -126,6 +126,9 @@ module.exports = {
                     const packageName = module.context.match(
                       /[\\/]node_modules[\\/](.*?)([\\/]|$)/
                     )[1];
+                    if(packageName.includes('element-ui')) {
+                      return;
+                    }
                     // npm package names are URL-safe, but some servers don't like @ symbols
                     return `npm.${packageName.replace('@', '')}`;
                   }
