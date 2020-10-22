@@ -85,6 +85,7 @@ module.exports = {
     config.optimization.minimize(true);
     // 分割代码
     config.optimization.splitChunks({
+      chunks: 'all'
     });
     // 配置cdn引入
     config.plugin('html').tap((args) => {
@@ -152,7 +153,7 @@ module.exports = {
     proxy: {
       '/': {
         /* 目标代理服务器地址 */
-        target: 'http://v.juhe.cn/',
+        target: '',
         ws: true,
         /* 允许跨域 */
         changeOrigin: true
