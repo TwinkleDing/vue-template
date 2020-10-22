@@ -81,12 +81,11 @@ module.exports = {
     ]
   },
   chainWebpack: (config) => {
-     // 压缩代码
-     config.optimization.minimize(true);
-     // 分割代码
-     config.optimization.splitChunks({
-         chunks: 'all'
-     });
+    // 压缩代码
+    config.optimization.minimize(true);
+    // 分割代码
+    config.optimization.splitChunks({
+    });
     // 配置cdn引入
     config.plugin('html').tap((args) => {
       args[0].cdn = cdn;

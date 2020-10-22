@@ -46,7 +46,7 @@ export default {
   watch: {
     setOption: {
       handler(data) {
-        console.log(data);
+        // console.log(data);
       },
       deep: true
     }
