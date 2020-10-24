@@ -44,12 +44,12 @@ export default {
     };
   },
   watch: {
-    setOption: {
-      handler(data) {
-        // console.log(data);
-      },
-      deep: true
-    }
+    // setOption: {
+    //   handler(data) {
+    //     // console.log(data);
+    //   },
+    //   deep: true
+    // }
   },
   mounted(){
     this.drawLine();
