@@ -4,8 +4,10 @@
       <div class='file-title'>
         <i class='el-icon-back' @click="backDir"></i>
         <span>当前文件夹： {{ dirName }}</span>
-        <el-button class='addBtn' type='primary' @click="addFile">{{ dirType === 'file' ? '保存文件' : '新建文件' }}</el-button>
-        <el-button v-if="dirType !== 'file'" class='addBtn' type='primary' @click='addDir'>新建文件夹</el-button>
+        <div>
+          <el-button class='addBtn' type='primary' @click="addFile">{{ dirType === 'file' ? '保存文件' : '新建文件' }}</el-button>
+          <el-button v-if="dirType !== 'file'" class='addBtn' type='primary' @click='addDir'>新建文件夹</el-button>
+        </div>
       </div>
       <div class='file-content'>
         <div v-for="(item, index) in fileList" :key='index'>
@@ -22,10 +24,13 @@
         </div>
       </div>
     </div>
-    <mavon-editor v-model='content'
-      ref='md' @change='change'
-      @imgAdd='$imgAdd'
-      style='min-height: 600px' />
+    <div class='edit-box'>
+      <mavon-editor v-model='content'
+        ref='md' @change='change'
+        :subfield='false'
+        style='height:100%'
+        @imgAdd='$imgAdd' />
+    </div>
   </div>
 </template>
 
@@ -192,19 +197,21 @@ export default {
 <style lang='scss'>
 .pages-markdown{
   height: calc(100% - 20px);
+  display: flex;
+
   .file{
     text-align: left;
     padding: 10px;
     font-size: 20px;
+    width: 600px;
     &-title{
       padding: 10px;
       .addBtn{
-        margin-left: 10px;
+        margin: 10px;
       }
     }
     &-content{
       padding: 10px;
-      max-height: 200px;
       box-sizing: border-box;
       overflow: auto;
     }
@@ -214,6 +221,10 @@ export default {
     .el-icon-back{
       cursor: pointer;
     }
+  }
+  .edit-box{
+    width: calc(100% - 600px);
+    height: 800px;
   }
 }
 </style>
