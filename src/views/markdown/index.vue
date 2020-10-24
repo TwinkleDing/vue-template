@@ -5,12 +5,20 @@
         <i class='el-icon-back' @click="backDir"></i>
         <span>当前文件夹： {{ dirName }}</span>
         <el-button class='addBtn' type='primary' @click="addFile">{{ dirType === 'file' ? '保存文件' : '新建文件' }}</el-button>
+        <el-button v-if="dirType !== 'file'" class='addBtn' type='primary' @click='addDir'>新建文件夹</el-button>
       </div>
       <div class='file-content'>
         <div v-for="(item, index) in fileList" :key='index'>
           <div class='file-item' @dblclick="openFile(item)">
             <i :class='item.type === "file" ? "el-icon-files" : "el-icon-folder"'></i>
-            {{ item.name }}</div>
+            {{ item.name }}
+            <el-popconfirm
+              title="这是一段内容确定删除吗？"
+              @onConfirm="delFile(item)"
+            >
+              <el-button slot="reference" type='text'>删除</el-button>
+            </el-popconfirm>
+          </div>
         </div>
       </div>
     </div>
@@ -25,7 +33,7 @@
 // 导入组件 及 组件样式
 import { mavonEditor } from 'mavon-editor';
 import 'mavon-editor/dist/css/index.css';
-import { fileList, fileInfo, filePath, fileAdd } from '@/api/markdown';
+import { fileList, fileInfo, filePath, fileAdd, fileDel, dirAdd, dirDel } from '@/api/markdown';
 
 export default {
   name: 'MarkDowns',
@@ -111,12 +119,51 @@ export default {
           });
           this.getFileList();
         });
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
+      });
+    },
+    addDir() {
+      this.$prompt('请输入文件夹名', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        // inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+        // inputErrorMessage: '邮箱格式不正确'
+      }).then(({ value }) => {
+        let params = {
+          dir: this.dirName + '\\' + value,
+        };
+        dirAdd(params).then(res => {
+          this.$message({
+            type: 'success',
+            message: res
+          });
+          this.getFileList();
         });
       });
+    },
+    delFile(item) {
+      if(item.type === 'file') {
+        let params = {
+          file: this.dirName + '\\' + item.name
+        };
+        fileDel(params).then(res => {
+          this.$message({
+            type: 'success',
+            message: res
+          });
+          this.getFileList();
+        });
+      }else {
+        let params = {
+          dir: this.dirName + '\\' + item.name
+        };
+        dirDel(params).then(res => {
+          this.$message({
+            type: 'success',
+            message: res
+          });
+          this.getFileList();
+        });
+      }
     },
     change(value, render) {
       //实时获取转成html的数据
