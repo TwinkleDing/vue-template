@@ -4,7 +4,7 @@
       <div class='file-title'>
         <i class='el-icon-back' @click="backDir"></i>
         <span>当前文件夹： {{ dirName }}</span>
-        <el-button type='primary' @click="addFile">保存文件</el-button>
+        <el-button class='addBtn' type='primary' @click="addFile">{{ dirType === 'file' ? '保存文件' : '新建文件' }}</el-button>
       </div>
       <div class='file-content'>
         <div v-for="(item, index) in fileList" :key='index'>
@@ -38,28 +38,45 @@ export default {
       html:'',// 转成的html,
       fileList: [],
       dirName: '',
-      dirType: ''
+      dirType: 'folder'
     };
   },
   created() {
     this.getFilePath();
   },
   methods: {
-    getFileList() {
-      fileList({dirName: this.dirName}).then( res => {
-        this.fileList = res;
-      });
-    },
     getFilePath() {
       filePath({dirName: this.dirName}).then( res => {
         this.dirName = res;
         this.getFileList();
       });
     },
+    getFileList() {
+      this.dirType = 'folder';
+      fileList({dirName: this.dirName}).then( res => {
+        this.fileList = res;
+      });
+    },
     getFileInfo() {
+      this.dirType = 'file';
       fileInfo({file: this.dirName}).then( res => {
         this.content = res.toString();
       });
+    },
+    openFile(item) {
+      this.dirName += '\\' + item.name;
+      if(item.type === 'file') {
+        this.fileList = [];
+        this.getFileInfo();
+      }else {
+        this.getFileList();
+      }
+    },
+    backDir() {
+      let index= this.dirName.lastIndexOf('\\');
+      this.dirName = this.dirName.slice(0, index);
+      this.getFileList();
+      this.content = '';
     },
     addFile() {
       if(!this.content) {
@@ -70,7 +87,7 @@ export default {
         return false;
       }
       let currentName = '';
-      let currentFloder = '';
+      let currentFloder = this.dirName;
       if(this.dirType === 'file') {
         let arr = this.dirName.split('\\');
         currentName = arr.pop();
@@ -88,8 +105,11 @@ export default {
           content: this.content
         };
         fileAdd(params).then( res => {
-          console.log(res);
-          // this.getFileList();
+          this.$message({
+            type: 'success',
+            message: res
+          });
+          this.getFileList();
         });
       }).catch(() => {
         this.$message({
@@ -97,23 +117,6 @@ export default {
           message: '取消输入'
         });
       });
-    },
-    openFile(item) {
-      this.dirName += '\\' + item.name;
-      if(item.type === 'file') {
-        this.dirType = 'file';
-        this.fileList = [];
-        this.getFileInfo();
-      }else {
-        this.dirType = 'folder';
-        this.getFileList();
-      }
-    },
-    backDir() {
-      let index= this.dirName.lastIndexOf('\\');
-      this.dirName = this.dirName.slice(0, index);
-      this.getFileList();
-      this.content = '';
     },
     change(value, render) {
       //实时获取转成html的数据
@@ -148,6 +151,9 @@ export default {
     font-size: 20px;
     &-title{
       padding: 10px;
+      .addBtn{
+        margin-left: 10px;
+      }
     }
     &-content{
       padding: 10px;
