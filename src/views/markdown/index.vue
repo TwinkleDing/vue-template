@@ -12,7 +12,7 @@
       <div class='file-content'>
         <div v-for="(item, index) in fileList" :key='index'>
           <div class='file-item' @dblclick="openFile(item)">
-            <i :class='item.type === "file" ? "el-icon-files" : "el-icon-folder"'></i>
+            <i :class='item.type === "file" ? "el-icon-files" : "el-icon-folder"' :style='`color:${themeColor}`'></i>
             {{ item.name }}
             <el-popconfirm
               title="这是一段内容确定删除吗？"
@@ -26,7 +26,9 @@
     </div>
     <div class='edit-box'>
       <mavon-editor v-model='content'
-        ref='md' @change='change'
+        ref='md'
+        v-if='dirType === "file" || editShow'
+        @change='change'
         :subfield='false'
         style='height:100%'
         @imgAdd='$imgAdd' />
@@ -39,6 +41,7 @@
 import { mavonEditor } from 'mavon-editor';
 import 'mavon-editor/dist/css/index.css';
 import { fileList, fileInfo, filePath, fileAdd, fileDel, dirAdd, dirDel } from '@/api/markdown';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'MarkDowns',
@@ -51,12 +54,14 @@ export default {
       html:'',// 转成的html,
       fileList: [],
       dirName: '',
-      dirType: 'folder'
+      dirType: 'folder',
+      editShow: false
     };
   },
   created() {
     this.getFilePath();
   },
+  computed: mapGetters(['themeColor']),
   methods: {
     getFilePath() {
       filePath({dirName: this.dirName}).then( res => {
@@ -77,6 +82,7 @@ export default {
       });
     },
     openFile(item) {
+      this.editShow = false;
       this.dirName += '\\' + item.name;
       if(item.type === 'file') {
         this.fileList = [];
@@ -86,17 +92,15 @@ export default {
       }
     },
     backDir() {
+      this.editShow = false;
       let index= this.dirName.lastIndexOf('\\');
       this.dirName = this.dirName.slice(0, index);
       this.getFileList();
       this.content = '';
     },
     addFile() {
-      if(!this.content) {
-        this.$message({
-          type: 'warning',
-          message: '未添加内容'
-        });
+      if(!this.editShow || this.dirType === 'file') {
+        this.editShow = true;
         return false;
       }
       let currentName = '';
@@ -216,6 +220,7 @@ export default {
       overflow: auto;
     }
     .file-item{
+      display: inline-block;
       cursor: pointer;
     }
     .el-icon-back{

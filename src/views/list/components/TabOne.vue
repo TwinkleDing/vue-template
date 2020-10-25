@@ -160,7 +160,6 @@ export default {
 .tab-one{
   padding: 100px;
   .item{
-    float: left;
     margin: 20px;
   }
   .progress{

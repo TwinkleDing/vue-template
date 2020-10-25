@@ -4,6 +4,7 @@ export default [
   {
     path: '/info',
     component: Layout,
+    redirect: '/infos',
     props: true,
     children: [{
       path: '/infos',
