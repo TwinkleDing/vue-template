@@ -4,9 +4,10 @@ export default [
   {
     path: '/info',
     component: Layout,
+    redirect: '/infos',
     props: true,
     children: [{
-      path: '/info',
+      path: '/infos',
       name: 'Infos',
       key: 'Infos',
       component: () => import( /* webpackChunkName: 'views' */ '@/views/list/info')

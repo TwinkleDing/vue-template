@@ -22,12 +22,18 @@ const cdn = {
   },
 
   // 通过cdn方式使用
-  js: [
-    'https://cdn.bootcss.com/vue/2.6.11/vue.runtime.min.js',
+  js: IsProduction ? [
+    'https://cdn.bootcss.com/vue/2.6.11/vue.min.js',
     'https://cdn.bootcss.com/vue-router/3.1.2/vue-router.min.js',
     'https://cdn.bootcss.com/vuex/3.1.2/vuex.min.js',
     'https://cdn.bootcss.com/axios/0.19.2/axios.min.js',
     'https://cdn.bootcss.com/echarts/4.6.0/echarts.min.js'
+  ] : [
+    'https://cdn.bootcss.com/vue/2.6.11/vue.js',
+    'https://cdn.bootcss.com/vue-router/3.1.2/vue-router.js',
+    'https://cdn.bootcss.com/vuex/3.1.2/vuex.js',
+    'https://cdn.bootcss.com/axios/0.19.2/axios.js',
+    'https://cdn.bootcss.com/echarts/4.6.0/echarts.js'
   ],
   css: [],
 };
@@ -81,12 +87,12 @@ module.exports = {
     ]
   },
   chainWebpack: (config) => {
-     // 压缩代码
-     config.optimization.minimize(true);
-     // 分割代码
-     config.optimization.splitChunks({
-         chunks: 'all'
-     });
+    // 压缩代码
+    config.optimization.minimize(true);
+    // 分割代码
+    config.optimization.splitChunks({
+      chunks: 'all'
+    });
     // 配置cdn引入
     config.plugin('html').tap((args) => {
       args[0].cdn = cdn;
@@ -116,7 +122,7 @@ module.exports = {
             .optimization.splitChunks({
               chunks: 'all',
               maxInitialRequests: Infinity,
-              minSize: 20000, // 依赖包超过20000bit将被单独打包
+              minSize: 200000, // 依赖包超过200000bit将被单独打包
               cacheGroups: {
                 vendor: {
                   test: /[\\/]node_modules[\\/]/,
@@ -126,6 +132,9 @@ module.exports = {
                     const packageName = module.context.match(
                       /[\\/]node_modules[\\/](.*?)([\\/]|$)/
                     )[1];
+                    if(packageName.includes('element-ui')) {
+                      return;
+                    }
                     // npm package names are URL-safe, but some servers don't like @ symbols
                     return `npm.${packageName.replace('@', '')}`;
                   }
@@ -150,7 +159,7 @@ module.exports = {
     proxy: {
       '/': {
         /* 目标代理服务器地址 */
-        target: 'http://v.juhe.cn/',
+        target: '/',
         ws: true,
         /* 允许跨域 */
         changeOrigin: true

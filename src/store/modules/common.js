@@ -116,14 +116,14 @@ const common = {
                 label: '嵌套路由',
                 name: 'normal',
                 path: '/normal',
+                redirect: '/listss',
                 key: 'normal',
                 children: [
                   {
                     label: '嵌套路由',
-                    name: 'Lists',
-                    path: '/lists',
+                    path: '/listss',
                     key: 'Lists',
-                    component: 'list/index',
+                    redirect: '/lists',
                     children: [
                       {
                         label: '表格',
@@ -152,10 +152,10 @@ const common = {
               },
               {
                 label: 'Tab',
-                name: 'Infos',
-                path: '/info',
-                key: 'Infos',
-                component: 'list/info',
+                name: 'Tab',
+                path: '/tab',
+                redirect: '/info',
+                key: 'Tab',
               },
               {
                 label: '图表',

@@ -87,6 +87,7 @@ export default {
       box-sizing: border-box;
       overflow-y: auto;
       overflow-x: hidden;
+      user-select:none;
       .main-content{
         min-height: calc(100% - 40px);
         box-sizing: border-box;
