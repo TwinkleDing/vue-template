@@ -5,12 +5,18 @@
                     :key='item.key'
                     :index='item.key'
                     @click='open(item)'>
-        <span slot='title' >{{item.label}}</span>
+        <template slot='title'>
+          <i class='el-icon-menu'></i>
+          <span>{{item.label}}</span>
+        </template>
       </el-menu-item>
       <el-submenu v-if='item.children && item.children.length'
                   :key='item.key'
                   :index='item.key'>
-        <span slot='title' >{{item.label}}</span>
+        <template slot='title'>
+          <i class='el-icon-menu'></i>
+          <span>{{item.label}}</span>
+        </template>
         <left-item :menu='item.children' />
       </el-submenu>
     </template>
