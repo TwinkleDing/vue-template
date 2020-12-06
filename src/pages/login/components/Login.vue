@@ -24,8 +24,8 @@ export default {
   data() {
     return {
       form: {
-        account: 'bilibili',
-        password: 'bilibili'
+        account: '',
+        password: ''
       }
     };
   },
@@ -42,10 +42,20 @@ export default {
           'user_pwd': this.form.password
         };
         loginByUsername(params).then(res => {
-          this.$store.dispatch('userInfo', res.data);
-          this.$store.dispatch('route');
-        }).then(() => {
-          this.goIndex();
+          if(res.code === 200){
+            this.$store.dispatch('userInfo', res.data);
+            this.$store.dispatch('route');
+          }else{
+            this.$message({
+              type: 'error',
+              message: res.msg
+            });
+          }
+          return res.code;
+        }).then((code) => {
+          if(code === 200) {
+            this.goIndex();
+          }
         });
       }
     },
@@ -63,20 +73,17 @@ export default {
       this.goIndex();
     },
     goIndex() {
-      this.$store.dispatch('logIn', this.form.account).then(() => {
-        // 页面跳转
-        const loading = this.$loading({
-          lock: true,
-          text: 'Loading',
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)'
-        });
-        setTimeout(() => {
-          loading.close();
-          this.$router.push({ path: '/index' });
-        }, 1000);
-      }).catch(() => {
+      // 页面跳转
+      const loading = this.$loading({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
       });
+      setTimeout(() => {
+        loading.close();
+        this.$router.push({ path: '/index' });
+      }, 1000);
     }
   }
 };

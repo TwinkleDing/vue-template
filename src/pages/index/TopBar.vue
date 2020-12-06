@@ -8,7 +8,7 @@
       <top-language />
       <top-color />
       <i class='icon-font icon-home'></i>
-      <div><i class='el-icon-user'></i>用户id：{{ user }}</div>
+      <div><i class='el-icon-user'></i>用户id：{{ userInfo.user_name }}</div>
       <el-button type='primary' @click='logout'>{{$t('common.logout')}}</el-button>
     </div>
   </div>
@@ -32,10 +32,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['userInfo'])
   },
   mounted() {
     this.hello();
+    console.log(this.userInfo)
   },
   methods: {
     logout() {

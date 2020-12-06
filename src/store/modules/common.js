@@ -31,13 +31,6 @@ const common = {
         type: 'local'
       });
     },
-    REMOVE_USER: (state) => {
-      state.user = '';
-      removeStore({
-        name: 'user',
-        type: 'local'
-      });
-    },
     REMOVE_ROUTES: (state) => {
       state.route = [];
       removeStore({
@@ -82,16 +75,9 @@ const common = {
         resolve();
       });
     },
-    logIn({ commit }, user) {
-      return new Promise(resolve => {
-        commit('SET_USER', user);
-        resolve();
-      });
-    },
     logOut({ commit }) {
       return new Promise(resolve => {
         commit('SET_LOGIN_IN', false);
-        commit('REMOVE_USER');
         commit('REMOVE_ROUTES');
         commit('REMOVE_USER_INFO');
         resolve();
