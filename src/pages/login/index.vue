@@ -34,8 +34,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import Login from './Components/Login';
-import Registered from './Components/Registered';
+import Login from './components/Login';
+import Registered from './components/Registered';
 
 export default {
   name: 'LoginBox',

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import leftItem from './Components/LeftItem';
+import leftItem from './components/LeftItem';
 import {mapGetters} from 'vuex';
 
 export default {
