@@ -36,7 +36,7 @@ export default {
   },
   mounted() {
     this.hello();
-    console.log(this.userInfo)
+    console.log(this.userInfo);
   },
   methods: {
     logout() {
