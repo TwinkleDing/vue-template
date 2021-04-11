@@ -10,7 +10,12 @@ export default [
       path: '/infos',
       name: 'Infos',
       key: 'Infos',
-      component: () => import( /* webpackChunkName: 'views' */ '@/views/list/info')
+      component: () => import( /* webpackChunkName: 'info' */ '@/views/list/info')
     }]
+  },
+  {
+    path: '/personal',
+    name: 'Personal',
+    component: () => import( /* webpackChunkName: 'personal' */ '@/views/personal/index')
   }
 ];

@@ -64,8 +64,9 @@ export default {
     },
     tourists() {
       let data = {
-        'account': 'bilibili',
-        'password': 'bilibili'
+        'account': 'twinkeDing',
+        'password': 'twinkeDing',
+        'user_name': 'twinkeDing'
       };
       this.$store.dispatch('userInfo', data);
       this.$store.dispatch('route');

@@ -27,7 +27,12 @@ export default {
     };
   },
   methods: {
-    regest() {},
+    regest() {
+      this.$message({
+        type: 'warning',
+        message: '暂无服务器，无法注册，请使用游客登陆！'
+      });
+    },
     goBack() {
       this.$emit('regest');
     }
