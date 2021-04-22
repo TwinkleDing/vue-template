@@ -1,111 +1,145 @@
-import { setStore, getStore, removeStore } from '@/utils/store';
+import {
+  setStore,
+  getStore,
+  removeStore
+} from '@/utils/store';
 
 const common = {
   state: {
-    userInfo: getStore({ name: 'userInfo' }) || '',
-    loginIn: getStore({ name: 'loginIn'}) || false ,
-    user: getStore({ name: 'user' }) || '',
-    color: getStore({ name: 'color' }) || '#409eff',
-    route: getStore({ name: 'route' }) || [],
-    language: getStore({ name: 'language'} ) || 'zh',
+    userInfo: getStore( {
+      name: 'userInfo'
+    } ) || '',
+    loginIn: getStore( {
+      name: 'loginIn'
+    } ) || false,
+    user: getStore( {
+      name: 'user'
+    } ) || '',
+    color: getStore( {
+      name: 'color'
+    } ) || '#409eff',
+    route: getStore( {
+      name: 'route'
+    } ) || [],
+    language: getStore( {
+      name: 'language'
+    } ) || 'zh',
   },
   mutations: {
-    SET_USER_INFO: (state, userInfo) => {
+    SET_USER_INFO: ( state, userInfo ) => {
       state.userInfo = userInfo;
-      setStore({
+      setStore( {
         name: 'userInfo',
         content: state.userInfo
-      });
+      } );
     },
-    SET_USER: (state, user) => {
+    SET_USER: ( state, user ) => {
       state.user = user;
-      setStore({
+      setStore( {
         name: 'user',
         content: state.user
-      });
+      } );
     },
-    REMOVE_USER_INFO: (state) => {
+    REMOVE_USER_INFO: ( state ) => {
       state.userInfo = {};
-      removeStore({
+      removeStore( {
         name: 'userInfo',
         type: 'local'
-      });
+      } );
     },
-    REMOVE_USER: (state) => {
-      state.user = '';
-      removeStore({
-        name: 'user',
-        type: 'local'
-      });
-    },
-    REMOVE_ROUTES: (state) => {
+    REMOVE_ROUTES: ( state ) => {
       state.route = [];
-      removeStore({
+      removeStore( {
         name: 'route',
         type: 'local'
-      });
+      } );
     },
-    SET_COLOR: (state, color) => {
+    SET_COLOR: ( state, color ) => {
       state.color = color;
-      setStore({
+      setStore( {
         name: 'color',
         content: state.color
-      });
+      } );
     },
-    SET_ROUTE: (state, route) => {
+    SET_ROUTE: ( state, route ) => {
       state.route = route;
-      setStore({
+      setStore( {
         name: 'route',
         content: state.route
-      });
+      } );
     },
-    SET_LOGIN_IN: (state, loginIn) => {
+    SET_LOGIN_IN: ( state, loginIn ) => {
       state.loginIn = loginIn;
-      setStore({
+      setStore( {
         name: 'loginIn',
         content: state.loginIn
-      });
+      } );
     },
-    SET_LANGUAGE: (state, language) => {
+    SET_LANGUAGE: ( state, language ) => {
       state.language = language;
-      setStore({
+      var head = document.getElementsByTagName( 'head' )[ 0 ];
+
+      function loadStyles( url ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = url;
+        head.appendChild( link );
+      }
+      if ( process.env.NODE_ENV === 'production' ) {
+        for ( let i in head.children ) {
+          if ( head.children[ i ].attributes ) {
+            if ( head.children[ i ].attributes[ 0 ] ) {
+              if ( head.children[ i ].attributes[ 0 ].name === 'href' ) {
+                if ( head.children[ i ].attributes[ 0 ].value.includes( 'public.css' ) ) {
+                  head.removeChild( head.children[ i ] );
+                  console.log( head.children[ i ] );
+                }
+              }
+            }
+          }
+        }
+        if ( language === 'en' ) {
+          loadStyles( '/css/ar_public.css' );
+        } else {
+          loadStyles( '/css/public.css' );
+        }
+      }
+      setStore( {
         name: 'language',
         content: state.language
-      });
+      } );
     }
   },
   actions: {
-    userInfo({ commit }, userInfo) {
-      return new Promise(resolve => {
-        commit('SET_LOGIN_IN', true);
-        commit('SET_USER_INFO', userInfo);
+    userInfo( {
+      commit
+    }, userInfo ) {
+      return new Promise( resolve => {
+        commit( 'SET_LOGIN_IN', true );
+        commit( 'SET_USER_INFO', userInfo );
         resolve();
-      });
+      } );
     },
-    logIn({ commit }, user) {
-      return new Promise(resolve => {
-        commit('SET_USER', user);
+    logOut( {
+      commit
+    } ) {
+      return new Promise( resolve => {
+        commit( 'SET_LOGIN_IN', false );
+        commit( 'REMOVE_ROUTES' );
+        commit( 'REMOVE_USER_INFO' );
         resolve();
-      });
+      } );
     },
-    logOut({ commit }) {
-      return new Promise(resolve => {
-        commit('SET_LOGIN_IN', false);
-        commit('REMOVE_USER');
-        commit('REMOVE_ROUTES');
-        commit('REMOVE_USER_INFO');
-        resolve();
-      });
-    },
-    route({ commit }) {
-      return new Promise((resolve, reject)=> {
-        const routes = [
-          {
+    route( {
+      commit
+    } ) {
+      return new Promise( ( resolve, reject ) => {
+        const routes = [ {
             path: '',
             name: 'Pages',
             component: 'Pages',
-            children: [
-              {
+            children: [ {
                 label: '首页',
                 name: 'Homes',
                 path: '/dashboard',
@@ -118,21 +152,18 @@ const common = {
                 path: '/normal',
                 redirect: '/listss',
                 key: 'normal',
-                children: [
-                  {
+                children: [ {
                     label: '嵌套路由',
                     path: '/listss',
                     key: 'Lists',
                     redirect: '/lists',
-                    children: [
-                      {
-                        label: '表格',
-                        name: 'Lists',
-                        path: '/lists',
-                        key: 'Listss',
-                        component: 'list/index',
-                      },
-                    ]
+                    children: [ {
+                      label: '表格',
+                      name: 'Lists',
+                      path: '/lists',
+                      key: 'Listss',
+                      component: 'list/index',
+                    }, ]
                   },
                   {
                     label: '表单',
@@ -186,12 +217,12 @@ const common = {
             redirect: '/404', //重定向
           }
         ];
-        commit('SET_ROUTE', routes);
-        resolve(routes);
-        if(routes.length === 0) {
-          reject(new Error());
+        commit( 'SET_ROUTE', routes );
+        resolve( routes );
+        if ( routes.length === 0 ) {
+          reject( new Error() );
         }
-      });
+      } );
     }
   }
 };

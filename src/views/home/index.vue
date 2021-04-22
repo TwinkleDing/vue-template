@@ -13,8 +13,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import CardPanel from './Components/CardPanel';
+import CardPanel from './components/CardPanel';
 import ECharts from '@/components/Charts';
 
 export default {
@@ -200,9 +199,6 @@ export default {
         ]
       }
     };
-  },
-  computed: {
-    ...mapGetters(['userInfo']),
   },
   mounted() {
   }
