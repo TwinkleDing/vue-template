@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     openPdf() {
-      window.open('http://192.168.31.180:666/static/丁玉亮的简历.pdf');
+      window.open('/static/丁玉亮的简历.pdf');
     }
   }
 };

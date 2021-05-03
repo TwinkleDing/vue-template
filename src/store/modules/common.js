@@ -147,13 +147,13 @@ const common = {
                 component: 'home/index',
               },
               {
-                label: '嵌套路由',
+                label: '嵌套路由一',
                 name: 'normal',
                 path: '/normal',
                 redirect: '/listss',
                 key: 'normal',
                 children: [ {
-                    label: '嵌套路由',
+                    label: '嵌套路由二',
                     path: '/listss',
                     key: 'Lists',
                     redirect: '/lists',

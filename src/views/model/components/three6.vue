@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div class="three6">
     <div id='box5' class='box'></div>
+    <div id='status'></div>
   </div>
 </template>
 
@@ -112,7 +113,7 @@ export default {
 			// this.mesh.scale.multiplyScalar( 1 );
       this.scene.add( this.mesh );
       this.stats = new Stats();
-      document.getElementById('box5').appendChild(this.stats.dom);
+      document.getElementById('status').appendChild(this.stats.dom);
       this.setupDatGui();
       this.timeGo= Math.PI / 2;
       let render=()=> {
@@ -447,9 +448,25 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped>
-.box{
-  height: 500px;
-  margin-bottom: 300px;
+<style lang='scss'>
+.three6{
+  position: relative;
+  .box{
+    height: 500px;
+    margin-bottom: 300px;
+    position: relative;
+  }
+  #status{
+    position: absolute;
+    top: 0;
+    div{
+      position: absolute!important;
+    }
+  }
 }
+.dg.ac{
+  position: absolute!important;
+  top: 60px!important;
+}
+
 </style>
