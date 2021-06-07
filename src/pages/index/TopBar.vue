@@ -8,7 +8,7 @@
       <top-language />
       <top-color />
       <i class='icon-font icon-home'></i>
-      <div><i class='el-icon-user'></i>用户id：{{ userInfo.user_name }}</div>
+      <div><i class='el-icon-user'></i>{{$t('common.userId') + userInfo.user_name }}</div>
       <el-button type='primary' @click='logout'>{{$t('common.logout')}}</el-button>
     </div>
   </div>
@@ -42,7 +42,7 @@ export default {
     logout() {
       this.$confirm('即将退出登录状态, 是否继续?', this.$t('common.tip'), {
         confirmButtonText: this.$t('common.confirm'),
-        cancelButtonText: this.$t('common.cancle'),
+        cancelButtonText: this.$t('common.cancel'),
         type: 'warning'
       }).then(() => {
         this.$store.dispatch('logOut').then(() => {
