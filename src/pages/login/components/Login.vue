@@ -43,8 +43,9 @@ export default {
         };
         loginByUsername(params).then(res => {
           if(res.code === 200){
+            res.data.type = 'adimin';
             this.$store.dispatch('userInfo', res.data);
-            this.$store.dispatch('route');
+            this.$store.dispatch('route', res.data.type);
           }else{
             this.$message({
               type: 'error',
@@ -64,12 +65,13 @@ export default {
     },
     tourists() {
       let data = {
-        'account': 'twinkeDing',
-        'password': 'twinkeDing',
-        'user_name': 'twinkeDing'
+        account: 'twinkeDing',
+        password: 'twinkeDing',
+        'user_name': 'twinkeDing',
+        type: 'tourist'
       };
       this.$store.dispatch('userInfo', data);
-      this.$store.dispatch('route');
+      this.$store.dispatch('route', data.type);
       this.form = data;
       this.goIndex();
     },

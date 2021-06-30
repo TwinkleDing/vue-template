@@ -133,9 +133,9 @@ const common = {
     },
     route( {
       commit
-    } ) {
+    }, type ) {
       return new Promise( ( resolve, reject ) => {
-        const routes = [ {
+        const routes1 = [ {
             path: '',
             name: 'Pages',
             component: 'Pages',
@@ -217,9 +217,49 @@ const common = {
             redirect: '/404', //重定向
           }
         ];
-        commit( 'SET_ROUTE', routes );
-        resolve( routes );
-        if ( routes.length === 0 ) {
+        const routes2 = [ {
+          path: '',
+          name: 'Pages',
+          component: 'Pages',
+          children: [ {
+              label: '首页',
+              name: 'Homes',
+              path: '/dashboard',
+              key: 'Homes',
+              component: 'home/index',
+            },
+            {
+              label: '图表',
+              name: 'Charts',
+              path: '/charts',
+              key: 'Charts',
+              component: 'chart/index',
+            },
+            {
+              label: '地图',
+              name: 'Maps',
+              path: '/maps',
+              key: 'Maps',
+              component: 'map/index',
+            },
+            {
+              label: '模型',
+              name: 'Model',
+              path: '/models',
+              key: 'Models',
+              component: 'model/index',
+            }
+          ]
+        },
+        {
+          path: '*',
+          name: 'NotFound',
+          redirect: '/404', //重定向
+        }
+        ];
+        commit( 'SET_ROUTE', type === 'admin' ? routes1 : routes2);
+        resolve( type === 'admin' ? routes1 : routes2 );
+        if ( routes1.length === 0 ) {
           reject( new Error() );
         }
       } );
