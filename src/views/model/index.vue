@@ -424,9 +424,4 @@ export default {
 .model-ca{
   position:relative;
 }
-.dg.ac{
-  position: absolute;
-  right: 0;
-  top: 60px;
-}
 </style>

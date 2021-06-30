@@ -2,10 +2,10 @@
   <div class='login'>
     <el-form ref='form' :model='form' label-width='0px'>
       <el-form-item>
-        <el-input v-model='form.account' placeholder='请输入用户ID' prefix-icon='el-icon-user'></el-input>
+        <el-input v-model='form.account' :placeholder='$t("login.userId")' prefix-icon='el-icon-user'></el-input>
       </el-form-item>
       <el-form-item>
-        <el-input v-model='form.password' placeholder='请输入密码' prefix-icon='el-icon-user-solid'></el-input>
+        <el-input v-model='form.password' :placeholder='$t("login.userPassword")' prefix-icon='el-icon-user-solid'></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type='primary' @click='regest'>{{$t('login.register')}}</el-button>
@@ -43,8 +43,9 @@ export default {
         };
         loginByUsername(params).then(res => {
           if(res.code === 200){
+            res.data.type = 'adimin';
             this.$store.dispatch('userInfo', res.data);
-            this.$store.dispatch('route');
+            this.$store.dispatch('route', res.data.type);
           }else{
             this.$message({
               type: 'error',
@@ -64,12 +65,13 @@ export default {
     },
     tourists() {
       let data = {
-        'account': 'twinkeDing',
-        'password': 'twinkeDing',
-        'user_name': 'twinkeDing'
+        account: 'twinkeDing',
+        password: 'twinkeDing',
+        'user_name': 'twinkeDing',
+        type: 'tourist'
       };
       this.$store.dispatch('userInfo', data);
-      this.$store.dispatch('route');
+      this.$store.dispatch('route', data.type);
       this.form = data;
       this.goIndex();
     },
