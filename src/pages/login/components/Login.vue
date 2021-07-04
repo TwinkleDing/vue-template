@@ -43,9 +43,8 @@ export default {
         };
         loginByUsername(params).then(res => {
           if(res.code === 200){
-            res.data.type = 'adimin';
             this.$store.dispatch('userInfo', res.data);
-            this.$store.dispatch('route', res.data.type);
+            this.$store.dispatch('route', 'admin');
           }else{
             this.$message({
               type: 'error',

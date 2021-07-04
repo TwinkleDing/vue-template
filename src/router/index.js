@@ -42,6 +42,7 @@ var Router = new VueRouter({
 Router.beforeEach((to, from, next) => {
   if(store.getters.route.length) {
     if(!getRoute) {
+      console.log(store.getters.route)
       Router.addRoutes(filterAsyncRouter(store.getters.route));
       getRoute = true;
       next({ ...to, replace: true });
