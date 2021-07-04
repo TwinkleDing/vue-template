@@ -10,3 +10,13 @@ export const loginByUsername = data =>
       ...data
     }
   });
+
+// 注册
+export const register = data =>
+  request({
+    url: baseUrl+'/user',
+    method: 'post',
+    data: {
+      ...data
+    }
+  });

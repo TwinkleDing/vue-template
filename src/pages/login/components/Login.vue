@@ -5,7 +5,7 @@
         <el-input v-model='form.account' :placeholder='$t("login.userId")' prefix-icon='el-icon-user'></el-input>
       </el-form-item>
       <el-form-item>
-        <el-input v-model='form.password' :placeholder='$t("login.userPassword")' prefix-icon='el-icon-user-solid'></el-input>
+        <el-input type='password' v-model='form.password' :placeholder='$t("login.userPassword")' prefix-icon='el-icon-user-solid'></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type='primary' @click='regest'>{{$t('login.register')}}</el-button>
