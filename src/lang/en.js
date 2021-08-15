@@ -17,5 +17,14 @@ export default {
         logout: "Logout",
         tip: "Tip",
         userId: "User ID: "
-    }
+    },
+    dashboard: "dashboard",
+    chart: "chart",
+    map: "map",
+    model: "model",
+    markdown: "markdown",
+    form: "form",
+    router1: "router1",
+    router2: "router2",
+    list: "list"
 };

@@ -6,7 +6,6 @@ import elementZhLocale from "element-ui/lib/locale/lang/zh-CN";
 import zhLocale from "./zh";
 import enLocale from "./en";
 
-
 Vue.use(VueI18n);
 
 const i18n = new VueI18n({

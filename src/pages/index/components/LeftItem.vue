@@ -7,7 +7,7 @@
                             @click='open(item)'>
                 <template slot='title'>
                     <i class='el-icon-menu'></i>
-                    <span>{{item.label}}</span>
+                    <span>{{$t(item.label)}}</span>
                 </template>
             </el-menu-item>
             <el-submenu v-if='item.children && item.children.length'
@@ -15,7 +15,7 @@
                         :index='item.key'>
                 <template slot='title'>
                     <i class='el-icon-menu'></i>
-                    <span>{{item.label}}</span>
+                    <span>{{$t(item.label)}}</span>
                 </template>
                 <left-item :menu='item.children' />
             </el-submenu>

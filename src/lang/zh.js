@@ -17,5 +17,14 @@ export default {
         logout: "退出登录",
         tip: "提示",
         userId: "用户ID："
-    }
+    },
+    dashboard: "首页",
+    chart: "图表",
+    map: "地图",
+    model: "模型",
+    markdown: "文本编辑器",
+    form: "表单",
+    router1: "嵌套路由1",
+    router2: "嵌套路由2",
+    list: "表格"
 };
