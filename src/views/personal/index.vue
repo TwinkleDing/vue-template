@@ -1,25 +1,25 @@
 <template>
-  <div class='personal'>
-    <div class='title' @click="openPdf">丁玉亮的简历</div>
-  </div>
+    <div class='personal'>
+        <div class='title' @click="openPdf">丁玉亮的简历</div>
+    </div>
 </template>
 
 <script>
 
 export default {
-  name: 'personal',
-  data() {
-    return {
+    name: "personal",
+    data() {
+        return {
 
-    };
-  },
-  mounted() {
-  },
-  methods: {
-    openPdf() {
-      window.open('/static/丁玉亮的简历.pdf');
+        };
+    },
+    mounted() {
+    },
+    methods: {
+        openPdf() {
+            window.open("/static/丁玉亮的简历.pdf");
+        }
     }
-  }
 };
 </script>
 

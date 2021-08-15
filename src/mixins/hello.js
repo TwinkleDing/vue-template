@@ -2,7 +2,7 @@
 var myMixin = {
     methods: {
         hello() {
-            this.mixxins = 'mixxins';
+            this.mixxins = "mixxins";
         }
     }
 };
