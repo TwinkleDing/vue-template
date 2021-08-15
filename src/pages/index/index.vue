@@ -1,65 +1,65 @@
 <template>
-  <div class='pages'>
-    <vue-particles
-      color="#47CD88"
-      linesColor="#47CD88"
-      shapeType="star"
-      hoverMode="grab"
-      clickMode="remove"
-      :particleOpacity="0.7"
-      :particlesNumber="80"
-      :particleSize="4"
-      :linesWidth="1"
-      :lineLinked="true"
-      :lineOpacity="0.4"
-      :linesDistance="150"
-      :moveSpeed="3"
-      :hoverEffect="true"
-      :clickEffect="true">
-    </vue-particles>
-    <top-bar />
-    <div class='pages-content'>
-      <div class='left'>
-        <left-menu/>
-      </div>
-      <div class='right'>
-        <div class='main-content'>
-          <router-view />
+    <div class='pages'>
+        <vue-particles
+            color="#47CD88"
+            linesColor="#47CD88"
+            shapeType="star"
+            hoverMode="grab"
+            clickMode="remove"
+            :particleOpacity="0.7"
+            :particlesNumber="80"
+            :particleSize="4"
+            :linesWidth="1"
+            :lineLinked="true"
+            :lineOpacity="0.4"
+            :linesDistance="150"
+            :moveSpeed="3"
+            :hoverEffect="true"
+            :clickEffect="true">
+        </vue-particles>
+        <top-bar />
+        <div class='pages-content'>
+            <div class='left'>
+                <left-menu/>
+            </div>
+            <div class='right'>
+                <div class='main-content'>
+                <router-view />
+                </div>
+                <div class='copy-right'>Copyright ©2020 , All Rights Reserved.</div>
+            </div>
+            <go-top :message='message' />
         </div>
-        <div class='copy-right'>Copyright ©2020 , All Rights Reserved.</div>
-      </div>
-      <go-top :message='message' />
     </div>
-  </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import { mapGetters } from 'vuex';
-import TopBar from './TopBar';
-import LeftMenu from './LeftMenu';
+import { mapGetters } from "vuex";
+import TopBar from "./TopBar";
+import LeftMenu from "./LeftMenu";
 
 export default {
-  name: 'Pages',
-  components: {
-    TopBar,
-    LeftMenu
-  },
-  data() {
-    return {
-      message: '',
-    };
-  },
-  computed: {
-    ...mapGetters(['user'])
-  },
-  methods: {
-    logout() {
-      this.$store.dispatch('logOut').then(() => {
-        this.$router.push({ path: '/login' });
-      });
+    name: "Pages",
+    components: {
+        TopBar,
+        LeftMenu
+    },
+    data() {
+        return {
+            message: "",
+        };
+    },
+    computed: {
+        ...mapGetters(["user"])
+    },
+    methods: {
+        logout() {
+            this.$store.dispatch("logOut").then(() => {
+                this.$router.push({ path: "/login" });
+            });
+        }
     }
-  }
 };
 </script>
 <style lang='scss' scoped>

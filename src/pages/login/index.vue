@@ -1,45 +1,45 @@
 <template>
-  <div class='login-box'>
-    <vue-particles
-      color="#47CD88"
-      linesColor="#47CD88"
-      shapeType="star"
-      hoverMode="grab"
-      clickMode="remove"
-      :particleOpacity="0.7"
-      :particlesNumber="80"
-      :particleSize="4"
-      :linesWidth="1"
-      :lineLinked="true"
-      :lineOpacity="0.4"
-      :linesDistance="150"
-      :moveSpeed="3"
-      :hoverEffect="true"
-      :clickEffect="true">
-    </vue-particles>
-    <div class='login-box-content' :class='regestAnimation ? "tranx" : ""'>
-      <div class='title'>{{$t('login.title')}}</div>
-      <login v-if='!regest' @regest='regestOpen' />
-      <Registered v-else @regest='regestClose' />
-      <div class='language' :style='`background-color:${themeColor}`'>
-        <span @click='changeLan("zh")' :style='language === "zh" ? `color: #fff` : ""'>中</span>
-        /
-        <span @click='changeLan("en")' :style='language === "en" ? `color: #fff` : ""'>En</span>
-      </div>
-      <div class='node-path'>vue path: <a :href="vuePath">{{ vuePath }}</a></div>
-      <div class='node-path'>node path: <a :href="nodePath">{{ nodePath }}</a></div>
+    <div class='login-box'>
+        <vue-particles
+            color="#47CD88"
+            linesColor="#47CD88"
+            shapeType="star"
+            hoverMode="grab"
+            clickMode="remove"
+            :particleOpacity="0.7"
+            :particlesNumber="80"
+            :particleSize="4"
+            :linesWidth="1"
+            :lineLinked="true"
+            :lineOpacity="0.4"
+            :linesDistance="150"
+            :moveSpeed="3"
+            :hoverEffect="true"
+            :clickEffect="true">
+        </vue-particles>
+        <div class='login-box-content' :class='regestAnimation ? "tranx" : ""'>
+            <div class='title'>{{$t('login.title')}}</div>
+            <login v-if='!regest' @regest='regestOpen' />
+            <registered v-else @regest='regestClose' />
+            <div class='language' :style='`background-color:${themeColor}`'>
+                <span @click='changeLan("zh")' :style='language === "zh" ? `color: #fff` : ""'>中</span>
+                /
+                <span @click='changeLan("en")' :style='language === "en" ? `color: #fff` : ""'>En</span>
+            </div>
+            <div class='node-path'>vue path: <a :href="vuePath">{{ vuePath }}</a></div>
+            <div class='node-path'>node path: <a :href="nodePath">{{ nodePath }}</a></div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import Login from './components/Login';
-import Registered from './components/Registered';
+import { mapGetters } from "vuex";
+import Login from "./components/Login";
+import Registered from "./components/Registered";
 
 export default {
-  name: 'LoginBox',
-  data() {
+    name: "LoginBox",
+    data() {
     /*
     color: String类型。默认'#dedede'。粒子颜色。
     particleOpacity: Number类型。默认0.7。粒子透明度。
@@ -57,53 +57,53 @@ export default {
     clickEffect: 布尔类型。默认true。是否有click特效。
     clickMode: String类型。默认true。可用的click模式有: "push", "remove", "repulse", "bubble"
     */
-    return{
-      regest: false,
-      regestAnimation: 'tranx',
-      thimer: false,
-      vuePath: 'https://github.com/TwinkleDing/vue-template',
-      nodePath: 'https://github.com/TwinkleDing/koa-mongodb'
-    };
-  },
-  components: {
-    Login,
-    Registered
-  },
-  mounted() {
-    this.$store.dispatch('logOut');
-  },
-  computed: {
-    ...mapGetters(['language', 'themeColor']),
-  },
-  methods: {
-    changeLan(lang) {
-      this.$i18n.locale = lang;
-      this.$store.commit('SET_LANGUAGE', lang);
+        return{
+            regest: false,
+            regestAnimation: "tranx",
+            thimer: false,
+            vuePath: "https://github.com/TwinkleDing/vue-template",
+            nodePath: "https://github.com/TwinkleDing/koa-mongodb"
+        };
     },
-    regestOpen() {
-      this.regestAnimation = false;
-      this.throttle(()=> {
-        this.regest = true;
-        this.regestAnimation = 'tranx';
-      }, 600);
+    components: {
+        Login,
+        Registered
     },
-    regestClose() {
-      this.regestAnimation = false;
-      this.throttle(()=> {
-        this.regest = false;
-        this.regestAnimation = 'tranx';
-      }, 600);
+    mounted() {
+        this.$store.dispatch("logOut");
     },
-    throttle(fn, wait) {
-      if(!this.timer) {
-        this.timer = setTimeout(()=>{
-          fn();
-          clearTimeout(this.timer);
-          this.timer = false;
-        }, wait);
-      }
+    computed: {
+        ...mapGetters(["language", "themeColor"]),
+    },
+    methods: {
+        changeLan(lang) {
+            this.$i18n.locale = lang;
+            this.$store.commit("SET_LANGUAGE", lang);
+        },
+        regestOpen() {
+            this.regestAnimation = false;
+            this.throttle(()=> {
+                this.regest = true;
+                this.regestAnimation = "tranx";
+            }, 600);
+        },
+        regestClose() {
+            this.regestAnimation = false;
+            this.throttle(()=> {
+                this.regest = false;
+                this.regestAnimation = "tranx";
+            }, 600);
+        },
+        throttle(fn, wait) {
+            if(!this.timer) {
+                this.timer = setTimeout(()=>{
+                    fn();
+                    clearTimeout(this.timer);
+                    this.timer = false;
+                }, wait);
+            }
+        }
     }
-  }
 };
 </script>
 
