@@ -159,7 +159,10 @@ module.exports = {
         proxy: {
             "/": {
                 /* 目标代理服务器地址 */
-                target: "/",
+                target: "http://localhost:8080",
+                pathReWrite: {
+                    "^/": "/"
+                },
                 ws: true,
                 /* 允许跨域 */
                 changeOrigin: true

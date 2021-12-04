@@ -11,6 +11,7 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
+  min-width: 1350px;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -20,6 +21,8 @@ body {
   color: #2c3e50;
   height: 100%;
   width: 100%;
+  min-width: 1350px;
+  overflow: auto;
 }
 
 #nav {

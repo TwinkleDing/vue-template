@@ -69,6 +69,7 @@ export default {
   background-size: 100% 100%;
   height: 100%;
   width: 100%;
+    min-width: 1350px;
   &-content {
     height: calc(100% - 61px);
     .left {
@@ -83,6 +84,7 @@ export default {
     .right {
       height: 100%;
       width: calc(100% - 200px);
+        min-width: 1150px;
       float: right;
       box-sizing: border-box;
       overflow-y: auto;
@@ -103,6 +105,7 @@ export default {
     background: oldlace;
     height: 100%;
     width: 100%;
+    min-width: 1350px;
     position: absolute;
     z-index: -1;
   }
