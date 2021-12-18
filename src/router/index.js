@@ -50,7 +50,7 @@ Router.beforeEach((to, from, next) => {
         }
     }else {
     // 未登录
-        if(to.path.includes("login")) {
+        if(to.path.includes("login") || to.path.includes("personal")) {
             next();
         }else {
             next("/login");
